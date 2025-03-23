@@ -1,4 +1,4 @@
-# 🛒 Ecobazar - University E-commerce Project  
+# 🛒 Ecobazar - E-commerce Project  
 
 Welcome to **Ecobazar**! 🌿🛍️ A university project designed to simulate a real-world e-commerce platform with essential shopping features.  
 
