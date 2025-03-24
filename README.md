@@ -3,7 +3,7 @@
 Welcome to **Ecobazar**! 🌿🛍️ A university project designed to simulate a real-world e-commerce platform with essential shopping features.  
 
 ## 🚀 Project Overview  
-This project is part of **[Your University Name]** coursework, aiming to develop a fully functional e-commerce website with a focus on usability, security, and performance.  
+This project was developed as part of the **Web Development** course under the guidance of **Dr. Ashraf Abdel Aziz** at the **Borg El Arab University**, Information Technology Department.  
 
 ## 🎯 Features  
 - 🏪 **User-Friendly Interface** – Easy navigation for customers  
