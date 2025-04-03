@@ -27,7 +27,7 @@ This project was developed as part of the **Web Development** course under the g
 ## 📜 Installation Guide  
 1. **Clone the repository:**  
    ```bash
-   git clone https://github.com/yourusername/ecobazar.git
+   git clone https://github.com/marwanmohamed213410/Ecobazar.git
    cd ecobazar
 
 2. Set up a local server (XAMPP, WAMP, or MAMP).

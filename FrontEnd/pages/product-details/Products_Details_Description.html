@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Details - Ecobazar</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .product-image img {
+            max-width: 100%;
+        }
+        .related-products img {
+            width: 100px;
+        }
+        .footer {
+            background: #222;
+            color: #fff;
+            padding: 20px 0;
+        }
+        .discount-box, .organic-box {
+            border: 1px solid #ddd;
+            padding: 10px;
+            margin-top: 10px;
+            text-align: center;
+            border-radius: 5px;
+        }
+        .discount-box {
+            background: #f8d7da;
+            color: #721c24;
+        }
+        .organic-box {
+            background: #d4edda;
+            color: #155724;
+        }
+    </style>
+</head>
+<body>
+    <nav style="background: url('Breadcrumbs.png') no-repeat center center/cover; padding: 10px 20px; display: flex; align-items: center;">
+        <div style="display: flex; align-items: center;">
+            <span style="font-size: 18px; color: white; margin-right: 10px;">
+                <i class="fas fa-home"></i>
+            </span>
+            <span style="color: #ccc; font-size: 16px; margin-right: 5px;">Category</span>
+            <span style="color: #ccc; font-size: 16px; margin-right: 5px;">&gt;</span>
+            <span style="color: #ccc; font-size: 16px; margin-right: 5px;">Vegetables</span>
+            <span style="color: #ccc; font-size: 16px; margin-right: 5px;">&gt;</span>
+            <span style="color: #2ecc71; font-size: 16px;">Chinese Cabbage</span>
+        </div>
+    </nav>
+    <header class="bg-light py-3 shadow-sm">
+        <div class="container d-flex justify-content-between align-items-center">
+            <h2 class="text-success">Ecobazar</h2>
+            <input type="text" class="form-control w-50" placeholder="Search">
+            <div>
+                <i class="fa fa-shopping-cart"></i> $17.00
+            </div>
+        </div>
+    </header>
+    <main class="container my-5">
+        <div class="row">
+            <div class="col-md-6 product-image">
+                <img src="Product Details Images.png" alt="Chinese Cabbage">
+            </div>
+           
+            <div class="col-md-6">
+                <h3>Chinese Cabbage</h3>
+                <p class="text-success">In Stock</p>
+                <p><del>$48.00</del> <strong class="text-danger">$17.28</strong></p>
+                <button class="btn btn-success">Add to Cart</button>
+                <p class="mt-3">Fresh and organic vegetables for your healthy meals.</p>
+                <div class="discount-box">
+                    <strong>64% Discount</strong><br>
+                    Save your 64% money with us!
+                </div>
+                <div class="organic-box">
+                    <strong>100% Organic</strong><br>
+                    100% Organic Vegetables
+                </div>
+            </div>
+
+            <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Details</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <style>
+        .feature-list li {
+            list-style: none;
+            margin-bottom: 10px;
+        }
+        .feature-list li::before {
+            content: '\2713'; /* Checkmark icon */
+            color: green;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <ul class="nav nav-tabs" id="productTabs">
+            <li class="nav-item">
+                <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#description">Descriptions</button>
+            </li>
+            <li class="nav-item">
+                <button class="nav-link" data-bs-toggle="tab" data-bs-target="#info">Additional Information</button>
+            </li>
+            <li class="nav-item">
+                <button class="nav-link" data-bs-toggle="tab" data-bs-target="#feedback">Customer Feedback</button>
+            </li>
+        </ul>
+        
+        <div class="tab-content mt-3">
+            <div class="tab-pane fade show active" id="description">
+                <div class="row">
+                    <div class="col-md-8">
+                        <p>Detailed product description goes here...</p>
+                        <ul class="feature-list">
+                            <li>100g of fresh leaves provided.</li>
+                            <li>Aliquam ac est at augue volutpat elementum.</li>
+                            <li>Quisque nec enim eget sapien molestie.</li>
+                            <li>Proin convallis odio volutpat finibus posuere.</li>
+                        </ul>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="text-center">
+                            <img src="Video.png" class="img-fluid" alt="Video Placeholder">
+                            <button class="btn btn-success mt-2">▶ Play Video</button>
+                        </div>
+                        <div class="mt-3 p-3 border rounded bg-light">
+                            <p><strong>64% Discount:</strong> Save your 64% money with us</p>
+                            <p><strong>100% Organic:</strong> 100% Organic Vegetables</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane fade" id="info">
+                <div class="row">
+                    <div class="col-md-8">
+                        <p>Here is the description of the product...</p>
+                        <ul class="feature-list">
+                            <li>Weight: 03</li>
+                            <li>Color: Green</li>
+                            <li>Type: Organic</li>
+                            <li>Category: Vegetables</li>
+                            <li>Stock Status: Available (5,413)</li>
+                            <li>Tags: Vegetables,Healthy,Chinese, Cabbage,Green Cabbage,</li>
+                        </ul>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="text-center">
+                            <img src="Video.png" class="img-fluid" alt="Video Placeholder">
+                            <button class="btn btn-success mt-2">▶ Play Video</button>
+                        </div>
+                        <div class="mt-3 p-3 border rounded bg-light">
+                            <p><strong>64% Discount:</strong> Save your 64% money with us</p>
+                            <p><strong>100% Organic:</strong> 100% Organic Vegetables</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </div>
+            <div class="tab-pane fade" id="feedback">
+                <p>Customer feedback section...</p>
+                <div class="col-md-4">
+                    <div class="text-center">
+                        <img src="Review.png" class="img-fluid" alt="Video Placeholder">
+                        <button class="btn btn-success mt-2">▶ Play Video</button>
+                    </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+
+<style>
+    .feature-list {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px; /* المسافة بين العناصر */
+    font-size: 16px;
+    color: #333;
+}
+
+.feature-list p {
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+    body {
+        font-family: Arial, sans-serif;
+        text-align: center;
+        background-color: #f8f8f8;
+    }
+    .products-container {
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+        padding: 20px;
+        flex-wrap: wrap;
+    }
+    .product-card {
+        background: #fff;
+        padding: 15px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        text-align: center;
+        width: 200px;
+        position: relative;
+        transition: transform 0.3s;
+    }
+    .product-card img {
+        width: 100%;
+        border-radius: 10px;
+    }
+    .sale-badge {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        background: red;
+        color: white;
+        padding: 5px 10px;
+        border-radius: 5px;
+        font-size: 12px;
+    }
+    .product-name {
+        font-weight: bold;
+        margin: 10px 0;
+    }
+    .product-price {
+        font-size: 16px;
+        color: #333;
+    }
+    .product-price del {
+        color: grey;
+        font-size: 14px;
+    }
+    .rating {
+        color: orange;
+    }
+    .lock-icon {
+        position: absolute;
+        bottom: 10px;
+        right: 10px;
+        font-size: 16px;
+        color: gray;
+    }
+    .highlighted {
+        border: 2px solid #28a745;
+        box-shadow: 0 0 10px #28a745;
+    }
+</style>
+</head>
+<body>
+<h2>Related Products</h2>
+<div class="products-container">
+    <div class="product-card">
+        <div class="sale-badge">Sale 50%</div>
+        <img src="Image1.png" alt="Green Apple">
+        <div class="product-name">Green Apple</div>
+        <div class="product-price">$14.99 <del>$20.99</del></div>
+        <div class="rating">★★★★☆</div>
+        <i class="fas fa-lock lock-icon"></i>
+    </div>
+    <div class="product-card">
+        <img src="Product Image2.png" alt="Chinese Cabbage">
+        <div class="product-name">Chinese Cabbage</div>
+        <div class="product-price">$14.99</div>
+        <div class="rating">★★★★☆</div>
+        <i class="fas fa-lock lock-icon"></i>
+    </div>
+    <div class="product-card highlighted">
+        <img src="Product Image3.png" alt="Green Capsicum">
+        <div class="product-name">Green Capsicum</div>
+        <div class="product-price">$14.99</div>
+        <div class="rating">★★★★☆</div>
+    </div>
+    <div class="product-card">
+        <img src="Product Image4.png" alt="Ladies Finger">
+        <div class="product-name">Ladies Finger</div>
+        <div class="product-price">$14.99</div>
+        <div class="rating">★★★★☆</div>
+        <i class="fas fa-lock lock-icon"></i>
+    </div>
+    <div class="product-card highlighted">
+        <img src="5.png" alt="Canada Dry Ginger Ale – 2 L
+        Bottle - 200ml - 400g">
+        <div class="product-name">Canada Dry Ginger Ale – 2 L
+            Bottle - 200ml - 400g</div>
+        <div class="product-price">$32.85</div>
+        <div class="rating">★★★★☆</div>
+    </div>
+    <div class="product-card">
+        <img src="image6.png" alt="Ladies Finger">
+        <div class="product-name">Foster Farms Takeout Crispy
+            Classic Buffalo Wings</div>
+        <div class="product-price">$18.99</div>
+        <div class="rating">★★★★☆</div>
+        <i class="fas fa-lock lock-icon"></i>
+    </div>
+    <div class="product-card highlighted">
+        <img src="image7.png" alt="Green Capsicum">
+        <div class="product-name">Angie’s Boomchickapop Sweet
+            & Salty Kettle Corn</div>
+        <div class="product-price">$34.99</div>
+        <div class="rating">★★★★☆</div>
+    </div>
+    <div class="product-card">
+        <div class="sale-badge">Sale 50%</div>
+        <img src="image8.png" alt="Green Apple">
+        <div class="product-name">Seeds of Change Organic
+            Quinoa, Brown, & Red Rice</div>
+        <div class="product-price">$19.99 <del>$29.99</del></div>
+        <div class="rating">★★★★☆</div>
+        <i class="fas fa-lock lock-icon"></i>
+    </div>
+    <div class="product-card highlighted">
+        <img src="image9.png" alt="mango juise">
+        <div class="product-name">mango juice</div>
+        <div class="product-price">$27.99</div>
+        <div class="rating">★★★★☆</div>
+    </div>
+    <div class="product-card">
+        <img src="image10.png" alt="Organic Frozen Triple Berry
+        Blend">
+        <div class="product-name">Organic Frozen Triple Berry
+            Blend</div>
+        <div class="product-price">$14.99</div>
+        <div class="rating">★★★★☆</div>
+        <i class="fas fa-lock lock-icon"></i>
+    </div>
+</div>
+</body>
+    </main>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f8f8;
+        }
+        .newsletter {
+            background: #f4f4f4;
+            padding: 20px;
+            text-align: center;
+        }
+        .newsletter input {
+            padding: 10px;
+            width: 300px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .newsletter button {
+            padding: 10px 20px;
+            background: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .footer {
+            background: #222;
+            color: white;
+            padding: 30px 20px;
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+        }
+        .footer div {
+            margin: 10px;
+        }
+        .footer h3 {
+            color: #28a745;
+        }
+        .footer a {
+            color: #ccc;
+            text-decoration: none;
+            display: block;
+            margin: 5px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="newsletter">
+        <h2>Subscribe to our Newsletter</h2>
+        <p>Stay updated with our latest news and offers.</p>
+        <input type="email" placeholder="Your email address">
+        <button>Subscribe</button>
+    </div>
+    <footer style="background-color: #111; color: #fff; padding: 40px 0; font-family: Arial, sans-serif;">
+        <div style="width: 80%; margin: auto; display: flex; flex-wrap: wrap; justify-content: space-between;">
+            <!-- Left Section -->
+            <div style="width: 25%; min-width: 250px;">
+                <h2 style="display: flex; align-items: center;">
+                    <span style="color: #29a745; font-size: 24px; margin-right: 10px;">&#127793;</span>
+                    <span>Ecobazar</span>
+                </h2>
+                <p style="color: #bbb; font-size: 14px;">Morbi cursus porttitor enim lobortis molestie. Duis gravida turpis dui, eget bibendum magna congue nec.</p>
+                <p style="color: #bbb; font-size: 14px;">
+                    <span style="color: #29a745;">(+20) 01285964248</span> or 
+                    <a href="mailto:ZiadAlbadry16@gmail.com" style="color: #29a745; text-decoration: none;">ZiadAlbadry16@gmail.com</a>
+                </p>
+            </div>
+            
+            <!-- Middle Sections -->
+            <div style="width: 15%; min-width: 150px;">
+                <h3>My Account</h3>
+                <ul style="list-style: none; padding: 0; color: #bbb;">
+                    <li>My Account</li>
+                    <li>Order History</li>
+                    <li style="color: white;">Shoping Cart</li>
+                    <li>Wishlist</li>
+                </ul>
+            </div>
+            <div style="width: 15%; min-width: 150px;">
+                <h3>Helps</h3>
+                <ul style="list-style: none; padding: 0; color: #bbb;">
+                    <li>Contact</li>
+                    <li>FAQs</li>
+                    <li>Terms & Condition</li>
+                    <li>Privacy Policy</li>
+                </ul>
+            </div>
+            <div style="width: 15%; min-width: 150px;">
+                <h3>Proxy</h3>
+                <ul style="list-style: none; padding: 0; color: #bbb;">
+                    <li>About</li>
+                    <li>Shop</li>
+                    <li>Product</li>
+                    <li>Track Order</li>
+                </ul>
+            </div>
+            <div style="width: 15%; min-width: 150px;">
+                <h3>Categories</h3>
+                <ul style="list-style: none; padding: 0; color: #bbb;">
+                    <li>Fruit & Vegetables</li>
+                    <li>Meat & Fish</li>
+                    <li>Bread & Bakery</li>
+                    <li>Beauty & Health</li>
+                </ul>
+            </div>
+        </div>
+        
+        <!-- Bottom Section -->
+        <div style="width: 80%; margin: auto; padding-top: 20px; border-top: 1px solid #333; text-align: center;">
+            <p style="color: #bbb;">Ecobazar eCommerce © 2025. All Rights Reserved</p>
+            <div style="display: flex; justify-content: center; align-items: center; gap: 10px;">
+                <img src="ApplePay.png" alt="Apple Pay" width="40">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/0/04/Visa.svg" alt="Visa" width="40">
+                <img src="Method=Discover.png" alt="Discover" width="40">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/b/b7/MasterCard_Logo.svg" alt="MasterCard" width="40">
+                <img src="Cart.png" alt="Visa" width="40">
+            </div>
+        </div>
+    </footer>
+    
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
