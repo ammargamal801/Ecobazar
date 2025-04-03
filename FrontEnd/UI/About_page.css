@@ -155,7 +155,9 @@ body {
 }
 
 .about-image img {
-  width: 100%;
+  width: 95%;
+  margin-left: 30px;
+  border-radius: 8px;
 }
 /* Hero section styles */
 .hero-section {
@@ -372,24 +374,45 @@ body {
 
 .shop-btn {
   display: inline-block;
-  background-color: #00b207;
+  background-color: #04db00;
   color: white;
   text-decoration: none;
   padding: 10px 24px;
   border-radius: 25px;
   font-weight: bold;
-  transition: background-color 0.3s;
+  transition: background-color 0.3s, transform 0.3s ease;
   text-align: center;
   font-size: 14px;
+  position: relative;
+  margin-top: 10px;
+  box-shadow: 0 5px 15px rgba(0, 178, 7, 0.3);
+}
+
+.shop-btn .arrow {
+  display: inline-block;
+  margin-left: 8px;
+  transition: transform 0.3s ease;
 }
 
 .shop-btn:hover {
-  background-color: #2c7035;
+  background: linear-gradient(180deg, #04db00 0%, #e2ee00 100%);
+  transform: translateY(-3px);
+  box-shadow: 0 5px 15px rgba(0, 178, 7, 0.3);
 }
 
+.shop-btn:hover .arrow {
+  transform: translateX(2px);
+}
+
+/* اضافة تأثير الضغط عند النقر */
+.shop-btn:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 5px rgba(0, 178, 7, 0.3);
+}
 .delivery-image img {
   max-width: 100%;
   height: auto;
+  margin-left: 90px;
 }
 
 .arrow-icon {
@@ -466,7 +489,6 @@ body {
   height: 250px;
   object-fit: cover;
 }
-
 .team-info {
   padding: 15px;
   text-align: left;
@@ -482,7 +504,45 @@ body {
   color: #666;
   font-size: 14px;
 }
+.team-card:hover .social-icons {
+  opacity: 1;
+}
 
+.social-icons {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  gap: 20px;
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+  text-decoration: none;
+}
+.social-icons a {
+  background: white;
+  padding: 10px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s;
+  text-decoration: none;
+  margin-bottom: 80px;
+}
+
+.social-icons a:hover {
+  transform: scale(1.2);
+  background-color: #00c907;
+}
+
+.social-icons i {
+  font-size: 20px;
+  color: #333;
+}
 .slider-arrow {
   position: absolute;
   top: 50%;
@@ -490,7 +550,7 @@ body {
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  background-color: #fff;
+  background-color: #000000;
   border: 1px solid #e0e0e0;
   display: flex;
   align-items: center;
@@ -523,7 +583,10 @@ body {
 .testimonial-title {
   font-size: 36px;
   font-weight: 700;
+  margin-top: -80px;
+  margin-bottom: 40px;
   color: #222;
+  text-align: center;
 }
 
 .testimonial-navigation {
@@ -539,13 +602,13 @@ body {
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  border: 1px solid #e0e0e0;
+  border: 1px solid hsl(0, 0%, 100%);
 }
 
 .testimonial-nav-btn.active {
-  background-color: #00b207;
+  background-color: #04db00;
   color: white;
-  border-color: #00b207;
+  border-color: #04db00;
 }
 
 .testimonial-slider {
@@ -554,16 +617,24 @@ body {
 }
 
 .testimonial-card {
-  background-color: #fcfcfc;
-  border-radius: 10px;
-  padding: 30px;
-  flex: 1;
+  width: 500;
+  height: 100;
+  border-radius: 12px;
+  gap: 16px;
+  padding: 24px;
+  background-color: #ffffff;
+  overflow: hidden;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+  transition: transform 0.3s ease;
 }
-
+.testimonial-card:hover {
+  transform: translateY(-5px);
+}
 .quote-icon {
   color: #00b207;
   font-size: 50px;
-  margin-bottom: 15px;
+  margin-bottom: 10px;
+  margin-top: -20px;
 }
 
 .testimonial-text {
@@ -602,7 +673,8 @@ body {
 
 .rating {
   display: flex;
-  color: #ffc107;
+  color: rgba(255, 138, 0, 1);
+  font-size: x-large;
 }
 
 /* Partners section */
@@ -611,7 +683,7 @@ body {
   justify-content: space-between;
   align-items: center;
   padding: 50px 0;
-  background: linear-gradient(180deg, #ffffff 0%, #f2f2f2 100%);
+  background: linear-gradient(180deg, #ffffff 0%, #ffffff 100%);
 }
 
 .partner-logo {
@@ -622,4 +694,28 @@ body {
 
 .partner-logo:hover {
   opacity: 1;
+}
+.marquee-container {
+  width: 100%;
+  overflow: hidden;
+  background-color: #ffffff;
+  padding: 15px 0;
+  margin: 20px 0;
+}
+
+.marquee-content {
+  display: inline-block;
+
+  animation: marquee-animation 17s linear infinite;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+@keyframes marquee-animation {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
 }
