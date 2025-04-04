@@ -22,7 +22,13 @@ This project was developed as part of the **Web Development** course under the g
 
 ### **Backend** 🖥️  
 - **PHP** 🐘  
-- **MySQL** 🗄️  
+- **MySQL** 🗄️
+
+<h2>🔗 Resources</h2>
+<ul>
+<li><a href="https://drive.google.com/file/d/1loRfSUgbbjx23VxiUqISoGNazPBtBBiU/view?usp=sharing">Web Programming Project outlines</a></li>
+<li>temblate design on <a href="https://www.figma.com/design/ut1cR8klPr05AYzAqtnifH/Shopery---Organic-eCommerce-Shop-Website-Figma-Template--Community---Community-?node-id=460-39913&t=gWEDAWwAPxj6IHAT-1">figma</a></li>
+</ul>
 
 ## 📜 Installation Guide  
 1. **Clone the repository:**  
@@ -57,6 +63,12 @@ This project was developed as part of the **Web Development** course under the g
     Doaa Essam Elhoseni  (ID: 2320214)</b>:
     <a href="https://github.com/DoaaEssam1" target="blank"><img align="center" src="https://raw.githubusercontent.com/tandpfun/skill-icons/main/icons/Github-Dark.svg" alt="mariam eid" height="30" width="40" /></a>
     <a href="#" target="blank"><img align="center" src="https://raw.githubusercontent.com/tandpfun/skill-icons/main/icons/LinkedIn.svg" alt="doaa" height="30" width="40" /></a>
+  </li>
+
+   <!-- lamyaa section -->
+  <li>
+    Lamyaa Abdallah fathy  (ID: 2320463)</b>:
+    <a href="https://github.com/lamyaaabdallah" target="blank"><img align="center" src="https://raw.githubusercontent.com/tandpfun/skill-icons/main/icons/Github-Dark.svg" alt="mariam eid" height="30" width="40" /></a>
   </li>
   
   <!-- mariam eid section -->
