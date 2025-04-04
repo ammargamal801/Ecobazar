@@ -46,7 +46,7 @@ This project was developed as part of the **Web Development** course under the g
 
 6. Start Apache & MySQL in your local server.
 
-7. Access the project in your browser: http://localhost/ecobazar
+7. Access the project in your browser: http://localhost/Ecobazar
 
 ## 👾 Contributors 
 
