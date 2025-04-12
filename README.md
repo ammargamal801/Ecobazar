@@ -130,4 +130,9 @@ This project was developed as part of the **Web Development** course under the g
     <a href="https://github.com/ZiadAlbadry" target="blank"><img align="center" src="https://raw.githubusercontent.com/tandpfun/skill-icons/main/icons/Github-Dark.svg" alt="ziad" height="30" width="40" /></a>
     <a href="https://www.linkedin.com/in/ziad-albadry-732866243" target="blank"><img align="center" src="https://raw.githubusercontent.com/tandpfun/skill-icons/main/icons/LinkedIn.svg" alt="ziad" height="30" width="40" /></a>
   </li>
+<!--mohamed mustafa section-->
+  <li>
+    Mohamed Mostafa Ali Ammar  (ID: 2320943):
+    <a href="https://github.com/mohamed-ali-003" target="blank"><img align="center" src="https://raw.githubusercontent.com/tandpfun/skill-icons/main/icons/Github-Dark.svg" alt="ziad" height="30" width="40" /></a>
+  </li>
 </ul>
