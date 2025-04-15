@@ -1,0 +1,17 @@
+Products_Details_Description
+ecobazar-product/
+├── index.html
+├── css/
+│   ├── style.css
+│   └── responsive.css
+├── js/
+│   └── script.js
+├── images/
+│   ├── chinese-cabbage.jpg
+│   ├── green-apple.jpg
+│   ├── cherry-cabbage.jpg
+│   ├── green-capricum.jpg
+│   └── ladies-finger.jpg
+└── fonts/
+    ├── font-awesome/
+    └── custom-fonts/
