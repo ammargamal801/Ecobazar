@@ -1,12 +1,31 @@
+
 document.addEventListener('DOMContentLoaded', function() {
     // Mobile Menu Toggle
     const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
-    const mainNav = document.querySelector('.main-nav ul');
+    const mainNav = document.querySelector('.main-nav');
     
     mobileMenuBtn.addEventListener('click', function() {
-        mainNav.style.display = mainNav.style.display === 'flex' ? 'none' : 'flex';
+        mainNav.style.display = mainNav.style.display === 'block' ? 'none' : 'block';
     });
     
+    // Update cart count (example)
+    function updateCartCount() {
+        const cartCount = document.querySelector('.cart-count');
+        // يمكنك استبدال هذا الرقم ببيانات حقيقية من السلة
+        cartCount.textContent = '3';
+    }
+    
+    updateCartCount();
+    
+    // Window resize handler
+    window.addEventListener('resize', function() {
+        if (window.innerWidth > 768) {
+            mainNav.style.display = 'block';
+        } else {
+            mainNav.style.display = 'none';
+        }
+    });
+});  
     // Handle window resize to show/hide mobile menu appropriately
     window.addEventListener('resize', function() {
         if (window.innerWidth > 768) {
@@ -164,4 +183,3 @@ document.addEventListener('DOMContentLoaded', function() {
             console.log('Navigating to product page');
         });
     });
-});
