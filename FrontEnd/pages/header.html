@@ -4,8 +4,138 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" 
+    integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
+    <!-- Custom Styles -->
+    <style>
+        #searchBox {
+            display: none; /* Initially hidden */
+            transition: all 0.3s ease; /* Smooth transition */
+            position: absolute;
+            top: 60px; /* Adjust based on navbar height */
+            right: 10px;
+            width: 200px; /* Adjust width as needed */
+        }
+    </style>
 </head>
 <body>
-    
+    <nav class="navbar border fixed-top d-flex">
+        <div class="container-fluid d-flex">
+            <div class="container d-flex">
+                <div class="col-3 d-flex ms-5 me-5">
+                    <a class="text-decoration-none me-4 d-flex align-items-center" style="font-size: 13px;font-weight:550;color:var(--black-text-color);" href="">Home <i class="bi bi-chevron-down ms-1 mt-1"></i></a>
+                    <a class="text-decoration-none me-4 d-flex align-items-center" style="font-size: 13px;font-weight:550;color:var(--black-text-color);" href="">Shop<i class="bi bi-chevron-down ms-1 mt-1"></i></a>
+                    <a class="text-decoration-none me-4 d-flex align-items-center" style="font-size: 13px;font-weight:550;color:var(--black-text-color);" href="">Pages<i class="bi bi-chevron-down ms-1 mt-1"></i></a>
+                    <a class="text-decoration-none me-4 d-flex align-items-center" style="font-size: 13px;font-weight:550;color:var(--black-text-color);" href="">Blog <i class="bi bi-chevron-down ms-1 mt-1"></i></a>
+                    <a class="text-decoration-none d-flex align-items-center text-nowrap" style="font-size: 13px;font-weight:550;color:var(--black-text-color);" href="">About Us</a>
+                </div>
+                <div class="col-3 d-flex justify-content-center fs-2 ms-5" style="font-family: Poppins; font-weight:400;color:var(--black-text-color);">
+                    <a href="" class="text-decoration-none" style="color:var(--black-text-color);"><i class="fas fa-leaf me-1 mt-2 text-success"></i>Ecobazar</a>
+                </div>
+                <div class="col-3 align-content-center" style="font-family: Poppins; font-size: 15px;margin-right: -100px; margin-left: 140px;">
+                    <i class="fa-solid fa-phone-volume align-content-center me-1 mt-3"></i> (219) 555-0114
+                </div>
+                <div class="col-3 align-content-center position-relative">
+                    <i class="bi bi-search fa-lg me-3" id="searchIcon" style="cursor: pointer;"></i>
+                    <a href="" style="color:var(--black-text-color);"><i class="bi bi-heart fa-lg me-3"></i></a>
+                    <a href="" style="color:var(--black-text-color);"><i class="bi bi-handbag fa-lg me-3"></i></a>
+                    <a href="" style="color:var(--black-text-color);"><i class="bi bi-person fa-lg"></i></a>
+                    <!-- Search Box moved here -->
+                    <form class="d-flex" role="search">
+                        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" id="searchBox">
+                       
+                    </form>
+                </div>
+            </div>
+            <button class="navbar-toggler border-0" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar"
+                aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+                <div class="offcanvas-header">
+                    <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Shopping Card (2) </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                </div>
+                <div class="offcanvas-body">
+                    <div class="container">
+                     <div class="col">
+                        <div class="row  position-relative">
+                            <div class="col">
+                            <img src="../Assets/orange.jpg" class="w-25" alt="">
+                            </div>
+                            <div class="col-auto">
+                            <div class="row " style="margin-left: -240px;margin-top:20px ;">
+                            <p style="font-weight:400;font-family: poppins;" > Fresh Indian Orange</p>
+                            </div>
+                            <div class="row" style="margin-top:-18px ;margin-left: -240px;" >
+                                <p>1 kg x &nbsp;<span class="fw-bold">12.00</span></p>
+                              </div>
+                            </div>
+                            <div class="col position-absolute " style="margin-left: 320px; margin-top:20px ;">
+                                <div class="btn-group " role="group" aria-label="Third group">
+                                    <button type="button" class="x-button" style="border-radius:20px ; background-color:var(--white) ;
+                                     border-color: var(--border-color);" >x</button>
+                                  </div>
+                            </div>
+                        </div>
+                        <div class="row ">
+                            <div class="row position-relative">
+                                <div class="col "style="margin-left:-50px ;">
+                                <img src="../Assets/apple.jpg" class="w-50" alt="" >
+                                </div>
+                                <div class="col-auto">
+                                <div class="row " style="margin-left: -185px;margin-top:40px ;">
+                                <p style="font-weight:400;font-family: poppins;" > Green Apple</p>
+                                </div>
+                                <div class="row" style="margin-top:-18px ;margin-left: -185px;" >
+                                    <p>1 kg x &nbsp;<span class="fw-bold">14.00</span></p>
+                                  </div>
+                                </div>
+                                <div class="col position-absolute " style="margin-left: 320px; margin-top:40px ;">
+                                    <div class="btn-group " role="group" aria-label="Third group">
+                                        <button type="button" class="x-button" style="border-radius:20px ; background-color:var(--white) ;
+                                         border-color: var(--border-color);" >x</button>
+                                      </div>
+                                </div>
+                            </div>
+                        </div>
+
+                     </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Bootstrap JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" 
+    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
+    <!-- Custom JavaScript -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const searchIcon = document.getElementById('searchIcon');
+            const searchBox = document.getElementById('searchBox');
+
+            searchIcon.addEventListener('click', function(event) {
+                event.preventDefault();
+                if (searchBox.style.display === 'none' || searchBox.style.display === '') {
+                    searchBox.style.display = 'block';
+                } else {
+                    searchBox.style.display = 'none';
+                }
+            });
+        });
+    </script>
 </body>
 </html>
