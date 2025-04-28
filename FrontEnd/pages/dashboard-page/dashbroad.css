@@ -269,6 +269,16 @@ h1, h2, h3, h4, h5, h6 {
     font-weight: 500;
 }
 
+.edit-address {
+  color: green;
+  text-decoration: none;
+}
+
+.edit-address:hover {
+  color: darkgreen;
+}
+
+
 
 .acount-info__costumer-info {
     width: 424px;
