@@ -7,13 +7,14 @@
     --sticker-color: #00B207;
     --text-hover-color: #2C742F;
     --card-border-color: #E6E6E6;
-    --header-text-not-hovered: #999999;
+    --header-text-not-hovered: #959393;
     --green-text: #00B207;
     --light-green: #5eec7f;
-    --footer-background: #1A1A1A;
+    --footer-background: #002603;
     --second-background: #EDF2EE;
     --discount-background: #EA4B481A;
-    --discount: #EA4B48;
+    --discount: #48acea;
+    --white:#ffffff;
 }
 #searchBox {
     display: none;
@@ -40,3 +41,6 @@
     -ms-overflow-style: none;
     scrollbar-width: none;
 }
+.form-control::placeholder {
+ color: var(--header-text-not-hovered);
+  }
