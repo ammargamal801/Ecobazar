@@ -1,0 +1,29 @@
+body {
+    font-family: Arial, sans-serif;
+  }
+  
+  header span, 
+  header a {
+    font-size: 14px;
+  }
+  
+  header a {
+    text-decoration: none;
+    color: #000;
+  }
+  
+  header a:hover {
+    color: #28a745;
+  }
+  
+  table input {
+    max-width: 30px;
+  }
+  
+  .card {
+    border: none;
+  }
+  
+  .card-title {
+    font-weight: bold;
+  }
