@@ -13,4 +13,23 @@ document.addEventListener('DOMContentLoaded', () => {
     totalUsersElement.textContent = totalUsers;
     totalSalesElement.textContent = `EG 20000`;
     totalProductsElement.textContent = totalProducts;
-  });
+
+    // toggele between items without reload the page
+    const btns = document.querySelectorAll('.nav-link');
+    btns.forEach((btn , idx) => {
+      btn.addEventListener('click' , () => {
+        const details = document.querySelectorAll('.btn-details');
+
+        btns.forEach(btn => {
+          btn.classList.remove('active');
+        });
+        btn.classList.add('active');
+
+        details.forEach(detail => {
+          detail.classList.remove('active');
+      });
+
+      details[idx].classList.add('active');
+      });
+});
+});
