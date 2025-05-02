@@ -1,22 +1,28 @@
 body {
     font-family: Arial, sans-serif;
-  }
-  
-  .sidebar {
-    height: 100vh;
-  }
-  
-  .sidebar .nav-link {
-    font-size: 16px;
-    padding: 10px 20px;
-  }
-  
-  .sidebar .nav-link.active {
-    background-color: #d4edda;
-    font-weight: bold;
-  }
-  
-  .card {
-    border: none;
-    border-radius: 5px;
-  }
+}
+
+.sidebar {
+  height: 100vh;
+}
+
+.sidebar .nav-link {
+  font-size: 16px;
+  padding: 10px 20px;
+}
+
+.sidebar .nav-link.active {
+  background-color: #d4edda;
+  font-weight: bold;
+}
+
+.card {
+  border: none;
+  border-radius: 5px;
+}
+.btn-details { 
+  display: none; 
+} 
+.btn-details.active { 
+  display: block; 
+}
