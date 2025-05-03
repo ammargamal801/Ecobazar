@@ -26,3 +26,55 @@ body {
 .btn-details.active { 
   display: block; 
 }
+/* \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ */
+
+.order__ul {
+  display: flex;
+  padding: 12px 24px;
+  gap: 120px;
+  list-style: none;
+  color: #4D4D4D;
+  background-color: #F2F2F2;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.order__ul li {
+  display: inline-block; 
+}
+
+.order__ul li:nth-child(1) {
+  width: 76px;
+}
+
+.order__ul li:nth-child(2) {
+  width: 124px;
+}
+
+.order__ul li:nth-child(3) {
+  width: 168px;
+}
+
+.order__ul li:nth-child(4) {
+  width: 82px;
+}
+
+.order__ul li:nth-child(5) {
+  width: 86px;
+}
+
+.order__ul li:nth-child(5) a {
+  all: unset;
+  color: #00B207;
+  font-weight: 500;
+  font-size: 14px;
+}
+
+.acount-info__order--ul {
+  background-color: #fff;
+  color: #333333;
+}
+
+.acount-info__order--end-ul {
+  padding-bottom: 36px;
+}

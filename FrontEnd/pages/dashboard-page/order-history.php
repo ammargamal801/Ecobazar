@@ -1,3 +1,16 @@
+<?php
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "eco_bazar";
+
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -148,104 +161,28 @@
                                     <li>Status</li>
                                     <li></li>
                                 </ul>
+                                <?php
+                                $sql = "SELECT id, total_price, status, created_at FROM orders";
+                                $result = $conn->query($sql);
+                                
+                                if ($result->num_rows > 0) {
+                                    while($row = $result->fetch_assoc()) {
+                                        echo '<ul class="flex__row order__ul acount-info__order--ul">';
+                                        echo '<li>#'. $row["id"] . '</li>';
+                                        echo '<li>' . $row["created_at"] . '</li>';
+                                        echo '<li>$'. $row["total_price"] . '</li>';
+                                        echo '<li>' . $row["status"] . '</li>';
+                                        echo '<li><a href="#">View Details</a></li>';
 
-                                <div>
-                                    <ul class="flex__row order__ul acount-info__order--ul">
-                                        <li>#3933</li>
-                                        <li>4 April, 2021</li>
-                                        <li>$135.00 (5 Products)</li>
-                                        <li>Processing</li>
-                                        <li><a href="#">View Details</a></li>
-                                    </ul>
-    
-                                    <ul class="flex__row order__ul acount-info__order--ul">
-                                        <li>#5045</li>
-                                        <li>27 Mar, 2021</li>
-                                        <li>$25.00 (1 Product)</li>
-                                        <li>on the way</li>
-                                        <li><a href="#">View Details</a></li>
-                                    </ul>
-    
-                                    <ul class="flex__row order__ul acount-info__order--ul">
-                                        <li>#5028</li>
-                                        <li>20 Mar, 2021</li>
-                                        <li>$250.00 (4 Products)</li>
-                                        <li>Completed</li>
-                                        <li><a href="#">View Details</a></li>
-                                    </ul>
-    
-                                    <ul class="flex__row order__ul acount-info__order--ul">
-                                        <li>#4600</li>
-                                        <li>19 Mar, 2021</li>
-                                        <li>$35.00 (1 Products)</li>
-                                        <li>Completed</li>
-                                        <li><a href="#">View Details</a></li>
-                                    </ul>
-    
-                                    <ul class="flex__row order__ul acount-info__order--ul">
-                                        <li>#4152</li>
-                                        <li>18 Mar, 2021</li>
-                                        <li>$578.00 (13 Products)</li>
-                                        <li>Completed</li>
-                                        <li><a href="#">View Details</a></li>
-                                    </ul>
-    
-                                    <ul class="flex__row order__ul acount-info__order--ul">
-                                        <li>#8811</li>
-                                        <li>10 Mar, 2021</li>
-                                        <li>$345.00 (7 Products)</li>
-                                        <li>Completed</li>
-                                        <li><a href="#">View Details</a></li>
-                                    </ul>
-
-                                    <ul class="flex__row order__ul acount-info__order--ul">
-                                        <li>#3536</li>
-                                        <li>5 Mar, 2021</li>
-                                        <li>$560.00 (2 Products)</li>
-                                        <li>Completed</li>
-                                        <li><a href="#">View Details</a></li>
-                                    </ul>
-
-                                    <ul class="flex__row order__ul acount-info__order--ul">
-                                        <li>#1374</li>
-                                        <li>27 Feb, 2021</li>
-                                        <li>$560.00 (2 Products)</li>
-                                        <li>Completed</li>
-                                        <li><a href="#">View Details</a></li>
-                                    </ul>
-
-                                    <ul class="flex__row order__ul acount-info__order--ul">
-                                        <li>#7791</li>
-                                        <li>25 Feb, 2021</li>
-                                        <li>$560.00 (2 Products)</li>
-                                        <li>Completed</li>
-                                        <li><a href="#">View Details</a></li>
-                                    </ul>
-
-                                    <ul class="flex__row order__ul acount-info__order--ul">
-                                        <li>#4846</li>
-                                        <li>24 Feb, 2021</li>
-                                        <li>$23.00 (1 Products)</li>
-                                        <li>Completed</li>
-                                        <li><a href="#">View Details</a></li>
-                                    </ul>
-
-                                    <ul class="flex__row order__ul acount-info__order--ul">
-                                        <li>#5948</li>
-                                        <li>20 Feb, 2021</li>
-                                        <li>$23.00 (1 Products)</li>
-                                        <li>Completed</li>
-                                        <li><a href="#">View Details</a></li>
-                                    </ul>
-
-                                    <ul class="flex__row  order__ul acount-info__order--ul acount-info__order--end-ul">
-                                        <li>#1577</li>
-                                        <li>12 Oct, 2020</li>
-                                        <li>$23.00 (1 Products)</li>
-                                        <li>Completed</li>
-                                        <li><a href="#">View Details</a></li>
-                                    </ul>
-                                    
+                                        
+                                        echo '</ul>';
+                                    }
+                                } else {
+                                    echo "0 results";
+                                }
+                                
+                                $conn->close();
+                                ?>                      
                                     <div class="flex__row order-list__buttons">
                                         <button class="flex__row order-list__grey-button">
                                             <img src="dashbroad-image/order-left-arrow.svg" alt="right arrow" />
