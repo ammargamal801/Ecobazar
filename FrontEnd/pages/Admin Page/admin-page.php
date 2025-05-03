@@ -1,3 +1,17 @@
+<?php
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "eco_bazar";
+
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+?>
+ 
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -26,8 +40,9 @@
             <li class="nav-item">
               <a class="nav-link" href="#">
                 <span>👤</span>
-                Manage Users
+                Manage Order
               </a>
+              
             </li>
             <li class="nav-item">
               <a class="nav-link" href="#">
@@ -141,6 +156,36 @@
           <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
             <h1 class="h2">Manage Orders</h1>
           </div>
+          <ul class="flex__row order__ul">
+            <li>User ID</li>
+            <li>Order ID</li>
+            <li>Date</li>
+            <li>Total</li>
+            <li>Status</li>
+        </ul>
+
+        <?php
+          $sql = "SELECT  id,user_id ,total_price, status, created_at FROM orders";
+          $result = $conn->query($sql);
+          
+          if ($result->num_rows > 0) {
+              while($row = $result->fetch_assoc()) {
+                  echo '<ul class="flex__row order__ul acount-info__order--ul">';
+                  echo '<li>#'. $row["id"] . '</li>';
+                  echo '<li>#'. $row["user_id"] . '</li>';
+                  echo '<li>' . $row["created_at"] . '</li>';
+                  echo '<li>$'. $row["total_price"] . '</li>';
+                  echo '<li>' . $row["status"] . '</li>';
+                  echo '<li><a href="#">View Details</a></li>';
+
+                  echo '</ul>';
+              }
+          } else {
+              echo "0 results";
+          }
+          
+          $conn->close();
+          ?>
         </div>
       <!-- Manage orders End-->
       
