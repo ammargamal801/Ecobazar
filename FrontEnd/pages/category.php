@@ -1,5 +1,5 @@
 <?php
-require_once '../category-b/products_filter.php';
+require_once '../../Backend/category-b/products_filter.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -10,7 +10,7 @@ require_once '../category-b/products_filter.php';
     <title>Ecobazar - Category</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link rel="stylesheet" href="category.css">
+    <link rel="stylesheet" href="../Style/category.css">
 </head>
 
 <body>
@@ -259,7 +259,7 @@ require_once '../category-b/products_filter.php';
     </div>
     <!-- /////////////////////////////////////////////////////////////////////// -->
 
-    <script src="category.js"></script>
+    <script src="../Logics/category.js"></script>
     
 </body>
 
