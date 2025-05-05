@@ -1,0 +1,286 @@
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f8f9fa;
+        }
+
+        .wishlist-container {
+            max-width: 1200px;
+            margin: 30px auto;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+            overflow: hidden;
+        }
+
+        .wishlist-header {
+            background-color: #f8f9fa;
+            padding: 15px 20px;
+            border-bottom: 1px solid #e9ecef;
+        }
+
+        .wishlist-header h1 {
+            font-size: 24px;
+            margin-bottom: 0;
+            font-weight: 500;
+            color: #333;
+        }
+
+        /* New layout style */
+        .wishlist-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .wishlist-table th {
+            font-weight: 600;
+            color: #333;
+            padding: 15px 20px;
+            text-align: left;
+            border-bottom: 1px solid #e9ecef;
+            background-color: #f8f9fa;
+        }
+
+        .wishlist-table th.text-center {
+            text-align: center;
+        }
+
+        .wishlist-table td {
+            padding: 20px;
+            border-bottom: 1px solid #e9ecef;
+            vertical-align: middle;
+        }
+
+        .wishlist-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .product-cell {
+            display: flex;
+            align-items: center;
+        }
+
+        .product-image {
+            width: 80px;
+            height: 80px;
+            object-fit: contain;
+            border-radius: 4px;
+            margin-right: 15px;
+        }
+
+        .product-name {
+            font-weight: 500;
+            color: #333;
+            margin-bottom: 0;
+            transition: color 0.2s;
+        }
+
+        .product-name:hover {
+            color: #00a524;
+        }
+
+        .price-cell {
+            text-align: center;
+            font-weight: 600;
+            color: #333;
+            font-size: 16px;
+        }
+
+        .stock-cell {
+            text-align: center;
+        }
+
+        .stock-status {
+            padding: 6px 12px;
+            border-radius: 4px;
+            font-size: 13px;
+            display: inline-block;
+            font-weight: 500;
+        }
+
+        .in-stock {
+            background-color: #e8f5e9;
+            color: #2e7d32;
+        }
+
+        .out-of-stock {
+            background-color: #ffebee;
+            color: #c62828;
+        }
+
+        .action-cell {
+            text-align: center;
+        }
+
+        .action-buttons {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .btn-add-to-cart {
+            background-color: #00a524;
+            color: white;
+            border: none;
+            border-radius: 20px;
+            padding: 10px 15px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            width: 120px;
+            font-size: 14px;
+        }
+
+        .btn-add-to-cart:hover {
+            background-color: #008a1e;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-add-to-cart:disabled {
+            background-color: #e0e0e0;
+            color: #9e9e9e;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .btn-remove {
+            background-color: transparent;
+            border: none;
+            color: #999;
+            font-size: 1.2em;
+            transition: all 0.2s;
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+        }
+
+        .btn-remove:hover {
+            color: #c62828;
+            background-color: #f5f5f5;
+        }
+
+        .social-share {
+            padding: 20px;
+            border-top: 1px solid #e9ecef;
+            background-color: #fff;
+        }
+
+        .social-share span {
+            margin-right: 15px;
+            color: #555;
+            font-weight: 500;
+        }
+
+        .social-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background-color: #00a524;
+            color: white;
+            margin-right: 10px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .social-icon:hover {
+            background-color: #008a1e;
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        /* Responsive styles */
+        @media (max-width: 991px) {
+            .wishlist-table {
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 767px) {
+            .wishlist-table th {
+                padding: 12px 10px;
+                font-size: 14px;
+            }
+
+            .wishlist-table td {
+                padding: 15px 10px;
+            }
+
+            .product-image {
+                width: 60px;
+                height: 60px;
+                margin-right: 10px;
+            }
+
+            .product-name {
+                font-size: 14px;
+            }
+
+            .price-cell {
+                font-size: 14px;
+            }
+
+            .btn-add-to-cart {
+                padding: 8px 12px;
+                font-size: 13px;
+                width: 100px;
+            }
+
+            .stock-status {
+                padding: 4px 8px;
+                font-size: 12px;
+            }
+        }
+
+        @media (max-width: 575px) {
+            .wishlist-container {
+                margin: 15px auto;
+                border-radius: 0;
+            }
+
+            .wishlist-table th {
+                font-size: 13px;
+                padding: 10px 8px;
+            }
+
+            .wishlist-table td {
+                padding: 12px 8px;
+            }
+
+            .product-image {
+                width: 50px;
+                height: 50px;
+                margin-right: 8px;
+            }
+
+            .product-name {
+                font-size: 13px;
+            }
+
+            .btn-add-to-cart {
+                padding: 6px 10px;
+                font-size: 12px;
+                width: 90px;
+            }
+
+            .social-icon {
+                width: 32px;
+                height: 32px;
+            }
+
+            .action-buttons {
+                flex-direction: column;
+                gap: 5px;
+            }
+
+            .btn-remove {
+                margin-top: 5px;
+            }
+        }
