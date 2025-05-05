@@ -229,11 +229,19 @@ require_once '../../Backend/category-b/products_filter.php';
                                     <i class="far fa-heart"></i>
                                 </div>
                                 <div class="Preview">
-                                    <i class="far fa-eye"></i>
+                                    <!-- تعديل هنا: إضافة رابط لصفحة التفاصيل -->
+                                    <a href="./Products_Details_Description.php?id=<?php echo $product['id']; ?>">
+                                        <i class="far fa-eye"></i>
+                                    </a>
                                 </div>
                             </div>
                             <div class="product-info">
-                                <h4><?php echo htmlspecialchars($product['name']); ?></h4>
+                                <!-- إضافة رابط للعنوان أيضاً -->
+                                <h4>
+                                    <a href="../pages/product-details.php?id=<?php echo $product['id']; ?>">
+                                        <?php echo htmlspecialchars($product['name']); ?>
+                                    </a>
+                                </h4>
                                 <div class="price">$<?php echo $product['price']; ?></div>
                                 <div class="rating">
                                     <div class="stars">
@@ -253,14 +261,13 @@ require_once '../../Backend/category-b/products_filter.php';
                 <?php else: ?>
                     <p>no products found</p>
                 <?php endif; ?>
-
             </div>
         </div>
     </div>
     <!-- /////////////////////////////////////////////////////////////////////// -->
 
     <script src="../Logics/category.js"></script>
-    
+
 </body>
 
 </html>
