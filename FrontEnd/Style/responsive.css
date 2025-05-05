@@ -1,0 +1,122 @@
+
+/* Tablet View */
+@media (max-width: 992px) {
+    .product-main {
+        flex-direction: column;
+        gap: 20px;
+    }
+    
+    .products-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+    
+    .footer-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+/* Small Tablet View */
+@media (max-width: 768px) {
+    .main-nav {
+        display: none;
+    }
+    
+    .mobile-menu-btn {
+        display: block;
+    }
+    
+    .products-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .footer-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* Mobile View */
+@media (max-width: 576px) {
+    .container {
+        width: 95%;
+    }
+    
+    .product-gallery .main-image {
+        height: 300px;
+    }
+    
+    .products-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .footer-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .newsletter-form {
+        flex-direction: column;
+    }
+    
+    .newsletter-form input {
+        border-radius: 4px;
+        margin-bottom: 10px;
+    }
+    
+    .newsletter-form button {
+        border-radius: 4px;
+        padding: 12px;
+    }
+    
+    .tab-nav {
+        flex-wrap: wrap;
+    }
+    
+    .tab-nav li {
+        padding: 8px 15px;
+        font-size: 14px;
+    }
+}
+/* أضف هذا في responsive.css */
+@media (max-width: 768px) {
+    .product-main {
+        flex-direction: column;
+    }
+    
+    .product-gallery, .product-info {
+        width: 100%;
+    }
+    
+    .description-container, .additional-info-container {
+        flex-direction: column;
+    }
+    
+    .description-video, .info-video {
+        width: 100%;
+        margin-top: 20px;
+    }
+    
+    .header-top {
+        flex-wrap: wrap;
+    }
+    
+    .search-bar {
+        order: 3;
+        width: 100%;
+        margin-top: 15px;
+    }
+}
+
+@media (max-width: 576px) {
+    .price {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .add-to-cart .d-flex {
+        flex-direction: column;
+    }
+    
+    .btn {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+}
