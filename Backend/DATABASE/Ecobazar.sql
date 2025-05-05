@@ -59,61 +59,8 @@ CREATE TABLE if not exists reviews (
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE ON UPDATE CASCADE,
     FOREIGN KEY (product_id) REFERENCES products(id) ON DELETE CASCADE ON UPDATE CASCADE
 );
-
--- ||||||||||||||||||||||||||||||||||\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-
-
-INSERT INTO users (name, email, password, role) 
-VALUES 
-  ('Ahmed Ali', 'ahmed@example.com', '123456', 'customer'),
-  ('Sara Mohamed', 'sara@example.com', 'abcdef', 'customer'),
-  ('Admin User', 'admin@example.com', 'admin123', 'admin'),
-  ('Mohamed Ali', 'mohamed@example.com', 'pass123', 'customer');
-
-
-INSERT INTO categories (name)
-VALUES 
-('Electronics'),
-('Clothing'),
-('Home & Garden');
-
-
-INSERT INTO products (name, description, price, stock, category_id, image_url)
-VALUES
-('iPhone 14', 'Latest Apple smartphone.', 29999.00, 10, 1, 'iphone.jpg'),
-('Men T-Shirt', 'Cotton t-shirt.', 250.00, 50, 2, 'tshirt.jpg'),
-('Garden Chair', 'Comfortable chair for garden.', 750.00, 20, 3, 'chair.jpg');
-
-
-INSERT INTO orders (user_id, total_price, status)
-VALUES
-(1, 30500.00, 'pending'),
-(2, 250.00, 'completed');
-
-
-INSERT INTO order_items (order_id, product_id, quantity, price)
-VALUES
-(1, 1, 1, 29999.00),  -- أحمد اشترى آيفون
-(1, 3, 1, 750.00),    -- أحمد اشترى كرسي جنينة
-(2, 2, 1, 250.00);    -- سارة اشترت تي شيرت
-
-INSERT INTO reviews (user_id, product_id, rating, comment)
-VALUES
-(1, 1, 5, 'Amazing phone!'),
-(2, 2, 4, 'Good quality t-shirt.'),
-(1, 3, 3, 'Chair is okay but could be better.');
-
-
-SELECT * FROM users;
-
-
-
-
-
-
-
-
-
-
-
-
+USE eco_bazar;
+ALTER TABLE users ADD COLUMN phone VARCHAR(11) UNIQUE;
+ALTER TABLE users ADD COLUMN phone VARCHAR(11) AFTER email;
+ALTER TABLE reviews MODIFY COLUMN rating INT NOT NULL CHECK (rating >= 1 AND rating <= 5);
+ALTER TABLE users ADD COLUMN l_name VARCHAR(255) AFTER name;
