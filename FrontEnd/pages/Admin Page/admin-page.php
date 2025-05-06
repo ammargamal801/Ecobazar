@@ -2,7 +2,7 @@
 $servername = "localhost";
 $username = "root";
 $password = "";
-$dbname = "eco_bazar";
+$dbname = "market";
 
 $conn = new mysqli($servername, $username, $password, $dbname);
 
