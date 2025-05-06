@@ -224,25 +224,23 @@ require_once '../../Backend/category-b/products_filter.php';
                     <?php foreach ($products as $product): ?>
                         <div class="product-card">
                             <div class="product-image">
-                                <img src="<?php echo htmlspecialchars($product['image']); ?>">
+                                <img src="<?php echo htmlspecialchars($product['main_image']); ?>">
                                 <div class="wishlist">
                                     <i class="far fa-heart"></i>
                                 </div>
                                 <div class="Preview">
-                                    <!-- تعديل هنا: إضافة رابط لصفحة التفاصيل -->
                                     <a href="./Products_Details_Description.php?id=<?php echo $product['id']; ?>">
                                         <i class="far fa-eye"></i>
                                     </a>
                                 </div>
                             </div>
                             <div class="product-info">
-                                <!-- إضافة رابط للعنوان أيضاً -->
                                 <h4>
                                     <a href="../pages/product-details.php?id=<?php echo $product['id']; ?>">
                                         <?php echo htmlspecialchars($product['name']); ?>
                                     </a>
                                 </h4>
-                                <div class="price">$<?php echo $product['price']; ?></div>
+                                <div class="price">$<?php echo $product['original_price']; ?></div>
                                 <div class="rating">
                                     <div class="stars">
                                         <i class="fas fa-star"></i>

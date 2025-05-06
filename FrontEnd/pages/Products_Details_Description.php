@@ -1,6 +1,9 @@
 <?php
 require_once '../../Backend/category-b/product-details.php';
 ?>
+<?php
+require_once '../../Backend/category-b/related.php';
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -46,27 +49,31 @@ require_once '../../Backend/category-b/product-details.php';
             <!-- القائمة الرئيسية -->
             <nav class="main-nav">
                 <ul class="nav-list">
-                    <li><a href="index.html" class="active">Home</a></li>
+                    <li><a href="index.html">Home</a></li>
                     <li class="mega-menu">
-                        <a href="shop.html">Shop <i class="fas fa-chevron-down"></i></a>
-                        <!-- قائمة Mega Menu -->
+                        <a href="./category.php">Shop <i class="fas fa-chevron-down"></i></a>
                         <div class="mega-menu-content">
-                            <div class="mega-menu-column">
-                                <h4>Fruits & Vegetables</h4>
-                                <ul>
-                                    <li><a href="#">Organic Fruits</a></li>
-                                    <li><a href="#">Fresh Vegetables</a></li>
-                                    <li><a href="#">Leafy Greens</a></li>
-                                </ul>
-                            </div>
-                            <div class="mega-menu-column">
-                                <h4>Dairy & Eggs</h4>
-                                <ul>
-                                    <li><a href="#">Organic Milk</a></li>
-                                    <li><a href="#">Farm Eggs</a></li>
-                                    <li><a href="#">Cheese</a></li>
-                                </ul>
-                            </div>
+                            <?php
+                            $categories_query = "SELECT * FROM categories";
+                            $categories_result = $conn->query($categories_query);
+
+                            if ($categories_result && $categories_result->num_rows > 0):
+                                while ($category = $categories_result->fetch_assoc()):
+                                    ?>
+                                    <div class="mega-menu-column">
+                                        <h4><?php echo htmlspecialchars($category['name']); ?></h4>
+                                        <ul>
+                                            <li>
+                                                <a href="category.php?id=<?php echo $category['id']; ?>">
+                                                    View All <?php echo htmlspecialchars($category['name']); ?>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <?php
+                                endwhile;
+                            endif;
+                            ?>
                         </div>
                     </li>
                     <li><a href="blog.html">Blog</a></li>
@@ -99,18 +106,16 @@ require_once '../../Backend/category-b/product-details.php';
                 <div class="product-info">
                     <h1><?php echo $product['name']; ?></h1>
                     <div class="rating">
-                        <span class="stars"><?php echo displayStars($average_rating); ?></span>
-                        <span class="review-count"><?php echo $review_count; ?> Review</span>
+                        <span class="stars">★★★★★</span>
+                        <span class="review-count">4 Review</span>
                         <span class="sold-count">$<?php echo number_format($product['sold_count']); ?></span>
                     </div>
 
                     <div class="price">
-                        <span class="original-price"><?php echo formatPrice($product['original_price']); ?></span>
-                        <span class="discounted-price"><?php echo formatPrice($product['discounted_price']); ?></span>
+                        <span class="original-price"><?php echo ($product['original_price']); ?></span>
+                        <span class="discounted-price"><?php echo ($product['discounted_price']); ?></span>
                         <?php if ($product['discounted_price'] < $product['original_price']): ?>
-                            <span
-                                class="discount-badge"><?php echo calculateDiscount($product['original_price'], $product['discounted_price']); ?>%
-                                OFF</span>
+                            <span class="discount-badge">64% OFF</span>
                         <?php endif; ?>
                     </div>
 
@@ -124,8 +129,8 @@ require_once '../../Backend/category-b/product-details.php';
                         <p><?php echo $product['description']; ?></p>
                     </div>
 
-                    <div class="add-to-cart">
-                        <button class="btn-add-to-cart">Add to Cart</button>
+                    <div class="add-to-cart1">
+                        <button class="btn-add-to-cart1">Add to Cart</button>
                         <div class="meta-info">
                             <p><strong>Category:</strong> <?php echo $product['category_name']; ?></p>
                             <p><strong>Tag:</strong> <?php echo $product['tags']; ?></p>
@@ -159,7 +164,7 @@ require_once '../../Backend/category-b/product-details.php';
                                     if (!empty(trim($feature))):
                                         ?>
                                         <li><strong><?php echo $feature; ?></strong></li>
-                                    <?php
+                                        <?php
                                     endif;
                                 endforeach;
                                 ?>
@@ -183,11 +188,8 @@ require_once '../../Backend/category-b/product-details.php';
                                         <i class="fas fa-tag"></i>
                                     </div>
                                     <div class="feature-text">
-                                        <h4><?php echo calculateDiscount($product['original_price'], $product['discounted_price']); ?>%
-                                            Discount</h4>
-                                        <p>Serve your
-                                            <?php echo calculateDiscount($product['original_price'], $product['discounted_price']); ?>%
-                                            money with us</p>
+                                        <h4>64% Discount</h4>
+                                        <p>Serve your 64% money with us</p>
                                     </div>
                                 </div>
                                 <div class="feature">
@@ -224,11 +226,11 @@ require_once '../../Backend/category-b/product-details.php';
                                 </tr>
                                 <tr>
                                     <th>Category:</th>
-                                    <td><?php echo $product['category_name']; ?></td>
+                                    <td><?php echo $product['name']; ?></td>
                                 </tr>
                                 <tr>
                                     <th>Stock Status:</th>
-                                    <td><?php echo $stock_status; ?></td>
+                                    <td><?php echo $product['stock_quantity']; ?></td>
                                 </tr>
                                 <tr>
                                     <th>Tags:</th>
@@ -251,11 +253,8 @@ require_once '../../Backend/category-b/product-details.php';
                                         <i class="fas fa-tag"></i>
                                     </div>
                                     <div class="feature-text">
-                                        <h4><?php echo calculateDiscount($product['original_price'], $product['discounted_price']); ?>%
-                                            Discount</h4>
-                                        <p>Serve your
-                                            <?php echo calculateDiscount($product['original_price'], $product['discounted_price']); ?>%
-                                            money with us</p>
+                                        <h4>64% Discount</h4>
+                                        <p>Serve your 64% money with us</p>
                                     </div>
                                 </div>
                                 <div class="feature">
@@ -274,41 +273,42 @@ require_once '../../Backend/category-b/product-details.php';
 
                 <!-- تعليقات العملاء -->
                 <div id="customer-feedback" class="tab-pane">
-                    <?php if ($reviews_result && $reviews_result->num_rows > 0): ?>
-                        <?php while ($review = $reviews_result->fetch_assoc()): ?>
-                            <div class="review">
-                                <div class="review-header">
-                                    <h4><?php echo $review['user_name']; ?></h4>
-                                    <span class="review-time">
-                                        <?php
-                                        $review_date = new DateTime($review['created_at']);
-                                        $now = new DateTime();
-                                        $diff = $now->diff($review_date);
+                    <div class="review">
+                        <div class="review-header">
+                            <h4>Kristin Weston</h4>
+                            <span class="review-time">2 min ago</span>
+                        </div>
+                        <p>Dua da Lidomospeur nulla, ed dittium eros.</p>
+                    </div>
 
-                                        if ($diff->days == 0) {
-                                            if ($diff->h == 0) {
-                                                echo $diff->i . " min ago";
-                                            } else {
-                                                echo $diff->h . " hours ago";
-                                            }
-                                        } else if ($diff->days < 30) {
-                                            echo $diff->days . " days ago";
-                                        } else {
-                                            echo $review_date->format('d M. Y');
-                                        }
-                                        ?>
-                                    </span>
-                                </div>
-                                <p><?php echo $review['comment']; ?></p>
-                            </div>
-                        <?php endwhile; ?>
-                    <?php else: ?>
-                        <p>No reviews yet. Be the first to review this product.</p>
-                    <?php endif; ?>
+                    <div class="review">
+                        <div class="review-header">
+                            <h4>Jane Cooper</h4>
+                            <span class="review-date">30 Apr. 2021</span>
+                        </div>
+                        <p>Keep the soil evenly moist for the heartbeat growth. If the sun gets too hot, Chinese cabbage
+                            tends to "bar" or go to seed: In long periods of heat, same kind of shade may be helpful.
+                            Watch out for smalls as they will harm the plants.</p>
+                    </div>
 
-                    <?php if ($review_count > 4): ?>
-                        <button class="btn-load-more">Load More</button>
-                    <?php endif; ?>
+                    <div class="review">
+                        <div class="review-header">
+                            <h4>Jacob Jones</h4>
+                            <span class="review-time">2 min ago</span>
+                        </div>
+                        <p>Vivamus oggi euilimod magna. Nem sed lechile nitix, et lechile fecus.</p>
+                    </div>
+
+                    <div class="review">
+                        <div class="review-header">
+                            <h4>Ralph Edwards</h4>
+                            <span class="review-time">2 min ago</span>
+                        </div>
+                        <p>2007- Canton Fiat Choi Bei Chay Chinese Cabbage Seeds Helicom Non-Okô/Poductive Besides rape
+                            VIA: chinensis, oka. Centreria Cholee, Ibé Choi, from USA.</p>
+                    </div>
+
+                    <button class="btn-load-more">Load More</button>
                 </div>
             </div>
         </div>
@@ -317,74 +317,45 @@ require_once '../../Backend/category-b/product-details.php';
                 <h2 class="section-title">Related Products</h2>
 
                 <div class="related-products-grid">
-                    <!-- Product Card 1 -->
-                    <div class="product-card">
-                        <div class="product-image">
-                            <img src="Assets/Product Image.png" alt="Green Apple">
-                        </div>
-                        <div class="product-info">
-                            <h3 class="product-title">Green Apple</h3>
-                            <div class="product-price">
-                                <span class="current-price">$10.99</span>
-                                <span class="original-price">$21.99</span>
+                    <?php if ($related_result && $related_result->num_rows > 0): ?>
+                        <?php while ($product = $related_result->fetch_assoc()): ?>
+                            <div class="product-card">
+                                <div class="product-image">
+                                    <img src="<?php echo htmlspecialchars($product['main_image']); ?>">
+                                    <div class="wishlist">
+                                        <i class="far fa-heart"></i>
+                                    </div>
+                                    <div class="Preview">
+                                        <a href="./Products_Details_Description.php?id=<?php echo $product['id']; ?>">
+                                            <i class="far fa-eye"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="product-info">
+                                    <h4>
+                                        <a href="../pages/product-details.php?id=<?php echo $product['id']; ?>">
+                                            <?php echo htmlspecialchars($product['name']); ?>
+                                        </a>
+                                    </h4>
+                                    <div class="price">$<?php echo $product['original_price']; ?></div>
+                                    <div class="rating">
+                                        <div class="stars">
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star-half-alt"></i>
+                                        </div>
+                                    </div>
+                                    <button class="add-to-cart">
+                                        <i class="fas fa-shopping-basket"></i>
+                                    </button>
+                                </div>
                             </div>
-                            <div class="product-rating">
-                                <span class="stars">★★★★★</span>
-                            </div>
-                            <button class="add-to-cart-btn">Add to Cart</button>
-                        </div>
-                    </div>
-
-                    <!-- Product Card 2 -->
-                    <div class="product-card">
-                        <div class="product-image">
-                            <img src="Assets/Product Image2.png" alt="Chinese Cabbage">
-                        </div>
-                        <div class="product-info">
-                            <h3 class="product-title">Chinese Cabbage</h3>
-                            <div class="product-price">
-                                <span class="current-price">$15.99</span>
-                            </div>
-                            <div class="product-rating">
-                                <span class="stars">★★★★★</span>
-                            </div>
-                            <button class="add-to-cart-btn">Add to Cart</button>
-                        </div>
-                    </div>
-
-                    <!-- Product Card 3 -->
-                    <div class="product-card">
-                        <div class="product-image">
-                            <img src="Assets/Product Image3.png" alt="Green Capsicum">
-                        </div>
-                        <div class="product-info">
-                            <h3 class="product-title">Green Capsicum</h3>
-                            <div class="product-price">
-                                <span class="current-price">$22.99</span>
-                            </div>
-                            <div class="product-rating">
-                                <span class="stars">★★★★★</span>
-                            </div>
-                            <button class="add-to-cart-btn">Add to Cart</button>
-                        </div>
-                    </div>
-
-                    <!-- Product Card 4 -->
-                    <div class="product-card">
-                        <div class="product-image">
-                            <img src="Assets/Product Image 4.png" alt="Ladies Finger">
-                        </div>
-                        <div class="product-info">
-                            <h3 class="product-title">Fresh Mango</h3>
-                            <div class="product-price">
-                                <span class="current-price">$28.99</span>
-                            </div>
-                            <div class="product-rating">
-                                <span class="stars">★★★★★</span>
-                            </div>
-                            <button class="add-to-cart-btn">Add to Cart</button>
-                        </div>
-                    </div>
+                        <?php endwhile; ?>
+                    <?php else: ?>
+                        <p>no products found</p>
+                    <?php endif; ?>
                 </div>
             </div>
         </section>
