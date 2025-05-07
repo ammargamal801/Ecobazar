@@ -3,7 +3,7 @@
 $host = "localhost";
 $username = "root"; 
 $password = ""; 
-$database = "market";
+$database = "eco_bazar";
 
 $conn = new mysqli($host, $username, $password, $database);
 
