@@ -4,7 +4,7 @@
     define('DB_SERVER', 'localhost');
     define('DB_USERNAME', 'root');      // Default XAMPP username
     define('DB_PASSWORD', '');          // Default XAMPP password is empty
-    define('DB_NAME', 'market');     // Your database name
+    define('DB_NAME', 'eco_bazar');     // Your database name
 
     // Attempt to connect to MySQL database
     function getConnection() {
