@@ -3,7 +3,7 @@ if (!isset($conn)) {
     $host = "localhost";
     $username = "root"; 
     $password = ""; 
-    $database = "market";
+    $database = "eco_bazar";
 
     $conn = new mysqli($host, $username, $password, $database);
     if ($conn->connect_error) {
