@@ -121,6 +121,7 @@ require_once '../../Backend/category-b/related.php';
 
                     <div class="brand-section">
                         <h3>Brand</h3>
+                        <p><li><?php echo $product['brand_id']; ?></li></p>
                         <div class="social-share">
                             <a href="#"><i class="fab fa-facebook"></i></a>
                             <a href="#"><i class="fab fa-twitter"></i></a>
