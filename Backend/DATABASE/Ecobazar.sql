@@ -60,13 +60,12 @@ CREATE TABLE product_images (
 CREATE TABLE users (
     id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(50) NOT NULL,
+    last_name VARCHAR(50),
     email VARCHAR(100) NOT NULL UNIQUE,
+    phone VARCHAR(20),
     password VARCHAR(255) NOT NULL,
     role ENUM('admin', 'customer') DEFAULT 'customer',
-    first_name VARCHAR(50),
-    last_name VARCHAR(50),
     profile_image VARCHAR(255) DEFAULT 'default_user.png',
-    phone VARCHAR(20),
     address TEXT,
     city VARCHAR(50),
     country VARCHAR(50),
@@ -75,18 +74,17 @@ CREATE TABLE users (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
-
 CREATE TABLE reviews (
     id INT AUTO_INCREMENT PRIMARY KEY,
     product_id INT NOT NULL,
     user_id INT NOT NULL,
     user_name VARCHAR(100),
-    rating DECIMAL(3, 1) NOT NULL,
+    rating INT NOT NULL CHECK (rating >= 1 AND rating <= 5),
     comment TEXT,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    FOREIGN KEY (product_id) REFERENCES products(id) ON DELETE CASCADE,
-    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (product_id) REFERENCES products(id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE tags (
@@ -134,14 +132,13 @@ CREATE TABLE cart_items (
 CREATE TABLE orders (
     id INT AUTO_INCREMENT PRIMARY KEY,
     user_id INT NOT NULL,
-    total_amount DECIMAL(10, 2) NOT NULL,
+    total_price DECIMAL(10,2) NOT NULL,
     shipping_address TEXT NOT NULL,
     billing_address TEXT NOT NULL,
     phone VARCHAR(20) NOT NULL,
     email VARCHAR(100) NOT NULL,
     status ENUM('pending', 'processing', 'shipped', 'delivered', 'cancelled') DEFAULT 'pending',
     payment_method VARCHAR(50) NOT NULL,
-    payment_status ENUM('pending', 'paid', 'failed', 'refunded') DEFAULT 'pending',
     tracking_number VARCHAR(100),
     notes TEXT,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -156,10 +153,29 @@ CREATE TABLE order_items (
     quantity INT NOT NULL,
     price DECIMAL(10, 2) NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (order_id) REFERENCES orders(id) ON DELETE CASCADE,
-    FOREIGN KEY (product_id) REFERENCES products(id)
+    FOREIGN KEY (order_id) REFERENCES orders(id) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (product_id) REFERENCES products(id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
+CREATE TABLE product_videos (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    product_id INT NOT NULL,
+    video_id VARCHAR(50) NOT NULL,
+    video_platform ENUM('youtube', 'vimeo', 'other') DEFAULT 'youtube',
+    display_order INT DEFAULT 0,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (product_id) REFERENCES products(id) ON DELETE CASCADE
+);
+
+CREATE TABLE product_features (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    product_id INT NOT NULL,
+    icon VARCHAR(50) NOT NULL,
+    title VARCHAR(100) NOT NULL,
+    description VARCHAR(255),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (product_id) REFERENCES products(id) ON DELETE CASCADE
+);
 -- /////////////////////////////////////////////////////////////////////
 INSERT INTO categories (id, name, display_order, image, description) VALUES 
 (1, 'Fresh Fruit', 1, 'category_fruit.png', 'Fresh and delicious fruits from local and international farms'),
@@ -181,26 +197,6 @@ INSERT INTO tags (name) VALUES
 ('Organic'), ('Fresh'), ('Natural'), ('Vegan'), ('Gluten-Free'), 
 ('Non-GMO'), ('Local'), ('Seasonal'), ('Imported'), ('Premium'), 
 ('Discount'), ('New Arrival'), ('Best Seller'), ('Low Calorie'), ('Healthy');
-
-CREATE TABLE product_videos (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    product_id INT NOT NULL,
-    video_id VARCHAR(50) NOT NULL,
-    video_platform ENUM('youtube', 'vimeo', 'other') DEFAULT 'youtube',
-    display_order INT DEFAULT 0,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (product_id) REFERENCES products(id) ON DELETE CASCADE
-);
-
-CREATE TABLE product_features (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    product_id INT NOT NULL,
-    icon VARCHAR(50) NOT NULL,
-    title VARCHAR(100) NOT NULL,
-    description VARCHAR(255),
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (product_id) REFERENCES products(id) ON DELETE CASCADE
-);
 
 INSERT INTO products (
     name, 
