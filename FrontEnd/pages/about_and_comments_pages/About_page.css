@@ -259,7 +259,7 @@ body {
 
 /* Banner styles */
 .banner {
-  height: 200px;
+  height: 150px;
   background-color: #222;
   color: white;
   background-image: url("image/ff7bff152fb8bb88e14787b680b49fc0.jpg");
@@ -286,7 +286,7 @@ body {
   display: flex;
   align-items: center;
   z-index: 2;
-  margin-top: 80px;
+  margin-top: 20px;
 }
 
 .breadcrumb a {
@@ -322,12 +322,15 @@ body {
   margin-bottom: 20px;
   line-height: 1.2;
   color: #1d3c45;
+  margin-left: 30px;
 }
 
 .about-description {
   color: #666;
   line-height: 1.6;
   margin-bottom: 20px;
+  margin-left: 30px;
+  line-height: 25px;
 }
 
 .about-image {
@@ -335,8 +338,8 @@ body {
 }
 
 .about-image img {
-  width: 95%;
-  margin-left: 30px;
+  width: 80%;
+  margin-left: 50px;
   border-radius: 8px;
 }
 /* Hero section styles */
@@ -479,15 +482,15 @@ body {
 }
 
 .icon-star {
-  color: #f8b400;
+  color: var(--star-color);
 }
 
 .icon-lock {
-  color: #5c5c5c;
+  color: var(--footer-background);
 }
 
 .icon-truck {
-  color: #7db249;
+  color: var(--green-text);
 }
 
 .icon-box {
