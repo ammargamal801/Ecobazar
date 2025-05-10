@@ -106,7 +106,7 @@ require_once '../../Backend/category-b/products_filter.php';
                     </div>
                 </div>
             </div>
-                        <!-- cart details -->
+            <!-- cart details -->
             <div class="cart">
                 <h2 class="cart-title">Your Cart</h2>
                 <div class="cart-content">
@@ -136,11 +136,11 @@ require_once '../../Backend/category-b/products_filter.php';
             </div>
             <div class="sort-by">
                 <span>Sort by:</span>
-                <select class="sort-select" name="sort" onchange="document.getElementById('filterForm').submit();">
-                    <option value="latest" <?php echo $sort_by == 'latest' ? 'selected' : ''; ?>>Latest</option>
-                    <option value="price-low" <?php echo $sort_by == 'price-low' ? 'selected' : ''; ?>>Price: Low to High</option>
-                    <option value="price-high" <?php echo $sort_by == 'price-high' ? 'selected' : ''; ?>>Price: High to Low</option>
-                    <option value="popular" <?php echo $sort_by == 'popular' ? 'selected' : ''; ?>>Popular</option>
+                <select class="sort-select">
+                    <option value="latest">Latest</option>
+                    <option value="price-low">Price: Low to High</option>
+                    <option value="price-high">Price: High to Low</option>
+                    <option value="popular">Popular</option>
                 </select>
             </div>
             <div class="results-count">
@@ -163,15 +163,6 @@ require_once '../../Backend/category-b/products_filter.php';
                     <div class="category-list">
                         <div class="sidebar">
                             <form id="filterForm" method="GET" action="">
-                                <!-- Hidden inputs to preserve other filter values -->
-                                <input type="hidden" name="min_price" value="<?php echo $min_price; ?>">
-                                <input type="hidden" name="max_price" value="<?php echo $max_price; ?>">
-                                <input type="hidden" name="sort" value="<?php echo $sort_by; ?>">
-                                <input type="hidden" name="rating" value="<?php echo $rating_filter; ?>">
-                                <?php foreach ($tags as $tag): ?>
-                                    <input type="hidden" name="tags[]" value="<?php echo htmlspecialchars($tag); ?>">
-                                <?php endforeach; ?>
-
                                 <?php foreach ($categories as $category): ?>
                                     <div class="category-item">
                                         <label>
@@ -197,17 +188,15 @@ require_once '../../Backend/category-b/products_filter.php';
                         <div class="price-range-slider">
                             <div class="slider-track"></div>
                             <div class="slider-range"></div>
-                            <input type="range" min="0" max="50" value="<?php echo $min_price; ?>" class="min-price" id="min-price" 
-                                onchange="updatePriceFilter()">
-                            <input type="range" min="0" max="50" value="<?php echo $max_price; ?>" class="max-price" id="max-price"
-                                onchange="updatePriceFilter()">
+                            <input type="range" min="0" max="100" value="0" class="min-price" id="min-price">
+                            <input type="range" min="0" max="100" value="100" class="max-price" id="max-price">
                         </div>
 
                         <div class="price-values">
                             <span>Price: </span>
-                            <span id="min-value"><?php echo $min_price; ?></span>
+                            <span id="min-value">0</span>
                             <span> - </span>
-                            <span id="max-value"><?php echo $max_price; ?></span>
+                            <span id="max-value">100</span>
                         </div>
                     </div>
                 </div>
@@ -219,40 +208,35 @@ require_once '../../Backend/category-b/products_filter.php';
                     </div>
                     <div class="rating-options">
                         <div class="rating-option">
-                            <input type="checkbox" id="rating-5" <?php echo $rating_filter == 5 ? 'checked' : ''; ?>
-                                onclick="setRatingFilter(5)">
+                            <input type="checkbox" id="rating-5">
                             <label for="rating-5">
                                 <span class="stars2">★★★★★</span>
                                 <span class="rating-text">5.0</span>
                             </label>
                         </div>
                         <div class="rating-option">
-                            <input type="checkbox" id="rating-4" <?php echo $rating_filter == 4 ? 'checked' : ''; ?>
-                                onclick="setRatingFilter(4)">
+                            <input type="checkbox" id="rating-4" checked>
                             <label for="rating-4">
                                 <span class="stars2">★★★★☆</span>
                                 <span class="rating-text">4.0 & up</span>
                             </label>
                         </div>
                         <div class="rating-option">
-                            <input type="checkbox" id="rating-3" <?php echo $rating_filter == 3 ? 'checked' : ''; ?>
-                                onclick="setRatingFilter(3)">
+                            <input type="checkbox" id="rating-3">
                             <label for="rating-3">
                                 <span class="stars2">★★★☆☆</span>
                                 <span class="rating-text">3.0 & up</span>
                             </label>
                         </div>
                         <div class="rating-option">
-                            <input type="checkbox" id="rating-2" <?php echo $rating_filter == 2 ? 'checked' : ''; ?>
-                                onclick="setRatingFilter(2)">
+                            <input type="checkbox" id="rating-2">
                             <label for="rating-2">
                                 <span class="stars2">★★☆☆☆</span>
                                 <span class="rating-text">2.0 & up</span>
                             </label>
                         </div>
                         <div class="rating-option">
-                            <input type="checkbox" id="rating-1" <?php echo $rating_filter == 1 ? 'checked' : ''; ?>
-                                onclick="setRatingFilter(1)">
+                            <input type="checkbox" id="rating-1">
                             <label for="rating-1">
                                 <span class="stars2">★☆☆☆☆</span>
                                 <span class="rating-text">1.0 & up</span>
@@ -268,10 +252,19 @@ require_once '../../Backend/category-b/products_filter.php';
                         <span class="chevron up"><i class="fas fa-chevron-up"></i></span>
                     </div>
                     <div class="tags-container">
-                        <?php foreach ($popular_tags as $tag): ?>
-                            <span class="tag <?php echo in_array($tag, $tags) ? 'active' : ''; ?>" 
-                                onclick="toggleTag('<?php echo $tag; ?>')"><?php echo $tag; ?></span>
-                        <?php endforeach; ?>
+                        <span class="tag">Healthy</span>
+                        <span class="tag active">Fresh</span>
+                        <span class="tag">Vegetarian</span>
+                        <span class="tag">Kitchen</span>
+                        <span class="tag">Vitamins</span>
+                        <span class="tag">Bread</span>
+                        <span class="tag">Meat</span>
+                        <span class="tag">Snacks</span>
+                        <span class="tag">Tofu</span>
+                        <span class="tag">Lunch</span>
+                        <span class="tag">Dinner</span>
+                        <span class="tag">Breakfast</span>
+                        <span class="tag">Fruit</span>
                     </div>
                 </div>
 
@@ -283,11 +276,11 @@ require_once '../../Backend/category-b/products_filter.php';
                         </div>
                         <div class="description">on your first order</div>
                         <div class="action-btn">
-                            <button class="shop-now" >Shop Now →</button>
+                            <button class="shop-now">Shop Now →</button>
                         </div>
                     </div>
                     <div class="banner-image">
-                        <img src="../Assets/bannel.jpg" alt="Fresh vegetables">
+                        <img src="../images/veg/sale.jpg" alt="Fresh vegetables">
                     </div>
                 </div>
 
@@ -295,36 +288,45 @@ require_once '../../Backend/category-b/products_filter.php';
                 <div class="section">
                     <div class="sale-title">Sale Products</div>
                     <div class="product-list">
-                        <?php foreach ($sale_products as $sale_product): ?>
-                            <div class="product-card-sort">
-                                <div class="product-image-sort">
-                                    <img src="<?php echo htmlspecialchars($sale_product['main_image']); ?>" alt="<?php echo htmlspecialchars($sale_product['name']); ?>">
-                                </div>
-                                <div class="product-info-sort">
-                                    <div class="product-name-sort"><?php echo htmlspecialchars($sale_product['name']); ?></div>
-                                    <div class="product-price-sort">
-                                        <span class="current-price-sort">$<?php echo $sale_product['discounted_price']; ?></span>
-                                        <span class="original-price-sort">$<?php echo $sale_product['original_price']; ?></span>
-                                    </div>
-                                    <div class="product-rating-sort">
-                                        <?php 
-                                        $full_stars = floor($sale_product['avg_rating']);
-                                        $half_star = $sale_product['avg_rating'] - $full_stars >= 0.5;
-                                        
-                                        for ($i = 1; $i <= 5; $i++) {
-                                            if ($i <= $full_stars) {
-                                                echo '★';
-                                            } elseif ($half_star && $i == $full_stars + 1) {
-                                                echo '★';
-                                            } else {
-                                                echo '☆';
-                                            }
-                                        }
-                                        ?>
-                                    </div>
-                                </div>
+                        <div class="product-card-sort">
+                            <div class="product-image-sort">
+                                <img src="../images/veg/redswchil.jpg" alt="Red Capsicum">
                             </div>
-                        <?php endforeach; ?>
+                            <div class="product-info-sort">
+                                <div class="product-name-sort">Red Capsicum</div>
+                                <div class="product-price-sort">
+                                    <span class="current-price-sort">$20.00</span>
+                                    <span class="original-price-sort">$32.00</span>
+                                </div>
+                                <div class="product-rating-sort">★★★★☆</div>
+                            </div>
+                        </div>
+                        <div class="product-card-sort">
+                            <div class="product-image-sort">
+                                <img src="../images/veg/mango.jpg" alt="Chinese Cabbage">
+                            </div>
+                            <div class="product-info-sort">
+                                <div class="product-name-sort">Chinese Cabbage</div>
+                                <div class="product-price-sort">
+                                    <span class="current-price-sort">$24.00</span>
+                                    <span class="original-price-sort">$30.00</span>
+                                </div>
+                                <div class="product-rating-sort">★★★★☆</div>
+                            </div>
+                        </div>
+                        <div class="product-card-sort">
+                            <div class="product-image-sort">
+                                <img src="../images/veg/swgrchil.jpg" alt="Green Capsicum">
+                            </div>
+                            <div class="product-info-sort">
+                                <div class="product-name-sort">Green Capsicum</div>
+                                <div class="product-price-sort">
+                                    <span class="current-price-sort">$14.00</span>
+                                    <span class="original-price-sort">$20.00</span>
+                                </div>
+                                <div class="product-rating-sort">★★★★☆</div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -352,50 +354,50 @@ require_once '../../Backend/category-b/products_filter.php';
                                         <?php echo htmlspecialchars($product['name']); ?>
                                     </a>
                                 </h4>
-                                <div class="price">
-                                    <?php if (!empty($product['discounted_price'])): ?>
-                                        <span class="current-price-sort">$<?php echo $product['discounted_price']; ?></span>
-                                        <span class="original-price-sort">$<?php echo $product['original_price']; ?></span>
-                                    <?php else: ?>
-                                        $<?php echo $product['original_price']; ?>
-                                    <?php endif; ?>
-                                </div>
+                                <div class="price">$<?php echo $product['original_price']; ?></div>
                                 <div class="rating">
                                     <div class="stars">
-                                        <?php
-                                        $product_rating = isset($product['avg_rating']) ? $product['avg_rating'] : 0;
-                                        $full_stars = floor($product_rating);
-                                        $half_star = $product_rating - $full_stars >= 0.5;
-                                        
-                                        for ($i = 1; $i <= 5; $i++) {
-                                            if ($i <= $full_stars) {
-                                                echo '<i class="fas fa-star"></i>';
-                                            } elseif ($half_star && $i == $full_stars + 1) {
-                                                echo '<i class="fas fa-star-half-alt"></i>';
-                                            } else {
-                                                echo '<i class="far fa-star"></i>';
-                                            }
-                                        }
-                                        ?>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star-half-alt"></i>
                                     </div>
                                 </div>
-                                <button class="add-to-cart" data-product-id="<?php echo $product['id']; ?>">
+                                <button class="add-to-cart">
                                     <i class="fas fa-shopping-basket"></i>
                                 </button>
                             </div>
                         </div>
                     <?php endforeach; ?>
                 <?php else: ?>
-                    <p>No products found matching your criteria</p>
+                    <p>no products found</p>
                 <?php endif; ?>
             </div>
         </div>
     </div>
     <!-- /////////////////////////////////////////////////////////////////////// -->
 
-    <script src="../Logics/category.js"></script>
+    
+    <!-- Custom JavaScript for search on nav bar -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const searchIcon = document.getElementById('searchIcon');
+            const searchBox = document.getElementById('searchBox');
+
+            searchIcon.addEventListener('click', function(event) {
+                event.preventDefault();
+                if (searchBox.style.display === 'none' || searchBox.style.display === '') {
+                    searchBox.style.display = 'block';
+                } else {
+                    searchBox.style.display = 'none';
+                }
+            });
+        });
+    </script>
+
     <script src="../Logics/add&delete-cart.js"></script>
+    <script src="../Logics/category.js"></script>
     
 </body>
-
 </html>
