@@ -1,5 +1,5 @@
+const proceedToCheck = document.querySelector(".proceed-to-check");
 const savedCart = JSON.parse(localStorage.getItem("cart"));
-
 const cartItemsContainer = document.getElementById("cart-items");
 let subtotal = 0;
 
@@ -89,8 +89,15 @@ if (savedCart && savedCart.length > 0) {
             document.getElementById("cart-total").textContent = `$${subtotal.toFixed(2)}`;
 
             // Update localStorage with new quantity
-            item.quantity = quantity;
-            localStorage.setItem("cart", JSON.stringify(savedCart));
+            let currentCart = JSON.parse(localStorage.getItem("cart")) || [];
+            const updatedCart = currentCart.map(cartItem => {
+                if (cartItem.productTitle === item.productTitle) {
+                        cartItem.quantity = quantity;
+                }
+                return cartItem;
+                });
+localStorage.setItem("cart", JSON.stringify(updatedCart));
+
         });
 
         // Handle Quantity Decrease
@@ -125,6 +132,11 @@ if (savedCart && savedCart.length > 0) {
 
     document.getElementById("cart-subtotal").textContent = `$${subtotal.toFixed(2)}`;
     document.getElementById("cart-total").textContent = `$${subtotal.toFixed(2)}`;
+    localStorage.setItem("cartTotal", subtotal.toFixed(2));
 } else {
     cartItemsContainer.innerHTML = `<tr><td colspan="5" class="text-center text-muted">Your cart is empty.</td></tr>`;
 }
+
+proceedToCheck.addEventListener("click" , () => {
+    window.location.href = "../CheckOut/CheckOut.php";
+});
