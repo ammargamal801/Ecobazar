@@ -301,3 +301,14 @@ INSERT INTO products (
 ('Vegan Toothpaste', 7, 1, 'vegan_toothpaste.png', 7.49, 5.99, 110, '100 g', 'White', 'Oral Care', 'Plant based\nFluoride free\nNatural mint flavor\nGentle whitening', 'Plant-based vegan toothpaste without fluoride. Natural mint flavor with gentle whitening properties.', 'Vegan, Personal Care, Natural', 200, FALSE, FALSE, TRUE),
 ('Natural Sunscreen', 7, 3, 'natural_sunscreen.png', 14.99, 11.99, 60, '150 ml', 'White', 'Sun Care', 'Mineral based\nBroad spectrum\nReef safe\nWater resistant', 'Natural mineral-based sunscreen with broad-spectrum protection. Reef-safe and water-resistant formula.', 'Natural, Personal Care, Outdoor', 130, TRUE, FALSE, FALSE),
 ('Lavender Essential Oil', 7, 1, 'lavender_essential_oil.png', 11.99, 9.49, 70, '30 ml', 'Purple', 'Essential Oil', 'Pure lavender\nSoothing aroma\nCalming effect\nMultiple uses', 'Pure lavender essential oil with soothing aroma. Perfect for aromatherapy or adding to personal care products.', 'Natural, Aromatherapy, Wellness', 140, FALSE, FALSE, TRUE);
+USE eco_bazar;
+ALTER TABLE users CHANGE last_name l_name VARCHAR(50);
+CREATE TABLE wishlist (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NOT NULL,
+    product_id INT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+    FOREIGN KEY (product_id) REFERENCES products(id) ON DELETE CASCADE,
+    UNIQUE KEY unique_wishlist_item (user_id, product_id)
+);

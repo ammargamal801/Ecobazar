@@ -15,6 +15,7 @@ if ($conn->connect_error) {
 <html lang="en">
     <head>
         <meta charset="UFT-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="icon" href="dashbroad-image/header-logo.svg" />
         <link rel="stylesheet" href="order-history.css" />
         <link rel="preconnect" href="https://fonts.googleapis.com">

@@ -1,0 +1,82 @@
+[
+    {
+        "fullName": "Sara mohamed",
+        "email": "sarsora33@gmail.com",
+        "message": "Great keep it up!",
+        "date": "10 May, 2025",
+        "colorHex": "#56fc72",
+        "initials": "SM",
+        "likes": 0,
+        "replies": [
+            {
+                "message": "Thanks sara !",
+                "date": "10 May, 2025",
+                "fullName": "Ecobazar"
+            }
+        ]
+    },
+    {
+        "fullName": "Kareem emad",
+        "email": "kemoo99@gmail.com",
+        "message": "Love this well done !!",
+        "date": "10 May, 2025",
+        "colorHex": "#6366f1",
+        "initials": "KE",
+        "likes": 0,
+        "replies": [
+            {
+                "message": "Thanks Kareem !",
+                "date": "10 May, 2025",
+                "fullName": "Ecobazar"
+            }
+        ]
+    },
+    {
+        "fullName": "Salma Ahmed",
+        "email": "saloma55@gmail.com",
+        "message": "Thank you for creating this website",
+        "date": "10 May, 2025",
+        "colorHex": "#ec4899",
+        "initials": "SA",
+        "likes": 0,
+        "replies": [
+            {
+                "message": "Thanks Salma !",
+                "date": "10 May, 2025",
+                "fullName": "Ecobazar"
+            }
+        ]
+    },
+    {
+        "fullName": "Ammar adham",
+        "email": "ammmar2@gmail.com",
+        "message": "Very Helpfull",
+        "date": "10 May, 2025",
+        "colorHex": "#f59e0b",
+        "initials": "AA",
+        "likes": 0,
+        "replies": [
+            {
+                "message": "Thanks Ammar !",
+                "date": "10 May, 2025",
+                "fullName": "Ecobazar"
+            }
+        ]
+    },
+    {
+        "fullName": "Mariam Ibrahim",
+        "email": "mariam33@gmail.com",
+        "message": "Good Job",
+        "date": "10 May, 2025",
+        "colorHex": "#31cd79",
+        "initials": "MI",
+        "likes": 0,
+        "replies": [
+            {
+                "message": "Thanks mariam !",
+                "date": "10 May, 2025",
+                "fullName": "Ecobazar"
+            }
+        ]
+    }
+]

@@ -1,93 +1,86 @@
+/* CSS Variables for consistent theming across the site */
 :root {
-    --background-page: #f0f8ff;
-    --background-card: #f0f8ff;
-    --white-text-color: #808080;
-    --black-text-color: #002603;
-    --sticker-color: #00B207;
-    --text-hover-color: #7b837b;
-    --card-border-color: #E6E6E6;
-    --header-text-not-hovered: #959393;
-    --green-text: #00B207;
-    --light-green: #5eec7f;
-    --footer-background: #002603;
-    --second-background: #EDF2EE;
-    --discount-background: #EA4B481A;
-    --discount: #48acea;
-    --white: #ffffff;
+    --background-page: #f0f8ff; /* Light blue background */
+    --background-card: #f0f8ff; /* Matching card background */
+    --white-text-color: #808080; /* Gray text */
+    --black-text-color: #002603; /* Dark green text */
+    --sticker-color: #00B207; /* Bright green for stickers/buttons */
+    --text-hover-color: #7b837b; /* Gray-green for hover states */
+    --card-border-color: #E6E6E6; /* Light gray borders */
+    --header-text-not-hovered: #959393; /* Inactive nav text */
+    --green-text: #00B207; /* Main green color */
+    --light-green: #5eec7f; /* Lighter green for accents */
+    --footer-background: #002603; /* Dark footer background */
+    --second-background: #EDF2EE; /* Secondary page background */
+    --discount-background: #EA4B481A; /* Discount tag background */
+    --discount: #48acea; /* Discount text color */
+    --white: #ffffff; /* Pure white */
 }
 
+/* Search box styling - initially hidden */
 #searchBox {
     display: none;
-    transition: all 0.3s ease;
+    transition: all 0.3s ease; /* Smooth animations */
     position: absolute;
     top: 60px;
     right: 10px;
     width: 200px;
 }
 
+/* Focus state for search box */
 #searchBox:focus {
     outline: none;
-    box-shadow: 0 0 0 0.2rem var(--light-green);
-    border-color: var(--green-text);
+    box-shadow: 0 0 0 0.2rem var(--light-green); /* Green glow */
+    border-color: var(--green-text); /* Green border */
 }
 
+/* Remove focus outlines from Bootstrap toggler */
 .navbar-toggler:focus,
 .navbar-toggler:active {
     outline: none;
     box-shadow: none;
 }
 
+/* Hide scrollbar in offcanvas but keep functionality */
 .offcanvas-body::-webkit-scrollbar {
     display: none;
 }
 
 .offcanvas-body {
-    -ms-overflow-style: none;
-    scrollbar-width: none;
+    -ms-overflow-style: none; /* IE/Edge */
+    scrollbar-width: none; /* Firefox */
 }
 
+/* Placeholder text styling */
 .form-control::placeholder {
     color: var(--header-text-not-hovered);
 }
 
+/* Footer container adjustments */
 .container-fluid[style*="background-color:var(--footer-background)"] {
-    min-height: 600px; /* Increased to accommodate wider spacing */
+    min-height: 600px; /* Give footer more vertical space */
 }
 
-/* Food Icon Styles with outline only */
+/* Food icon styling - outline only effect */
 .food-icon {
     position: absolute;
     font-size: 60px;
-    opacity: 0.2;
+    opacity: 0.2; /* Semi-transparent */
     color: #666666;
     display: block;
-    background: transparent; /* Empty interior */
-    -webkit-text-stroke: 2px #666666; /* Outline effect for webkit browsers */
+    background: transparent; /* No fill */
+    -webkit-text-stroke: 2px #666666; /* Outline for WebKit */
     text-stroke: 2px #666666; /* Standard outline */
-    -webkit-text-fill-color: transparent; /* Remove fill */
-    text-fill-color: transparent; /* Remove fill */
+    -webkit-text-fill-color: transparent; /* No fill */
+    text-fill-color: transparent; /* No fill */
 }
 
-/* Remove min-height to fit content naturally */
+/* Let footer height adjust to content naturally */
 .container-fluid[style*="background-color:var(--footer-background)"] {
-    min-height: auto; /* Remove fixed height, let content determine size */
+    min-height: auto;
 }
 
-/* Food Icon Styles (unchanged, included for completeness) */
-.food-icon {
-    position: absolute;
-    font-size: 60px;
-    opacity: 0.2;
-    color: #666666;
-    display: block;
-    background: transparent;
-    -webkit-text-stroke: 2px #666666;
-    text-stroke: 2px #666666;
-    -webkit-text-fill-color: transparent;
-    text-fill-color: transparent;
-}
-
-/* Scatter icons in the first column (unchanged) */
+/* First column food icon positioning - left side */
 .col:first-child .food-icon:nth-child(1) { top: 10px; left: 120px; }
 .col:first-child .food-icon:nth-child(2) { top: 10px; left: 40px; }
 .col:first-child .food-icon:nth-child(3) { top: 90px; left: 180px; }
@@ -106,7 +99,7 @@
 .col:first-child .food-icon:nth-child(16) { top: 420px; left: 130px; }
 .col:first-child .food-icon:nth-child(17) { top: 420px; left: 190px; }
 
-/* Scatter icons in the last column (mirrored, updated to match right corner) */
+/* Last column food icon positioning - right side (mirrored) */
 .col:last-child .food-icon:nth-child(1) { top: 10px; right: 120px; }
 .col:last-child .food-icon:nth-child(2) { top: 10px; right: 40px; }
 .col:last-child .food-icon:nth-child(3) { top: 90px; right: 180px; }
@@ -116,7 +109,7 @@
 .col:last-child .food-icon:nth-child(7) { top: 180px; right: 110px; }
 .col:last-child .food-icon:nth-child(8) { top: 180px; right: 180px; }
 .col:last-child .food-icon:nth-child(9) { top: 260px; right: 30px; }
-.col:last-child .food-icon:nth-child(10) { top: 260px; right: 100px; } /* Corrected to match left column */
+.col:last-child .food-icon:nth-child(10) { top: 260px; right: 100px; }
 .col:last-child .food-icon:nth-child(11) { top: 340px; right: 10px; }
 .col:last-child .food-icon:nth-child(12) { top: 340px; right: 70px; }
 .col:last-child .food-icon:nth-child(13) { top: 340px; right: 140px; }
@@ -124,3 +117,8 @@
 .col:last-child .food-icon:nth-child(15) { top: 420px; right: 70px; }
 .col:last-child .food-icon:nth-child(16) { top: 420px; right: 130px; }
 .col:last-child .food-icon:nth-child(17) { top: 420px; right: 190px; }
+
+/* Hover effect for list items (excluding first child) */
+.list-unstyled li:not(:first-child) a:hover {
+    color: var(--light-green) !important; /* Light green hover */
+}
