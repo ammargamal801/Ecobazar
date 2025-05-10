@@ -31,6 +31,10 @@ if (isset($_SESSION['user'])) {
     <link rel="stylesheet" href="../Style/main.css">
     <link rel="stylesheet" href="../Style/add-to-cart.css"> 
     <style>
+        body {
+            background-color: white !important;
+        }
+        
         .wishlist-icon {
             cursor: pointer;
             transition: color 0.3s ease;
