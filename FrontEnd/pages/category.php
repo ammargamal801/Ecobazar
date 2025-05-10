@@ -1,5 +1,16 @@
 <?php
 require_once '../../Backend/category-b/products_filter.php';
+session_start();
+
+// Get wishlist product IDs for the current user if logged in
+$wishlist_product_ids = [];
+if (isset($_SESSION['user'])) {
+    require_once '../../Backend/Authentication/users.php';
+    $user = unserialize($_SESSION['user']);
+    $user_id = $user->getId();
+    $wishlist_items = Customer::getWishlist($user_id);
+    $wishlist_product_ids = array_column($wishlist_items, 'id');
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -19,6 +30,18 @@ require_once '../../Backend/category-b/products_filter.php';
     <link rel="stylesheet" href="../Style/category.css">
     <link rel="stylesheet" href="../Style/main.css">
     <link rel="stylesheet" href="../Style/add-to-cart.css"> 
+    <style>
+        .wishlist-icon {
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+        .wishlist-icon.fas {
+            color: #EA4B48;
+        }
+        .wishlist-icon:hover {
+            transform: scale(1.1);
+        }
+    </style>
 </head>
 
 <body>
@@ -50,16 +73,16 @@ require_once '../../Backend/category-b/products_filter.php';
                 <!-- Icons and Search -->
                 <div class="col-3 justify-content-end align-self-center d-flex ms-auto">
                     <i class="bi bi-search fa-lg me-3" id="searchIcon" style="cursor: pointer;"></i>
-                    <a href="" class="align-self-center d-lg-flex d-none" style="color:var(--black-text-color);"><i class="bi bi-heart fa-lg me-3"></i></a>
+                    <a href="Wishlist Page/wishlist.php" class="align-self-center d-lg-flex d-none" style="color:var(--black-text-color);"><i class="bi bi-heart fa-lg me-3"></i></a>
                     <!-- Cart Icon -->
                     <div id="cart-icon">
-                        <a href="#" style="color: var(--black-text-color);" class="me-3" data-bs-toggle="offcanvas" 
+                        <a href="Shopping Cart/shopping_cart.html" style="color: var(--black-text-color);" class="me-3" data-bs-toggle="offcanvas" 
                         data-bs-target="#offcanvasCart" aria-controls="offcanvasCart">
                             <i class="bi bi-handbag fa-lg"></i>
                         </a>
                         <span class="cart-item-count"></span>
                     </div>
-                    <a href="" class="d-lg-flex d-none" style="color:var(--black-text-color);"><i class="bi bi-person fa-lg"></i></a>
+                    <a href="Login Page/login.php" class="d-lg-flex d-none" style="color:var(--black-text-color);"><i class="bi bi-person fa-lg"></i></a>
                     <!-- Search Box -->
                     <form class="d-flex" role="search">
                         <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" id="searchBox">
@@ -340,7 +363,12 @@ require_once '../../Backend/category-b/products_filter.php';
                             <div class="product-image">
                                 <img src="<?php echo htmlspecialchars($product['main_image']); ?>">
                                 <div class="wishlist">
-                                    <i class="far fa-heart"></i>
+                                    <?php if (isset($_SESSION['user'])): ?>
+                                        <i class="<?php echo in_array($product['id'], $wishlist_product_ids ?? []) ? 'fas' : 'far'; ?> fa-heart wishlist-icon" 
+                                        data-product-id="<?php echo $product['id']; ?>"></i>
+                                    <?php else: ?>
+                                        <a href="./Login Page/login.php" title="Login to add to wishlist"><i class="far fa-heart"></i></a>
+                                    <?php endif; ?>
                                 </div>
                                 <div class="Preview">
                                     <a href="./Products_Details_Description.php?id=<?php echo $product['id']; ?>">
@@ -396,8 +424,52 @@ require_once '../../Backend/category-b/products_filter.php';
         });
     </script>
 
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" 
+    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" 
+    crossorigin="anonymous"></script>
     <script src="../Logics/add&delete-cart.js"></script>
     <script src="../Logics/category.js"></script>
-    
+    <script>
+        // Wishlist functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const wishlistIcons = document.querySelectorAll('.wishlist-icon');
+            
+            wishlistIcons.forEach(icon => {
+                icon.addEventListener('click', function() {
+                    const productId = this.getAttribute('data-product-id');
+                    const isInWishlist = this.classList.contains('fas');
+                    
+                    // Determine action based on current state
+                    const action = isInWishlist ? 'remove' : 'add';
+                    
+                    // Send request to server
+                    fetch('../../Backend/wishlist/wishlist_handle.php', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded',
+                        },
+                        body: `action=${action}&product_id=${productId}`
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            // Toggle heart icon
+                            this.classList.toggle('far');
+                            this.classList.toggle('fas');
+                            
+                            // Show success message
+                            alert(data.message);
+                        } else {
+                            alert(data.message);
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        alert('An error occurred while updating your wishlist');
+                    });
+                });
+            });
+        });
+    </script>
 </body>
 </html>
