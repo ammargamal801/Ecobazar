@@ -1,5 +1,16 @@
 <?php
 require_once '../../Backend/category-b/products_filter.php';
+session_start();
+
+// Get wishlist product IDs for the current user if logged in
+$wishlist_product_ids = [];
+if (isset($_SESSION['user'])) {
+    require_once '../../Backend/Authentication/users.php';
+    $user = unserialize($_SESSION['user']);
+    $user_id = $user->getId();
+    $wishlist_items = Customer::getWishlist($user_id);
+    $wishlist_product_ids = array_column($wishlist_items, 'id');
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -19,6 +30,22 @@ require_once '../../Backend/category-b/products_filter.php';
     <link rel="stylesheet" href="../Style/category.css">
     <link rel="stylesheet" href="../Style/main.css">
     <link rel="stylesheet" href="../Style/add-to-cart.css"> 
+    <style>
+        body {
+            background-color: white !important;
+        }
+        
+        .wishlist-icon {
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+        .wishlist-icon.fas {
+            color: #EA4B48;
+        }
+        .wishlist-icon:hover {
+            transform: scale(1.1);
+        }
+    </style>
 </head>
 
 <body>
@@ -50,16 +77,16 @@ require_once '../../Backend/category-b/products_filter.php';
                 <!-- Icons and Search -->
                 <div class="col-3 justify-content-end align-self-center d-flex ms-auto">
                     <i class="bi bi-search fa-lg me-3" id="searchIcon" style="cursor: pointer;"></i>
-                    <a href="" class="align-self-center d-lg-flex d-none" style="color:var(--black-text-color);"><i class="bi bi-heart fa-lg me-3"></i></a>
+                    <a href="Wishlist Page/wishlist.php" class="align-self-center d-lg-flex d-none" style="color:var(--black-text-color);"><i class="bi bi-heart fa-lg me-3"></i></a>
                     <!-- Cart Icon -->
                     <div id="cart-icon">
-                        <a href="#" style="color: var(--black-text-color);" class="me-3" data-bs-toggle="offcanvas" 
+                        <a href="Shopping Cart/shopping_cart.html" style="color: var(--black-text-color);" class="me-3" data-bs-toggle="offcanvas" 
                         data-bs-target="#offcanvasCart" aria-controls="offcanvasCart">
                             <i class="bi bi-handbag fa-lg"></i>
                         </a>
                         <span class="cart-item-count"></span>
                     </div>
-                    <a href="" class="d-lg-flex d-none" style="color:var(--black-text-color);"><i class="bi bi-person fa-lg"></i></a>
+                    <a href="Login Page/login.php" class="d-lg-flex d-none" style="color:var(--black-text-color);"><i class="bi bi-person fa-lg"></i></a>
                     <!-- Search Box -->
                     <form class="d-flex" role="search">
                         <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" id="searchBox">
@@ -136,11 +163,11 @@ require_once '../../Backend/category-b/products_filter.php';
             </div>
             <div class="sort-by">
                 <span>Sort by:</span>
-                <select class="sort-select">
-                    <option value="latest">Latest</option>
-                    <option value="price-low">Price: Low to High</option>
-                    <option value="price-high">Price: High to Low</option>
-                    <option value="popular">Popular</option>
+                <select class="sort-select" name="sort" onchange="document.getElementById('filterForm').submit();">
+                    <option value="latest" <?php echo $sort_by == 'latest' ? 'selected' : ''; ?>>Latest</option>
+                    <option value="price-low" <?php echo $sort_by == 'price-low' ? 'selected' : ''; ?>>Price: Low to High</option>
+                    <option value="price-high" <?php echo $sort_by == 'price-high' ? 'selected' : ''; ?>>Price: High to Low</option>
+                    <option value="popular" <?php echo $sort_by == 'popular' ? 'selected' : ''; ?>>Popular</option>
                 </select>
             </div>
             <div class="results-count">
@@ -188,15 +215,17 @@ require_once '../../Backend/category-b/products_filter.php';
                         <div class="price-range-slider">
                             <div class="slider-track"></div>
                             <div class="slider-range"></div>
-                            <input type="range" min="0" max="100" value="0" class="min-price" id="min-price">
-                            <input type="range" min="0" max="100" value="100" class="max-price" id="max-price">
+                            <input type="range" min="0" max="50" value="<?php echo $min_price; ?>" class="min-price" id="min-price" 
+                                onchange="updatePriceFilter()">
+                            <input type="range" min="0" max="50" value="<?php echo $max_price; ?>" class="max-price" id="max-price"
+                                onchange="updatePriceFilter()">
                         </div>
 
                         <div class="price-values">
                             <span>Price: </span>
-                            <span id="min-value">0</span>
+                            <span id="min-value"><?php echo $min_price; ?></span>
                             <span> - </span>
-                            <span id="max-value">100</span>
+                            <span id="max-value"><?php echo $max_price; ?></span>
                         </div>
                     </div>
                 </div>
@@ -252,19 +281,10 @@ require_once '../../Backend/category-b/products_filter.php';
                         <span class="chevron up"><i class="fas fa-chevron-up"></i></span>
                     </div>
                     <div class="tags-container">
-                        <span class="tag">Healthy</span>
-                        <span class="tag active">Fresh</span>
-                        <span class="tag">Vegetarian</span>
-                        <span class="tag">Kitchen</span>
-                        <span class="tag">Vitamins</span>
-                        <span class="tag">Bread</span>
-                        <span class="tag">Meat</span>
-                        <span class="tag">Snacks</span>
-                        <span class="tag">Tofu</span>
-                        <span class="tag">Lunch</span>
-                        <span class="tag">Dinner</span>
-                        <span class="tag">Breakfast</span>
-                        <span class="tag">Fruit</span>
+                        <?php foreach ($popular_tags as $tag): ?>
+                            <span class="tag <?php echo in_array($tag, $tags) ? 'active' : ''; ?>" 
+                                onclick="toggleTag('<?php echo $tag; ?>')"><?php echo $tag; ?></span>
+                        <?php endforeach; ?>
                     </div>
                 </div>
 
@@ -288,45 +308,36 @@ require_once '../../Backend/category-b/products_filter.php';
                 <div class="section">
                     <div class="sale-title">Sale Products</div>
                     <div class="product-list">
-                        <div class="product-card-sort">
-                            <div class="product-image-sort">
-                                <img src="../images/veg/redswchil.jpg" alt="Red Capsicum">
-                            </div>
-                            <div class="product-info-sort">
-                                <div class="product-name-sort">Red Capsicum</div>
-                                <div class="product-price-sort">
-                                    <span class="current-price-sort">$20.00</span>
-                                    <span class="original-price-sort">$32.00</span>
+                        <?php foreach ($sale_products as $sale_product): ?>
+                            <div class="product-card-sort">
+                                <div class="product-image-sort">
+                                    <img src="<?php echo htmlspecialchars($sale_product['main_image']); ?>" alt="<?php echo htmlspecialchars($sale_product['name']); ?>">
                                 </div>
-                                <div class="product-rating-sort">★★★★☆</div>
-                            </div>
-                        </div>
-                        <div class="product-card-sort">
-                            <div class="product-image-sort">
-                                <img src="../images/veg/mango.jpg" alt="Chinese Cabbage">
-                            </div>
-                            <div class="product-info-sort">
-                                <div class="product-name-sort">Chinese Cabbage</div>
-                                <div class="product-price-sort">
-                                    <span class="current-price-sort">$24.00</span>
-                                    <span class="original-price-sort">$30.00</span>
+                                <div class="product-info-sort">
+                                    <div class="product-name-sort"><?php echo htmlspecialchars($sale_product['name']); ?></div>
+                                    <div class="product-price-sort">
+                                        <span class="current-price-sort">$<?php echo $sale_product['discounted_price']; ?></span>
+                                        <span class="original-price-sort">$<?php echo $sale_product['original_price']; ?></span>
+                                    </div>
+                                    <div class="product-rating-sort">
+                                        <?php 
+                                        $full_stars = floor($sale_product['avg_rating']);
+                                        $half_star = $sale_product['avg_rating'] - $full_stars >= 0.5;
+                                        
+                                        for ($i = 1; $i <= 5; $i++) {
+                                            if ($i <= $full_stars) {
+                                                echo '★';
+                                            } elseif ($half_star && $i == $full_stars + 1) {
+                                                echo '★';
+                                            } else {
+                                                echo '☆';
+                                            }
+                                        }
+                                        ?>
+                                    </div>
                                 </div>
-                                <div class="product-rating-sort">★★★★☆</div>
                             </div>
-                        </div>
-                        <div class="product-card-sort">
-                            <div class="product-image-sort">
-                                <img src="../images/veg/swgrchil.jpg" alt="Green Capsicum">
-                            </div>
-                            <div class="product-info-sort">
-                                <div class="product-name-sort">Green Capsicum</div>
-                                <div class="product-price-sort">
-                                    <span class="current-price-sort">$14.00</span>
-                                    <span class="original-price-sort">$20.00</span>
-                                </div>
-                                <div class="product-rating-sort">★★★★☆</div>
-                            </div>
-                        </div>
+                        <?php endforeach; ?>
                     </div>
                 </div>
             </div>
@@ -340,7 +351,12 @@ require_once '../../Backend/category-b/products_filter.php';
                             <div class="product-image">
                                 <img src="<?php echo htmlspecialchars($product['main_image']); ?>">
                                 <div class="wishlist">
-                                    <i class="far fa-heart"></i>
+                                    <?php if (isset($_SESSION['user'])): ?>
+                                        <i class="<?php echo in_array($product['id'], $wishlist_product_ids ?? []) ? 'fas' : 'far'; ?> fa-heart wishlist-icon" 
+                                        data-product-id="<?php echo $product['id']; ?>"></i>
+                                    <?php else: ?>
+                                        <a href="./Login Page/login.php" title="Login to add to wishlist"><i class="far fa-heart"></i></a>
+                                    <?php endif; ?>
                                 </div>
                                 <div class="Preview">
                                     <a href="./Products_Details_Description.php?id=<?php echo $product['id']; ?>">
@@ -354,14 +370,31 @@ require_once '../../Backend/category-b/products_filter.php';
                                         <?php echo htmlspecialchars($product['name']); ?>
                                     </a>
                                 </h4>
-                                <div class="price">$<?php echo $product['original_price']; ?></div>
+                                <div class="price">
+                                    <?php if (!empty($product['discounted_price'])): ?>
+                                        <span class="current-price-sort">$<?php echo $product['discounted_price']; ?></span>
+                                        <span class="original-price-sort">$<?php echo $product['original_price']; ?></span>
+                                    <?php else: ?>
+                                        $<?php echo $product['original_price']; ?>
+                                    <?php endif; ?>
+                                </div>
                                 <div class="rating">
                                     <div class="stars">
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star-half-alt"></i>
+                                        <?php
+                                        $product_rating = isset($product['avg_rating']) ? $product['avg_rating'] : 0;
+                                        $full_stars = floor($product_rating);
+                                        $half_star = $product_rating - $full_stars >= 0.5;
+                                        
+                                        for ($i = 1; $i <= 5; $i++) {
+                                            if ($i <= $full_stars) {
+                                                echo '<i class="fas fa-star"></i>';
+                                            } elseif ($half_star && $i == $full_stars + 1) {
+                                                echo '<i class="fas fa-star-half-alt"></i>';
+                                            } else {
+                                                echo '<i class="far fa-star"></i>';
+                                            }
+                                        }
+                                        ?>
                                     </div>
                                 </div>
                                 <button class="add-to-cart">
@@ -378,7 +411,7 @@ require_once '../../Backend/category-b/products_filter.php';
     </div>
     <!-- /////////////////////////////////////////////////////////////////////// -->
 
-    
+    <script src="../Logics/category.js"></script>
     <!-- Custom JavaScript for search on nav bar -->
     <script>
         document.addEventListener('DOMContentLoaded', function() {
@@ -396,8 +429,51 @@ require_once '../../Backend/category-b/products_filter.php';
         });
     </script>
 
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" 
+    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" 
+    crossorigin="anonymous"></script>
     <script src="../Logics/add&delete-cart.js"></script>
-    <script src="../Logics/category.js"></script>
-    
+    <script>
+        // Wishlist functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const wishlistIcons = document.querySelectorAll('.wishlist-icon');
+            
+            wishlistIcons.forEach(icon => {
+                icon.addEventListener('click', function() {
+                    const productId = this.getAttribute('data-product-id');
+                    const isInWishlist = this.classList.contains('fas');
+                    
+                    // Determine action based on current state
+                    const action = isInWishlist ? 'remove' : 'add';
+                    
+                    // Send request to server
+                    fetch('../../Backend/wishlist/wishlist_handle.php', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded',
+                        },
+                        body: `action=${action}&product_id=${productId}`
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            // Toggle heart icon
+                            this.classList.toggle('far');
+                            this.classList.toggle('fas');
+                            
+                            // Show success message
+                            alert(data.message);
+                        } else {
+                            alert(data.message);
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        alert('An error occurred while updating your wishlist');
+                    });
+                });
+            });
+        });
+    </script>
 </body>
 </html>

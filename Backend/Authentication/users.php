@@ -379,6 +379,8 @@ class Customer extends User
         return $rslt;
     }
 
+    
+
     // Customer specific methods
     public function viewProducts()
     {
@@ -393,6 +395,100 @@ class Customer extends User
     public function viewOrderHistory()
     {
         // Implementation for viewing order history
+    }
+
+    /**
+     * Add a product to the user's wishlist
+     * 
+     * @param int $user_id The ID of the user
+     * @param int $product_id The ID of the product to add to wishlist
+     * @return bool True if the product was added successfully, false otherwise
+     */
+    public static function addToWishlist($user_id, $product_id)
+    {
+        require_once 'config.php';
+        $conn = getConnection();
+        
+        // Check if the product already exists in the user's wishlist
+        $check_query = "SELECT * FROM wishlist WHERE user_id = ? AND product_id = ?";
+        $stmt = $conn->prepare($check_query);
+        $stmt->bind_param("ii", $user_id, $product_id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        
+        // If the product is already in the wishlist, return false
+        if ($result->num_rows > 0) {
+            $stmt->close();
+            $conn->close();
+            return false;
+        }
+        
+        // Add the product to the wishlist
+        $insert_query = "INSERT INTO wishlist (user_id, product_id, created_at) VALUES (?, ?, NOW())";
+        $stmt = $conn->prepare($insert_query);
+        $stmt->bind_param("ii", $user_id, $product_id);
+        $success = $stmt->execute();
+        
+        $stmt->close();
+        $conn->close();
+        
+        return $success;
+    }
+    
+    /**
+     * Remove a product from the user's wishlist
+     * 
+     * @param int $user_id The ID of the user
+     * @param int $product_id The ID of the product to remove from wishlist
+     * @return bool True if the product was removed successfully, false otherwise
+     */
+    public static function removeFromWishlist($user_id, $product_id)
+    {
+        require_once 'config.php';
+        $conn = getConnection();
+        
+        $delete_query = "DELETE FROM wishlist WHERE user_id = ? AND product_id = ?";
+        $stmt = $conn->prepare($delete_query);
+        $stmt->bind_param("ii", $user_id, $product_id);
+        $success = $stmt->execute();
+        
+        $stmt->close();
+        $conn->close();
+        
+        return $success;
+    }
+    
+    /**
+     * Get all products in the user's wishlist
+     * 
+     * @param int $user_id The ID of the user
+     * @return array An array of products in the user's wishlist
+     */
+    public static function getWishlist($user_id)
+    {
+        require_once 'config.php';
+        $conn = getConnection();
+        
+        $query = "SELECT p.*, w.created_at as added_date 
+                FROM wishlist w
+                JOIN products p ON w.product_id = p.id
+                WHERE w.user_id = ?
+                ORDER BY w.created_at DESC";
+        
+        $stmt = $conn->prepare($query);
+        $stmt->bind_param("i", $user_id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        
+        $wishlist_items = [];
+        while ($row = $result->fetch_assoc()) {
+            $wishlist_items[] = $row;
+        }
+        
+        $stmt->close();
+        $conn->close();
+        
+        return $wishlist_items;
     }
 
     /**
