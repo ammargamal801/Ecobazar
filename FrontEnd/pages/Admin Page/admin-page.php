@@ -363,6 +363,170 @@ $conn = getConnection();
     </div>
   </div>
 
+  <!-- Edit Product Modal -->
+  <div class="modal fade" id="editProductModal" tabindex="-1" aria-labelledby="editProductModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="editProductModalLabel">Edit Product</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form action="../../../Backend/Products Management/handle_products.php" method="POST" enctype="multipart/form-data" class="needs-validation" novalidate>
+            <input type="hidden" name="edit" value="true">
+            <input type="hidden" name="product_id" id="edit_product_id">
+            
+            <div class="row mb-3">
+              <div class="col-md-6">
+                <label for="edit_name" class="form-label">Product Name*</label>
+                <input type="text" class="form-control" id="edit_name" name="name" required>
+                <div class="invalid-feedback">Please enter a product name.</div>
+              </div>
+              <div class="col-md-6">
+                <label for="edit_category_id" class="form-label">Category*</label>
+                <select class="form-select" id="edit_category_id" name="category_id" required>
+                  <option value="">Select Category</option>
+                  <?php
+                  $cat_sql = "SELECT id, name FROM categories ORDER BY name";
+                  $cat_result = $conn->query($cat_sql);
+                  if ($cat_result && $cat_result->num_rows > 0) {
+                    while($cat_row = $cat_result->fetch_assoc()) {
+                      echo '<option value="'.$cat_row["id"].'">'.$cat_row["name"].'</option>';
+                    }
+                  }
+                  ?>
+                </select>
+                <div class="invalid-feedback">Please select a category.</div>
+              </div>
+            </div>
+            
+            <div class="row mb-3">
+              <div class="col-md-6">
+                <label for="edit_brand_id" class="form-label">Brand</label>
+                <select class="form-select" id="edit_brand_id" name="brand_id">
+                  <option value="">Select Brand</option>
+                  <?php
+                  $brand_sql = "SELECT id, name FROM brands ORDER BY name";
+                  $brand_result = $conn->query($brand_sql);
+                  if ($brand_result && $brand_result->num_rows > 0) {
+                    while($brand_row = $brand_result->fetch_assoc()) {
+                      echo '<option value="'.$brand_row["id"].'">'.$brand_row["name"].'</option>';
+                    }
+                  }
+                  ?>
+                </select>
+              </div>
+              <div class="col-md-6">
+                <label for="edit_main_image" class="form-label">Main Image</label>
+                <input type="file" class="form-control" id="edit_main_image" name="main_image">
+                <div class="form-text">Leave empty to keep current image</div>
+                <div id="current_image_preview" class="mt-2"></div>
+              </div>
+            </div>
+            
+            <div class="row mb-3">
+              <div class="col-md-6">
+                <label for="edit_original_price" class="form-label">Original Price*</label>
+                <div class="input-group">
+                  <span class="input-group-text">$</span>
+                  <input type="number" step="0.01" class="form-control" id="edit_original_price" name="original_price" required>
+                </div>
+                <div class="invalid-feedback">Please enter the original price.</div>
+              </div>
+              <div class="col-md-6">
+                <label for="edit_discounted_price" class="form-label">Discounted Price</label>
+                <div class="input-group">
+                  <span class="input-group-text">$</span>
+                  <input type="number" step="0.01" class="form-control" id="edit_discounted_price" name="discounted_price">
+                </div>
+              </div>
+            </div>
+            
+            <div class="row mb-3">
+              <div class="col-md-4">
+                <label for="edit_stock_quantity" class="form-label">Stock Quantity</label>
+                <input type="number" class="form-control" id="edit_stock_quantity" name="stock_quantity">
+              </div>
+              <div class="col-md-4">
+                <label for="edit_weight" class="form-label">Weight</label>
+                <input type="text" class="form-control" id="edit_weight" name="weight" placeholder="e.g. 500g, 1kg">
+              </div>
+              <div class="col-md-4">
+                <label for="edit_color" class="form-label">Color</label>
+                <input type="text" class="form-control" id="edit_color" name="color">
+              </div>
+            </div>
+            
+            <div class="row mb-3">
+              <div class="col-md-6">
+                <label for="edit_type" class="form-label">Type</label>
+                <input type="text" class="form-control" id="edit_type" name="type" placeholder="e.g. Fruit, Vegetable">
+              </div>
+              <div class="col-md-6">
+                <label for="edit_sold_count" class="form-label">Sold Count</label>
+                <input type="number" class="form-control" id="edit_sold_count" name="sold_count">
+              </div>
+            </div>
+            
+            <div class="row mb-3">
+              <div class="col-md-6">
+                <label for="edit_status" class="form-label">Status</label>
+                <select class="form-select" id="edit_status" name="status">
+                  <option value="active">Active</option>
+                  <option value="inactive">Inactive</option>
+                  <option value="out_of_stock">Out of Stock</option>
+                </select>
+              </div>
+            </div>
+            
+            <div class="mb-3">
+              <label for="edit_features" class="form-label">Features</label>
+              <textarea class="form-control" id="edit_features" name="features" rows="3" placeholder="Enter features, one per line"></textarea>
+              <div class="form-text">Enter each feature on a new line</div>
+            </div>
+            
+            <div class="mb-3">
+              <label for="edit_description" class="form-label">Description</label>
+              <textarea class="form-control" id="edit_description" name="description" rows="3"></textarea>
+            </div>
+            
+            <div class="mb-3">
+              <label for="edit_tags" class="form-label">Tags</label>
+              <input type="text" class="form-control" id="edit_tags" name="tags" placeholder="e.g. Organic, Fresh, Fruit">
+              <div class="form-text">Separate tags with commas</div>
+            </div>
+            
+            <div class="row mb-3">
+              <div class="col-md-4">
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" id="edit_is_featured" name="is_featured" value="1">
+                  <label class="form-check-label" for="edit_is_featured">Featured Product</label>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" id="edit_is_new" name="is_new" value="1">
+                  <label class="form-check-label" for="edit_is_new">New Arrival</label>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" id="edit_is_organic" name="is_organic" value="1">
+                  <label class="form-check-label" for="edit_is_organic">Organic Product</label>
+                </div>
+              </div>
+            </div>
+            
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+              <button type="submit" class="btn btn-primary">Update Product</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
   <script src="../../Logics/admin-page.js"></script>
   
@@ -398,6 +562,52 @@ $conn = getConnection();
               alert('An error occurred while deleting the product.');
             });
           }
+        }
+        
+        // Handle edit product button clicks
+        if (e.target && e.target.classList.contains('edit-product')) {
+          const productId = e.target.getAttribute('data-id');
+          
+          // Fetch product details
+          fetch(`../../../Backend/Products Management/get_product.php?id=${productId}`)
+            .then(response => response.json())
+            .then(product => {
+              if (product) {
+                // Populate the edit form with product data
+                document.getElementById('edit_product_id').value = product.id;
+                document.getElementById('edit_name').value = product.name;
+                document.getElementById('edit_category_id').value = product.category_id;
+                document.getElementById('edit_brand_id').value = product.brand_id || '';
+                document.getElementById('edit_original_price').value = product.original_price;
+                document.getElementById('edit_discounted_price').value = product.discounted_price || '';
+                document.getElementById('edit_stock_quantity').value = product.stock_quantity;
+                document.getElementById('edit_weight').value = product.weight || '';
+                document.getElementById('edit_color').value = product.color || '';
+                document.getElementById('edit_type').value = product.type || '';
+                document.getElementById('edit_features').value = product.features || '';
+                document.getElementById('edit_description').value = product.description || '';
+                document.getElementById('edit_tags').value = product.tags || '';
+                document.getElementById('edit_sold_count').value = product.sold_count || 0;
+                document.getElementById('edit_status').value = product.status;
+                
+                // Set checkboxes
+                document.getElementById('edit_is_featured').checked = product.is_featured == 1;
+                document.getElementById('edit_is_new').checked = product.is_new == 1;
+                document.getElementById('edit_is_organic').checked = product.is_organic == 1;
+                
+                // Show current image if available
+                if (product.main_image) {
+                  const imgPreview = document.getElementById('current_image_preview');
+                  imgPreview.innerHTML = `<img src="../../Assets/products/${product.main_image}" alt="${product.name}" width="100" class="img-thumbnail">`;
+                }
+              } else {
+                alert('Failed to load product details');
+              }
+            })
+            .catch(error => {
+              console.error('Error:', error);
+              alert('An error occurred while loading product details.');
+            });
         }
       });
     });

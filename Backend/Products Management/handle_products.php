@@ -7,6 +7,10 @@ $errors = [];
 
 // Check if form was submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Check if this is an edit operation
+    $is_edit = isset($_POST['edit']) && $_POST['edit'] == 'true';
+    $product_id = $is_edit ? (int)$_POST['product_id'] : null;
+    
     // Define required fields
     $required_fields = ['name', 'category_id', 'original_price'];
     
@@ -36,9 +40,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $is_featured = isset($_POST["is_featured"]) ? $_POST["is_featured"] : 0;
         $is_new = isset($_POST["is_new"]) ? $_POST["is_new"] : 0;
         $is_organic = isset($_POST["is_organic"]) ? $_POST["is_organic"] : 0;
+        $status = isset($_POST["status"]) ? $_POST["status"] : null;
         
         // Handle image upload
-        $main_image = 'placeholder.png'; // Default image
+        $main_image = null; // Default to null for edit mode (no image change)
         
         if (isset($_FILES['main_image']) && $_FILES['main_image']['error'] == 0) {
             $allowed = ['jpg', 'jpeg', 'png', 'gif'];
@@ -60,23 +65,43 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             } else {
                 $errors['main_image'] = "Invalid file type. Allowed types: " . implode(', ', $allowed);
             }
+        } else if (!$is_edit) {
+            // For new products, set default image
+            $main_image = 'placeholder.png';
         }
         
-        // If still no errors after image processing, add the product
+        // If still no errors after image processing, add or update the product
         if (empty($errors)) {
             require_once '../Authentication/users.php';
             
-            $product_id = Admin::addProduct(
-                $name, $category_id, $original_price, $discounted_price, $brand_id, 
-                $main_image, $stock_quantity, $weight, $color, $type, 
-                $features, $description, $tags, $sold_count, 
-                $is_featured, $is_new, $is_organic
-            );
-            
-            if ($product_id) {
-                $_SESSION['success_message'] = "Product added successfully!";
+            if ($is_edit) {
+                // Update existing product
+                $result = Admin::modifyProduct(
+                    $product_id, $name, $category_id, $original_price, $discounted_price, $brand_id, 
+                    $main_image, $stock_quantity, $weight, $color, $type, 
+                    $features, $description, $tags, $sold_count, 
+                    $is_featured, $is_new, $is_organic, $status
+                );
+                
+                if ($result) {
+                    $_SESSION['success_message'] = "Product updated successfully!";
+                } else {
+                    $_SESSION['error_message'] = "Failed to update product. Please try again.";
+                }
             } else {
-                $_SESSION['error_message'] = "Failed to add product. Please try again.";
+                // Add new product
+                $product_id = Admin::addProduct(
+                    $name, $category_id, $original_price, $discounted_price, $brand_id, 
+                    $main_image, $stock_quantity, $weight, $color, $type, 
+                    $features, $description, $tags, $sold_count, 
+                    $is_featured, $is_new, $is_organic
+                );
+                
+                if ($product_id) {
+                    $_SESSION['success_message'] = "Product added successfully!";
+                } else {
+                    $_SESSION['error_message'] = "Failed to add product. Please try again.";
+                }
             }
             
             header("Location: ../../FrontEnd/pages/Admin Page/admin-page.php");
