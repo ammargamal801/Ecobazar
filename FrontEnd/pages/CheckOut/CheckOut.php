@@ -1,3 +1,55 @@
+<?php
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "eco_bazar"; 
+$conn = new mysqli($servername, $username, $password, $dbname);
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+$totalPrice = $_POST['totalHidden'] ?? 0;
+$streetAddress = $_POST['streetAddress'] ?? '';
+$phone = $_POST['phone'] ?? '';
+$email = $_POST['email'] ?? '';
+$paymentMethod = $_POST['payment'] ?? '';
+
+
+$sql = "INSERT INTO orders (user_id, total_price, shipping_address, billing_address, phone, email, payment_method) 
+        VALUES (1, '$totalPrice', '$streetAddress', '$streetAddress', '$phone', '$email', '$paymentMethod')";
+$conn->query($sql);
+$orderId = $conn->insert_id;
+
+
+$cartItems = $_POST['cartItems'] ?? '[]';  
+$cartItems = json_decode($cartItems, true);
+
+foreach ($cartItems as $item) {
+    $productName = trim($item['productTitle']); 
+    $quantity = $item['quantity'];
+    $price = floatval(str_replace('$', '', $item['productPrice'])); 
+
+    $sql = "SELECT id FROM products WHERE name = '$productName' LIMIT 1";
+    $result = $conn->query($sql);
+
+    if ($result->num_rows > 0) {
+        $row = $result->fetch_assoc();
+        $productId = $row['id']; 
+
+        $sqlInsert = "INSERT INTO order_items (order_id, product_id, quantity, price)
+                    VALUES ('$orderId', '$productId', '$quantity', '$price')";
+        $conn->query($sqlInsert);
+        if ($conn->query($sqlInsert) === TRUE) {
+            echo "<script>
+                localStorage.setItem('orderCompleted', 'true');
+                window.location.href = '../category.php';
+                </script>";
+            exit;
+        }
+    }
+}
+$conn->close();
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -19,7 +71,7 @@
         <div class="row">
             <div class="col-lg-8">
                 <section class="billing-section">
-                    <form action="" method="POST">
+                    <form action="CheckOut.php" method="POST">
                         <h3 class="title">Billing Information</h3>
                         
                         <div class="row mb-3">
@@ -88,7 +140,27 @@
                                 </div>
                             </div>
                         </div>
-                        
+                        <div class="row mb-3">
+                            <input class="totalHidden" type="hidden"  name="totalHidden" >
+                            <input type="hidden" name="cartItems" id="cartItems">
+                        </div>
+
+                        <h3>Payment Method</h3>
+                        <div class="payment-methods">
+                            <div class="payment-option">
+                                <input class="form-check-input" type="radio" id="cod" name="payment" value="cod" checked>
+                                <label class="form-check-label" for="cod">Cash on Delivery</label>
+                            </div>
+                            <div class="payment-option">
+                                <input class="form-check-input" type="radio" id="paypal" name="payment" value="paypal">
+                                <label class="form-check-label" for="paypal">Paypal</label>
+                            </div>
+                            <div class="payment-option">
+                                <input class="form-check-input" type="radio" id="amazon" name="payment" value="amazon">
+                                <label class="form-check-label" for="amazon">Amazon Pay</label>
+                            </div>
+                        </div>
+
                         <hr>
                         
                         <h3 class="title">Additional Info</h3>
@@ -98,6 +170,7 @@
                                 <textarea class="form-control" id="orderNotes" name="orderNotes" placeholder="Notes about your order, e.g. special notes for delivery"></textarea>
                             </div>
                         </div>
+                        <button class="submit-btn">Place Order</button>
                     </form>
                 </section>
             </div>
@@ -125,23 +198,6 @@
                         </div>
                     </div>
                     
-                    <h3>Payment Method</h3>
-                    <div class="payment-methods">
-                        <div class="payment-option">
-                            <input class="form-check-input" type="radio" id="cod" name="payment" value="cod" checked>
-                            <label class="form-check-label" for="cod">Cash on Delivery</label>
-                        </div>
-                        <div class="payment-option">
-                            <input class="form-check-input" type="radio" id="paypal" name="payment" value="paypal">
-                            <label class="form-check-label" for="paypal">Paypal</label>
-                        </div>
-                        <div class="payment-option">
-                            <input class="form-check-input" type="radio" id="amazon" name="payment" value="amazon">
-                            <label class="form-check-label" for="amazon">Amazon Pay</label>
-                        </div>
-                    </div>
-                    
-                    <button class="submit-btn">Place Order</button>
                 </section>
             </div>
         </div>
