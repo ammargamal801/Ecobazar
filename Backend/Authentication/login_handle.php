@@ -44,7 +44,7 @@ if($user->getRole() == "admin") {
     header("Location:../../FrontEnd/pages/Admin Page/admin-page.php");
     exit();
 } elseif($user->getRole() == "customer") {
-    header("Location:../../FrontEnd/pages/contact-us.html");
+    header("Location:../../FrontEnd/pages/category.php");
     exit();
 }
 ?>
