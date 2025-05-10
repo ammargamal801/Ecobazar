@@ -394,8 +394,13 @@ require_once '../../Backend/category-b/products_filter.php';
                 }
             });
         });
-    </script>
 
+        if (localStorage.getItem('orderCompleted') === 'true') {
+            localStorage.removeItem('cart');
+            localStorage.removeItem('cartTotal');
+            localStorage.removeItem('orderCompleted'); 
+        }
+    </script>
     <script src="../Logics/add&delete-cart.js"></script>
     <script src="../Logics/category.js"></script>
     
