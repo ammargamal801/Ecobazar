@@ -164,7 +164,7 @@ h6 {
 
 .header__input__text + input {
   padding: 14px 24px;
-  background-color: #00b207;
+  background-color: var(--green-text);
   color: #fff;
   border-radius: 0px 6px 6px 0px;
   border: 0;
@@ -206,7 +206,7 @@ h6 {
 
 .nav__bar a:focus,
 .nav__bar a:hover {
-  color: #00b207;
+  color: var(--green-text);
 }
 
 .nav__container div {
@@ -470,11 +470,11 @@ body {
 .slogan {
   margin-top: 50px;
   font-size: 28px;
-  color: #1d3c45;
+  color: var(--black-text-color);
 }
 
 .icon-leaf {
-  color: #7db249;
+  color: var(--sticker-color);
 }
 
 .icon-headphones {
@@ -550,14 +550,14 @@ body {
 }
 
 .check-icon {
-  color: #3a9046;
+  color: var(--text-hover-color);
   font-size: 16px;
   min-width: 20px;
 }
 
 .shop-btn {
   display: inline-block;
-  background-color: #00b207;
+  background-color: var(--green-text);
   color: white;
   text-decoration: none;
   padding: 10px 24px;
@@ -568,7 +568,7 @@ body {
   font-size: 14px;
   position: relative;
   margin-top: 10px;
-  box-shadow: 0 5px 15px rgba(0, 178, 7, 0.3);
+  box-shadow: 0 5px 15px var(--text-hover-color);
 }
 
 .shop-btn .arrow {
@@ -584,7 +584,7 @@ body {
     var(--star-color) 100%
   );
   transform: translateY(-3px);
-  box-shadow: 0 5px 15px rgba(0, 178, 7, 0.3);
+  box-shadow: 0 5px 15px var(--text-hover-color);
 }
 
 .shop-btn:hover .arrow {
@@ -594,7 +594,7 @@ body {
 /* اضافة تأثير الضغط عند النقر */
 .shop-btn:active {
   transform: translateY(0);
-  box-shadow: 0 2px 5px rgba(0, 178, 7, 0.3);
+  box-shadow: 0 2px 5px var(--text-hover-color);
 }
 .delivery-image img {
   max-width: 100%;
@@ -632,6 +632,7 @@ body {
   background-color: #f9f9f9;
   padding: 80px 0;
   text-align: center;
+  margin-right: 12px;
 }
 
 .section-title {
@@ -794,9 +795,9 @@ body {
 }
 
 .testimonial-nav-btn.active {
-  background-color: #04db00;
+  background-color: var(--green-text);
   color: white;
-  border-color: #04db00;
+  border-color: var(--green-text);
 }
 
 .testimonial-slider {
@@ -906,5 +907,47 @@ body {
   }
   100% {
     transform: translateX(-100%);
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 992px) {
+  .about-section,
+  .features,
+  .team-slider {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .about-image img,
+  .feature {
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 768px) {
+  .breadcrumb {
+    font-size: 14px;
+  }
+
+  .store-title,
+  .about-title {
+    font-size: 24px;
+  }
+
+  .team-card {
+    flex: 0 0 100%;
+    text-align: center;
+  }
+}
+
+@media (max-width: 576px) {
+  .banner {
+    padding: 10px;
+  }
+
+  .about-content {
+    padding: 10px;
   }
 }
