@@ -277,6 +277,87 @@ class Admin extends User
             return false;
         }
     }
+    
+    public static function modifyProduct($product_id, $name, $category_id, $original_price, $discount_price, $brand_id, 
+                                      $main_image, $stock_quantity, $weight, $color, $type, $features, $description, 
+                                      $tags, $sold_count, $is_featured, $is_new, $is_organic, $status) {
+        require_once 'config.php';
+        $conn = getConnection();
+        
+        // Set default status based on stock quantity if not provided
+        if (empty($status)) {
+            $status = ($stock_quantity > 0) ? 'active' : 'out_of_stock';
+        }
+        
+        // Check if a new image was provided
+        $image_clause = "";
+        $params = [];
+        
+        // Build the base parameter array
+        $params[] = $name;
+        $params[] = $category_id;
+        $params[] = $brand_id;
+        
+        // Add image parameter if provided
+        if (!empty($main_image)) {
+            $image_clause = ", main_image = ?";
+            $params[] = $main_image;
+        }
+        
+        // Add remaining parameters
+        $params[] = $original_price;
+        $params[] = $discount_price;
+        $params[] = $stock_quantity;
+        $params[] = $weight;
+        $params[] = $color;
+        $params[] = $type;
+        $params[] = $features;
+        $params[] = $description;
+        $params[] = $tags;
+        $params[] = $sold_count;
+        $params[] = $is_featured;
+        $params[] = $is_new;
+        $params[] = $is_organic;
+        $params[] = $status;
+        $params[] = $product_id;
+        
+        // Prepare SQL statement
+        $sql = "UPDATE products SET name = ?, category_id = ?, brand_id = ?" . $image_clause . ", 
+                original_price = ?, discounted_price = ?, stock_quantity = ?, weight = ?, 
+                color = ?, type = ?, features = ?, description = ?, tags = ?, 
+                sold_count = ?, is_featured = ?, is_new = ?, is_organic = ?, status = ? 
+                WHERE id = ?";
+        
+        $stmt = $conn->prepare($sql);
+        
+        // Create the types string dynamically based on parameters
+        $types = '';
+        foreach ($params as $param) {
+            if (is_int($param)) {
+                $types .= 'i';
+            } elseif (is_double($param) || is_float($param)) {
+                $types .= 'd';
+            } else {
+                $types .= 's';
+            }
+        }
+        
+        // Dynamically bind parameters
+        $stmt->bind_param($types, ...$params);
+        
+        $result = $stmt->execute();
+        
+        if ($result) {
+            $affected_rows = $stmt->affected_rows;
+            $stmt->close();
+            $conn->close();
+            return $affected_rows > 0;
+        } else {
+            $stmt->close();
+            $conn->close();
+            return false;
+        }
+    }
 }
 
 
