@@ -17,7 +17,8 @@ require_once '../../Backend/category-b/products_filter.php';
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="../Style/category.css">
-    <link rel="stylesheet" href="../Style/main.css"> 
+    <link rel="stylesheet" href="../Style/main.css">
+    <link rel="stylesheet" href="../Style/add-to-cart.css"> 
 </head>
 
 <body>
@@ -105,6 +106,19 @@ require_once '../../Backend/category-b/products_filter.php';
                     </div>
                 </div>
             </div>
+                        <!-- cart details -->
+            <div class="cart">
+                <h2 class="cart-title">Your Cart</h2>
+                <div class="cart-content">
+                </div>
+                <div class="total">
+                    <div class="total-title">Total</div>
+                    <div class="total-price">$0</div>
+                </div>
+                <button class="btn-buy">Buy Now</button>
+                <i class="fa-solid fa-circle-xmark" id="cart-close"></i>
+            </div>
+        </div>
     </nav>
 
     <!-- Photo on Header Section -->
@@ -382,6 +396,7 @@ require_once '../../Backend/category-b/products_filter.php';
         });
     </script>
     <script src="../Logics/category.js"></script>
+    <script src="../Logics/add&delete-cart.js"></script>
     
 </body>
 
