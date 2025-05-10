@@ -1,0 +1,817 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Preload critical resources -->
+<link rel="preload" href="css/style.css" as="style">
+<link rel="preload" href="js/main.js" as="script">
+<link rel="preload" href="js/product.js" as="script">
+
+<!-- Font Awesome with media query -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" 
+      media="print" onload="this.media='all'">
+<noscript>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</noscript>
+
+<!-- Structured data for SEO -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org/",
+  "@type": "Product",
+  "name": "Organic Chinese Cabbage",
+  "image": "Assets/Product Image.png",
+  "description": "Crisp, fresh organic Chinese cabbage grown locally without pesticides or synthetic fertilizers.",
+  "brand": {
+    "@type": "Brand",
+    "name": "Organic Valley"
+  },
+  "offers": {
+    "@type": "Offer",
+    "priceCurrency": "USD",
+    "price": "17.28",
+    "availability": "https://schema.org/InStock"
+  },
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": "4.6",
+    "reviewCount": "42"
+  }
+}
+</script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ecobazar - Organic Chinese Cabbage</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <link rel="icon" href="Assets/favicon.ico" type="image/x-icon">
+</head>
+<body>
+    
+    <!-- Top Notification Bar -->
+    <div class="top-notification">
+        
+    </div>
+
+    <!-- Header Section -->
+    <header class="main-header">
+        <div class="container">
+            <div class="header-content">
+                <!-- Logo and Search -->
+                <div class="header-left">
+                    <div class="logo">
+                        <a href="index.html">
+                            <img src="Assets/plant 1.png" alt="Ecobazar Organic Store" width="40">
+                            <span>Ecobazar</span>
+                        </a>
+                    </div>
+                    
+                    <div class="search-container">
+                        <form class="search-form">
+                            <input type="search" placeholder="Search organic products..." class="search-input">
+                            <button type="submit" class="search-btn">
+                                <i class="fas fa-search"></i>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- User Actions -->
+                <div class="header-right">
+                    <div class="user-actions">
+                        <div class="location-selector">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <select class="location-dropdown">
+                                <option>Chicago, USA</option>
+                                <option>New York, USA</option>
+                            </select>
+                        </div>
+                        
+                        <a href="account.html" class="user-icon" title="My Account">
+                            <i class="far fa-user"></i>
+                        </a>
+                        
+                        <a href="wishlist.html" class="wishlist-icon" title="Wishlist">
+                            <i class="far fa-heart"></i>
+                            <span class="wishlist-count">2</span>
+                        </a>
+                        
+                        <a href="cart.html" class="cart-icon" title="Shopping Cart">
+                            <i class="fas fa-shopping-cart"></i>
+                            <span class="cart-count">3</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Main Navigation -->
+            <nav class="main-navigation">
+                <ul class="nav-menu">
+                    <li><a href="index.html">Home</a></li>
+                    
+                    <li class="dropdown">
+                        <a href="shop.html">Shop <i class="fas fa-chevron-down"></i></a>
+                        <div class="mega-menu">
+                            <div class="mega-menu-column">
+                                <h4>Fresh Produce</h4>
+                                <ul>
+                                    <li><a href="category.html?type=organic-fruits">Organic Fruits</a></li>
+                                    <li><a href="category.html?type=fresh-vegetables">Fresh Vegetables</a></li>
+                                    <li><a href="category.html?type=leafy-greens">Leafy Greens</a></li>
+                                </ul>
+                            </div>
+                            <div class="mega-menu-column">
+                                <h4>Dairy & Eggs</h4>
+                                <ul>
+                                    <li><a href="category.html?type=organic-milk">Organic Milk</a></li>
+                                    <li><a href="category.html?type=farm-eggs">Farm Eggs</a></li>
+                                    <li><a href="category.html?type=artisan-cheese">Artisan Cheese</a></li>
+                                </ul>
+                            </div>
+                            <div class="mega-menu-column">
+                                <h4>Special Offers</h4>
+                                <ul>
+                                    <li><a href="deals.html">Weekly Deals</a></li>
+                                    <li><a href="bundles.html">Product Bundles</a></li>
+                                    <li><a href="clearance.html">Clearance Items</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </li>
+                    
+                    <li><a href="blog.html">Blog</a></li>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="product-page">
+        <div class="container">
+            <!-- Breadcrumb Navigation -->
+            <nav class="breadcrumb-nav">
+                <ol class="breadcrumb">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="shop.html">Shop</a></li>
+                    <li><a href="vegetables.html">Vegetables</a></li>
+                    <li class="active">Chinese Cabbage</li>
+                </ol>
+            </nav>
+            
+
+            <!-- Product Main Section -->
+            <section class="product-main-section">
+                <div class="product-gallery">
+                    <div class="main-image">
+                        <img src="Assets/Product Image.png" alt="Fresh Organic Chinese Cabbage" class="product-image">
+                    </div>
+                    
+                    <div class="thumbnail-gallery">
+                        <div class="thumbnail active">
+                            <img src="Assets/Product Image (1).png" alt="Chinese Cabbage Thumbnail">
+                        </div>
+                        <div class="thumbnail">
+                            <img src="Assets/Product Image (2).png" alt="Chinese Cabbage Thumbnail">
+                        </div>
+                        <div class="thumbnail">
+                            <img src="Assets/Product Image (3).png" alt="Chinese Cabbage Thumbnail">
+                        </div>
+                        <div class="thumbnail">
+                            <img src="Assets/Product Image Slider.png" alt="Chinese Cabbage Thumbnail">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="product-details">
+                    <h1 class="product-title">Organic Chinese Cabbage</h1>
+                    
+                    <div class="product-meta">
+                        <div class="rating">
+                            <div class="stars">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                            </div>
+                            <span class="review-count">42 Reviews</span>
+                            <span class="stock-status in-stock">In Stock</span>
+                        </div>
+                    
+                        
+                        <div class="product-sku">
+                            <span>SKU: ECO-CC-001</span>
+                            <span>Brand: Organic Valley</span>
+                        </div>
+                    </div>
+
+                    <div class="price-section">
+                        <div class="current-price">$17.28</div>
+                        <div class="original-price">$49.00</div>
+                        <div class="discount-badge">Save 64%</div>
+                    </div>
+
+                    <div class="product-description">
+                        <p>Crisp, fresh organic Chinese cabbage grown locally without pesticides or synthetic fertilizers. Perfect for stir-fries, salads, and fermenting. Each head is hand-selected for quality and freshness.</p>
+                        
+                        <ul class="product-features">
+                            <li><i class="fas fa-check"></i> Certified Organic (USDA)</li>
+                            <li><i class="fas fa-check"></i> Non-GMO Verified</li>
+                            <li><i class="fas fa-check"></i> Locally Grown</li>
+                            <li><i class="fas fa-check"></i> Pesticide-Free</li>
+                        </ul>
+                         <button class="add-to-cart-btn">
+                            <i class="fas fa-shopping-cart"></i> Add to Cart
+                        </button>
+                        
+                        <button class="buy-now-btn">
+                            <i class="fas fa-bolt"></i> Buy Now
+                        </button>
+                        
+                        <button class="wishlist-btn">
+                            <i class="far fa-heart"></i> Add to Wishlist
+                        </button>
+                        <div class="product-actions">
+                        <div class="quantity-selector">
+                            <button class="qty-btn minus"><i class="fas fa-minus"></i></button>
+                            <input type="number" value="1" min="1" max="10" class="qty-input">
+                            <button class="qty-btn plus"><i class="fas fa-plus"></i></button>
+                        </div>
+                        
+                       
+                    </div>
+                    </div>
+
+                    
+
+                    <div class="product-meta-info">
+                        <div class="meta-item">
+                            <span class="meta-label">Category:</span>
+                            <span class="meta-value">Vegetables, Leafy Greens</span>
+                        </div>
+                        <div class="meta-item">
+                            <span class="meta-label">Tags:</span>
+                            <span class="meta-value">Organic, Fresh, Cabbage, Healthy</span>
+                        </div>
+                        <div class="meta-item">
+                            <span class="meta-label">Share:</span>
+                            <div class="social-share">
+                                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                                <a href="#"><i class="fab fa-twitter"></i></a>
+                                <a href="#"><i class="fab fa-pinterest"></i></a>
+                                <a href="#"><i class="fas fa-envelope"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Product Tabs Section -->
+            <section class="product-tabs-section">
+                <ul class="product-tabs-nav">
+                    <li class="active"><a href="#description-tab">Description</a></li>
+                    <li><a href="#additional-info-tab">Additional Info</a></li>
+                    <li><a href="#reviews-tab">Reviews (42)</a></li>
+                    <li><a href="#shipping-tab">Shipping Policy</a></li>
+                </ul>
+                
+                <div class="product-tabs-content">
+                    <!-- Description Tab -->
+                    <div id="description-tab" class="tab-pane active">
+                        <div class="description-content">
+                            <div class="text-content">
+                                <h3>About This Product</h3>
+                                <p>Our organic Chinese cabbage is carefully cultivated using sustainable farming practices that prioritize soil health and biodiversity. Each head is harvested at peak freshness to ensure optimal flavor and nutritional value.</p>
+                                
+                                <h4>Key Features:</h4>
+                                <ul>
+                                    <li>Rich in vitamins K, C, and folate</li>
+                                    <li>Excellent source of dietary fiber</li>
+                                    <li>Low in calories, high in nutrients</li>
+                                    <li>Versatile for various culinary uses</li>
+                                </ul>
+                                
+                                <h4>Storage Instructions:</h4>
+                                <p>Store unwashed in the vegetable crisper drawer of your refrigerator. For best quality, use within 5-7 days of purchase. Can be blanched and frozen for longer storage.</p>
+                            </div>
+                            
+                            <div class="video-content">
+                                <div class="video-wrapper">
+                                    <iframe src="https://www.youtube.com/embed/organic-farming" allowfullscreen></iframe>
+                                </div>
+                                <div class="video-features">
+                                    <div class="feature-box">
+                                        <div class="feature-icon">
+                                            <i class="fas fa-leaf"></i>
+                                        </div>
+                                        <div class="feature-text">
+                                            <h5>100% Organic</h5>
+                                            <p>Certified by USDA Organic Standards</p>
+                                        </div>
+                                    </div>
+                                    <div class="feature-box">
+                                        <div class="feature-icon">
+                                            <i class="fas fa-truck"></i>
+                                        </div>
+                                        <div class="feature-text">
+                                            <h5>Fast Delivery</h5>
+                                            <p>Next-day delivery available</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Additional Info Tab -->
+                    <div id="additional-info-tab" class="tab-pane">
+                        <div class="additional-info-content">
+                            <div class="specs-table">
+                                <table>
+                                    <tr>
+                                        <th>Weight</th>
+                                        <td>Approx. 1.2 kg per head</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Color</th>
+                                        <td>Light green with white base</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Dimensions</th>
+                                        <td>20-25 cm length, 15-18 cm diameter</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Origin</th>
+                                        <td>Local organic farm, Illinois</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Shelf Life</th>
+                                        <td>5-7 days refrigerated</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Certifications</th>
+                                        <td>USDA Organic, Non-GMO Project Verified</td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Reviews Tab -->
+                    <div id="reviews-tab" class="tab-pane">
+                        <div class="reviews-content">
+                            <div class="reviews-summary">
+                                <div class="average-rating">
+                                    <div class="rating-value">4.6</div>
+                                    <div class="rating-stars">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star-half-alt"></i>
+                                    </div>
+                                    <div class="rating-count">42 reviews</div>
+                                </div>
+                                
+                                <div class="rating-bars">
+                                    <div class="rating-bar">
+                                        <span class="stars">5 <i class="fas fa-star"></i></span>
+                                        <div class="bar-container">
+                                            <div class="bar" style="width: 75%;"></div>
+                                        </div>
+                                        <span class="percentage">75%</span>
+                                    </div>
+                                    <div class="rating-bar">
+                                        <span class="stars">4 <i class="fas fa-star"></i></span>
+                                        <div class="bar-container">
+                                            <div class="bar" style="width: 15%;"></div>
+                                        </div>
+                                        <span class="percentage">15%</span>
+                                    </div>
+                                    <div class="rating-bar">
+                                        <span class="stars">3 <i class="fas fa-star"></i></span>
+                                        <div class="bar-container">
+                                            <div class="bar" style="width: 5%;"></div>
+                                        </div>
+                                        <span class="percentage">5%</span>
+                                    </div>
+                                    <div class="rating-bar">
+                                        <span class="stars">2 <i class="fas fa-star"></i></span>
+                                        <div class="bar-container">
+                                            <div class="bar" style="width: 3%;"></div>
+                                        </div>
+                                        <span class="percentage">3%</span>
+                                    </div>
+                                    <div class="rating-bar">
+                                        <span class="stars">1 <i class="fas fa-star"></i></span>
+                                        <div class="bar-container">
+                                            <div class="bar" style="width: 2%;"></div>
+                                        </div>
+                                        <span class="percentage">2%</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="reviews-list">
+                                <div class="review">
+                                    <div class="review-header">
+                                        <div class="reviewer-info">
+                                            <div class="reviewer-name">Sarah Johnson</div>
+                                            <div class="review-date">May 15, 2023</div>
+                                        </div>
+                                        <div class="review-rating">
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                        </div>
+                                    </div>
+                                    <div class="review-content">
+                                        <h5>Fresh and Crisp!</h5>
+                                        <p>The Chinese cabbage arrived fresh and perfectly packed. I used it to make kimchi and it turned out amazing. Will definitely order again!</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="review">
+                                    <div class="review-header">
+                                        <div class="reviewer-info">
+                                            <div class="reviewer-name">Michael Chen</div>
+                                            <div class="review-date">April 28, 2023</div>
+                                        </div>
+                                        <div class="review-rating">
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="far fa-star"></i>
+                                        </div>
+                                    </div>
+                                    <div class="review-content">
+                                        <h5>Great Quality</h5>
+                                        <p>Very fresh and organic as advertised. The only reason I'm giving 4 stars is because one outer leaf was slightly damaged during shipping.</p>
+                                    </div>
+                                </div>
+                                
+                                <button class="load-more-reviews">Load More Reviews</button>
+                            </div>
+                            
+                            <div class="add-review">
+                                <h4>Add Your Review</h4>
+                                <form class="review-form">
+                                    <div class="form-group">
+                                        <label for="review-rating">Your Rating</label>
+                                        <div class="rating-input">
+                                            <input type="radio" id="star5" name="rating" value="5">
+                                            <label for="star5"><i class="fas fa-star"></i></label>
+                                            <input type="radio" id="star4" name="rating" value="4">
+                                            <label for="star4"><i class="fas fa-star"></i></label>
+                                            <input type="radio" id="star3" name="rating" value="3">
+                                            <label for="star3"><i class="fas fa-star"></i></label>
+                                            <input type="radio" id="star2" name="rating" value="2">
+                                            <label for="star2"><i class="fas fa-star"></i></label>
+                                            <input type="radio" id="star1" name="rating" value="1">
+                                            <label for="star1"><i class="fas fa-star"></i></label>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label for="review-title">Review Title</label>
+                                        <input type="text" id="review-title" placeholder="Summarize your experience">
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label for="review-text">Your Review</label>
+                                        <textarea id="review-text" rows="5" placeholder="Share details about your experience with this product"></textarea>
+                                    </div>
+                                    
+                                    <button type="submit" class="submit-review-btn">Submit Review</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Shipping Tab -->
+                    <div id="shipping-tab" class="tab-pane">
+                        <div class="shipping-content">
+                            <h3>Delivery Information</h3>
+                            <p>We offer fast and reliable shipping options to get your organic products to you as quickly and fresh as possible.</p>
+                            
+                            <div class="shipping-options">
+                                <div class="shipping-option">
+                                    <div class="option-icon">
+                                        <i class="fas fa-shipping-fast"></i>
+                                    </div>
+                                    <div class="option-details">
+                                        <h5>Standard Shipping</h5>
+                                        <p>3-5 business days - $5.99 (Free on orders over $50)</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="shipping-option">
+                                    <div class="option-icon">
+                                        <i class="fas fa-rocket"></i>
+                                    </div>
+                                    <div class="option-details">
+                                        <h5>Express Shipping</h5>
+                                        <p>1-2 business days - $12.99</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="shipping-option">
+                                    <div class="option-icon">
+                                        <i class="fas fa-store"></i>
+                                    </div>
+                                    <div class="option-details">
+                                        <h5>Local Pickup</h5>
+                                        <p>Available at our Chicago location - Free</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="shipping-notice">
+                                <h4>Important Notes:</h4>
+                                <ul>
+                                    <li>We ship Monday-Thursday to ensure freshness</li>
+                                    <li>All perishable items are packed with insulated liners and ice packs</li>
+                                    <li>Delivery dates may vary during holidays</li>
+                                    <li>Signature may be required for delivery</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Related Products Section -->
+            <section class="related-products">
+                <h2 class="section-title">You May Also Like</h2>
+                <div class="products-grid">
+                    <!-- Product 1 -->
+                    <div class="product-card">
+                        <div class="product-badge">Sale</div>
+                        <div class="product-image">
+                            <img src="Assets/apple.png" alt="Organic Green Apples">
+                            <div class="product-actions">
+                                <button class="quick-view"><i class="fas fa-eye"></i></button>
+                                <button class="add-to-wishlist"><i class="far fa-heart"></i></button>
+                            </div>
+                        </div>
+                        <div class="product-info">
+                            <h3 class="product-title">Organic Green Apples</h3>
+                            <div class="product-price">
+                                <span class="current-price">$10.99</span>
+                                <span class="original-price">$21.99</span>
+                            </div>
+                            <div class="product-rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                                <span class="rating-count">(128)</span>
+                            </div>
+                            <button class="add-to-cart">Add to Cart</button>
+                        </div>
+                    </div>
+                    
+                    <!-- Product 2 -->
+                    <div class="product-card">
+                        <div class="product-badge new">New</div>
+                        <div class="product-image">
+                            <img src="Assets/Product Image2.png" alt="Fresh Bok Choy">
+                            <div class="product-actions">
+                                <button class="quick-view"><i class="fas fa-eye"></i></button>
+                                <button class="add-to-wishlist"><i class="far fa-heart"></i></button>
+                            </div>
+                        </div>
+                        <div class="product-info">
+                            <h3 class="product-title">Fresh Bok Choy</h3>
+                            <div class="product-price">
+                                <span class="current-price">$15.99</span>
+                            </div>
+                            <div class="product-rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="far fa-star"></i>
+                                <span class="rating-count">(42)</span>
+                            </div>
+                            <button class="add-to-cart">Add to Cart</button>
+                        </div>
+                    </div>
+                    
+                    <!-- Product 3 -->
+                    <div class="product-card">
+                        <div class="product-image">
+                            <img src="Assets/Product Image3.png" alt="Organic Green Capsicum">
+                            <div class="product-actions">
+                                <button class="quick-view"><i class="fas fa-eye"></i></button>
+                                <button class="add-to-wishlist"><i class="far fa-heart"></i></button>
+                            </div>
+                        </div>
+                        <div class="product-info">
+                            <h3 class="product-title">Organic Green Capsicum</h3>
+                            <div class="product-price">
+                                <span class="current-price">$22.99</span>
+                            </div>
+                            <div class="product-rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <span class="rating-count">(86)</span>
+                            </div>
+                            <button class="add-to-cart">Add to Cart</button>
+                        </div>
+                    </div>
+                    
+                    <!-- Product 4 -->
+                    <div class="product-card">
+                        <div class="product-badge">-20%</div>
+                        <div class="product-image">
+                            <img src="Assets/Product Image 4.png" alt="Fresh Organic Mango">
+                            <div class="product-actions">
+                                <button class="quick-view"><i class="fas fa-eye"></i></button>
+                                <button class="add-to-wishlist"><i class="far fa-heart"></i></button>
+                            </div>
+                        </div>
+                        <div class="product-info">
+                            <h3 class="product-title">Fresh Organic Mango</h3>
+                            <div class="product-price">
+                                <span class="current-price">$28.99</span>
+                                <span class="original-price">$36.99</span>
+                            </div>
+                            <div class="product-rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                                <span class="rating-count">(214)</span>
+                            </div>
+                            <button class="add-to-cart">Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Newsletter Section -->
+    <section class="newsletter-section">
+        <div class="container">
+            <div class="newsletter-content">
+                <div class="newsletter-info">
+                    <h3>Join Our Organic Community</h3>
+                    <p>Subscribe to our newsletter for exclusive offers, recipes, and health tips.</p>
+                </div>
+                <form class="newsletter-form">
+                    <div class="input-group">
+                        <input type="email" placeholder="Your email address" required>
+                        <button type="submit" class="subscribe-btn">Subscribe</button>
+                    </div>
+                    <div class="form-check">
+                        <input type="checkbox" id="newsletter-consent" checked>
+                        <label for="newsletter-consent">I agree to receive marketing emails</label>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer Section -->
+    <footer class="main-footer">
+        <div class="container">
+            <div class="footer-grid">
+                <!-- Footer Column 1 -->
+                <div class="footer-column about-column">
+                    <div class="footer-logo">
+                        <img src="Assets/plant 1.png" alt="Ecobazar" width="40">
+                        <span>Ecobazar</span>
+                    </div>
+                    <p class="footer-about">We're committed to providing the freshest organic produce while supporting sustainable farming practices and local communities.</p>
+                    
+                    <div class="contact-info">
+                        <div class="contact-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>344 Lincoln Ave, Chicago, IL 60601</span>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fas fa-phone-alt"></i>
+                            <span>(219) 555-0114</span>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fas fa-envelope"></i>
+                            <span>info@ecobazar.com</span>
+                        </div>
+                    </div>
+                    
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-pinterest-p"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                
+                <!-- Footer Column 2 -->
+                <div class="footer-column">
+                    <h4 class="footer-title">My Account</h4>
+                    <ul class="footer-links">
+                        <li><a href="account.html">My Account</a></li>
+                        <li><a href="order-history.html">Order History</a></li>
+                        <li><a href="wishlist.html">Wishlist</a></li>
+                        <li><a href="newsletter.html">Newsletter</a></li>
+                        <li><a href="gift-cards.html">Gift Cards</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Footer Column 3 -->
+                <div class="footer-column">
+                    <h4 class="footer-title">Information</h4>
+                    <ul class="footer-links">
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="privacy-policy.html">Privacy Policy</a></li>
+                        <li><a href="terms.html">Terms & Conditions</a></li>
+                        <li><a href="return-policy.html">Return Policy</a></li>
+                        <li><a href="faq.html">FAQs</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Footer Column 4 -->
+                <div class="footer-column">
+                    <h4 class="footer-title">Quick Links</h4>
+                    <ul class="footer-links">
+                        <li><a href="contact.html">Contact Us</a></li>
+                        <li><a href="store-locator.html">Store Locator</a></li>
+                        <li><a href="blog.html">Our Blog</a></li>
+                        <li><a href="careers.html">Careers</a></li>
+                        <li><a href="affiliate.html">Affiliate Program</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Footer Column 5 -->
+                <div class="footer-column">
+                    <h4 class="footer-title">Categories</h4>
+                    <ul class="footer-links">
+                        <li><a href="fruits.html">Fresh Fruits</a></li>
+                        <li><a href="vegetables.html">Vegetables</a></li>
+                        <li><a href="dairy.html">Dairy & Eggs</a></li>
+                        <li><a href="meat.html">Meat & Fish</a></li>
+                        <li><a href="bakery.html">Bakery</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <div class="payment-methods">
+                    <img src="Assets/Cart.png" alt="Visa">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/b/b7/MasterCard_Logo.svg" alt="Mastercard">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/0/04/Visa.svg" alt="American Express">
+                    <img src="Assets/ApplePay.png" alt="PayPal">
+                    <img src="Assets/Method=Discover.png" alt="Apple Pay">
+                </div>
+                
+                <div class="copyright">
+                    <p>&copy; 2025 Ecobazar Organic Store. All Rights Reserved.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Mobile Bottom Navigation -->
+    <div class="mobile-bottom-nav">
+        <a href="index.html" class="mobile-nav-item">
+            <i class="fas fa-home"></i>
+            <span>Home</span>
+        </a>
+        <a href="shop.html" class="mobile-nav-item">
+            <i class="fas fa-store"></i>
+            <span>Shop</span>
+        </a>
+        <a href="search.html" class="mobile-nav-item">
+            <i class="fas fa-search"></i>
+            <span>Search</span>
+        </a>
+        <a href="cart.html" class="mobile-nav-item">
+            <i class="fas fa-shopping-cart"></i>
+            <span>Cart</span>
+            <span class="cart-count">3</span>
+        </a>
+        <a href="account.html" class="mobile-nav-item">
+            <i class="fas fa-user"></i>
+            <span>Account</span>
+        </a>
+    </div>
+
+    <!-- JavaScript Files -->
+    <script src="js/main.js"></script>
+    <script src="js/product.js"></script>
+</body>
+</html>
