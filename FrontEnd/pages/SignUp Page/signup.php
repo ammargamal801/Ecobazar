@@ -1,3 +1,6 @@
+<?php
+session_start();
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -22,44 +25,49 @@
         <div class="form-container mx-auto">
           <h1 class="text-success fw-bold">Ecobazar</h1>
           <h2 class="mt-4">Sign up</h2>
-          <p>Let’s get you all set up so you can access your personal account.</p>
-
-          <form>
+          <p>Let's get you all set up so you can access your personal account.</p>
+          <form action="../../../Backend/Authentication/signup_handle.php" method="POST">
             <div class="row">
               <div class="col-md-6 mb-3">
-                <input type="text" class="form-control" placeholder="First Name" required>
+                <input type="text" name="f_name" class="form-control" placeholder="First Name">
+                <small class="text-danger"><?php echo $_SESSION['errors']['f_name'] ?? ''; ?></small>
               </div>
               <div class="col-md-6 mb-3">
-                <input type="text" class="form-control" placeholder="Last Name" required>
+                <input type="text" name="l_name" class="form-control" placeholder="Last Name">
+                <small class="text-danger"><?php echo $_SESSION['errors']['l_name'] ?? ''; ?></small>
               </div>
             </div>
             <div class="row">
               <div class="col-md-6 mb-3">
-                <input type="email" class="form-control" placeholder="Email" required>
+                <input type="text" name="email" class="form-control" placeholder="Email">
+                <small class="text-danger"><?php echo $_SESSION['errors']['email'] ?? ''; ?></small>
               </div>
               <div class="col-md-6 mb-3">
-                <input type="text" class="form-control" placeholder="Phone Number" required>
+                <input type="text" name="phone" class="form-control" placeholder="Phone Number">
+                <small class="text-danger"><?php echo $_SESSION['errors']['phone'] ?? ''; ?></small>
               </div>
             </div>
             <div class="row">
               <div class="col-md-6 mb-3 position-relative">
-                <input type="password" class="form-control" placeholder="Password" id="password" required>
+                <input type="password" name="password" class="form-control" placeholder="Password" id="password">
                 <span class="toggle-password" onclick="togglePassword('password')">👁️</span>
+                <small class="text-danger"><?php echo $_SESSION['errors']['password'] ?? ''; ?></small>
               </div>
               <div class="col-md-6 mb-3 position-relative">
-                <input type="password" class="form-control" placeholder="Confirm Password" id="confirmPassword" required>
+                <input type="password" name="confirmPassword" class="form-control" placeholder="Confirm Password" id="confirmPassword">
                 <span class="toggle-password" onclick="togglePassword('confirmPassword')">👁️</span>
+                <small class="text-danger"><?php echo $_SESSION['errors']['confirmPassword'] ?? ''; ?></small>
               </div>
             </div>
             <div class="mb-3 form-check">
-              <input type="checkbox" class="form-check-input" id="terms" required>
+              <input type="checkbox" class="form-check-input" id="terms"  >
               <label for="terms" class="form-check-label">I agree to all the <a href="#" class="text-success">Terms and Privacy Policies</a></label>
             </div>
             <button type="submit" class="btn btn-success w-100">Create account</button>
           </form>
 
           <div class="text-center mt-3">
-            <p>Already have an account? <a href="../Login Page/login.html" class="text-success">Login</a></p>
+            <p>Already have an account? <a href="../Login Page/login.php" class="text-success">Login</a></p>
           </div>
         </div>
       </div>
@@ -71,3 +79,7 @@
 </body>
 
 </html>
+
+<?php
+$_SESSION['errors'] = null;
+?>

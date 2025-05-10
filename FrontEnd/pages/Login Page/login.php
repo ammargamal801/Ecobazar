@@ -1,3 +1,6 @@
+<?php
+session_start();
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -23,13 +26,15 @@
           <h1 class="text-success fw-bold">Login</h1>
           <p class="text-success">Login to access your travelwise account</p>
 
-          <form>
+          <form action="../../../Backend/Authentication/login_handle.php" method="POST">
             <div class="mb-3">
-              <input type="email" class="form-control" placeholder="Email" required>
+              <input type="text" name="email" class="form-control" placeholder="Email">
+              <small class="text-danger"><?php echo $_SESSION['errors']['email'] ?? ''; ?></small>
             </div>
             <div class="mb-3 position-relative">
-              <input type="password" class="form-control" placeholder="Password" id="password" required>
+              <input type="password" name="password" class="form-control" placeholder="Password" id="password">
               <span class="toggle-password" onclick="togglePassword('password')">👁️</span>
+              <small class="text-danger"><?php echo $_SESSION['errors']['password'] ?? ''; ?></small>
             </div>
             <div class="d-flex justify-content-between">
               <div class="form-check">
@@ -42,7 +47,7 @@
           </form>
 
           <div class="text-center mt-3">
-            <p>Don't have an account? <a href="../SignUp Page/signup.html" class="text-danger">Sign up</a></p>
+            <p>Don't have an account? <a href="../SignUp Page/signup.php" class="text-danger">Sign up</a></p>
           </div>
         </div>
       </div>
@@ -54,3 +59,6 @@
 </body>
 
 </html>
+<?php
+$_SESSION['errors'] = null;
+?>
