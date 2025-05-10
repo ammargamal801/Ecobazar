@@ -1,0 +1,175 @@
+/* Base Styles */
+.btn1 {
+    width: 131px;
+    height: 45px;
+    background-color: #00B207 !important;
+    color: white !important;
+    border-radius: 43px !important;
+    border: none;
+}
+
+/* Category Styles */
+.category h4 {
+    margin-top: 9px;
+}
+
+.brdr {
+    margin-top: 5px;
+    color: rgb(188, 182, 182);
+}
+
+/* Button Styles */
+.btn-fat {
+    background-color: #00B207 !important;
+    color: white;
+    border-radius: 30px !important;
+    padding: 10px 20px !important;
+    text-align: center;
+    border: none;
+}
+
+.btn {
+    background-color: #F2F2F2 !important;
+    border-radius: 30px !important;
+    padding: 10px 20px !important;
+    text-align: center;
+}
+
+/* Gallery Styles */
+.gallery-item {
+    overflow: hidden;
+    border-radius: 10px;
+    border: none;
+}
+
+.gallery-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+/* Recently Added Styles */
+.recently-card {
+    display: flex;
+    align-items: center;
+}
+
+.recently-card img {
+    width: 100px;
+    height: 77px;
+}
+
+.recently-card p {
+    color: #666666;
+}
+
+.recently-card i {
+    color: #00B207;
+}
+
+/* Dropdown Styles */
+select {
+    padding: 5px;
+    border-radius: 6px;
+    font-size: 16px;
+    width: 200px;
+    border: solid #E6E6E6 1px;
+}
+
+/* Titles Styles */
+.titles span {
+    font-weight: bolder;
+    margin-right: 4px;
+}
+
+.titles label {
+    color: #4D4D4D;
+}
+
+/* Card Number Styles */
+.num {
+    width: 50px;
+    height: 50px;
+    background-color: #E6E6E6;
+    line-height: 0.1;
+    position: absolute;
+    left: 20px;
+    top: 20px;
+    text-align: center;
+    padding: 10px 0;
+    font-weight: bold;
+    border-radius: 5px;
+}
+
+/* Card Styles */
+.card {
+    position: relative;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}
+
+/* Responsive Adjustments */
+@media (max-width: 992px) {
+    .num {
+        top: 15px;
+        width: 40px;
+        height: 40px;
+        padding: 8px 0;
+        font-size: 14px;
+    }
+    
+    .recently-card {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .recently-card img {
+        margin-bottom: 10px;
+    }
+}
+
+@media (max-width: 768px) {
+    .titles {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+    
+    select {
+        width: 100%;
+    }
+    
+    .card-body .d-flex {
+        gap: 10px !important;
+    }
+}
+
+@media (max-width: 576px) {
+    .num {
+        top: 10px;
+        left: 10px;
+        width: 35px;
+        height: 35px;
+        padding: 5px 0;
+        font-size: 12px;
+    }
+    
+    .card-text {
+        font-size: 14px;
+    }
+    
+    .pagination .page-item {
+        display: none;
+    }
+    
+    .pagination .page-item:first-child,
+    .pagination .page-item:last-child,
+    .pagination .page-item.active {
+        display: block;
+    }
+}
