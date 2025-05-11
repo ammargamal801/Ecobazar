@@ -1,14 +1,26 @@
+<?php
+session_start();
+require_once '../../../Backend/Authentication/users.php';
+// Check if user is logged in
+$is_logged_in = isset($_SESSION['user']);
+$wishlist_items = [];
+
+if ($is_logged_in) {
+    $user = unserialize($_SESSION['user']);
+    $user_id = $user->getId();
+    $wishlist_items = Customer::getWishlist($user_id);
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
     <head>
         <meta charset="UFT-8" />
-        <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0"> -->
         <link rel="icon" href="dashbroad-image/header-logo.svg" />
-        <link rel="stylesheet" href="settings.css" />
+        <link rel="stylesheet" href="order-detail.css" />
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
-        <title>Settings</title>
+        <title>Order Details</title>
 <!-- Bootstrap CSS for styling components -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
@@ -17,6 +29,15 @@
     <!-- Font Awesome for additional icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <!-- Custom stylesheet -->
+    <link rel="stylesheet" href="../Style/main.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="../../Style/main.css">
 </head>
 
@@ -27,34 +48,23 @@
             <div class="container d-flex align-items-center position-relative">
                 <!-- Mobile menu toggle button (hidden on larger screens) -->
                 <div class="col-1 me-3 mt-1 d-flex">
-                    <button class="navbar-toggler border-0" type="button" data-bs-toggle="offcanvas"
-                        data-bs-target="#offcanvasNavbar2" aria-controls="offcanvasNavbar2"
-                        aria-label="Toggle navigation2">
+                    <button class="navbar-toggler border-0" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar2"
+                        aria-controls="offcanvasNavbar2" aria-label="Toggle navigation2">
                         <span class="navbar-toggler-icon d-block d-xxl-none"></span>
                     </button>
                 </div>
 
                 <!-- Primary navigation links (hidden on mobile) -->
                 <div class="col-3 d-flex d-xxl-flex d-none align-items-center ms-n6" style="margin-left: -100px;">
-                    <a class="text-decoration-none me-3 d-flex align-items-center"
-                        style="font-size: 13px;font-weight:550;color:var(--black-text-color);" href="">Home <i
-                            class="bi bi-chevron-down ms-1 mt-1"></i></a>
-                    <a class="text-decoration-none me-3 d-flex align-items-center"
-                        style="font-size: 13px;font-weight:550;color:var(--black-text-color);" href="">Shop<i
-                            class="bi bi-chevron-down ms-1 mt-1"></i></a>
-                    <a class="text-decoration-none me-3 d-flex align-items-center"
-                        style="font-size: 13px;font-weight:550;color:var(--black-text-color);" href="">Contact<i
-                            class="bi bi-chevron-down ms-1 mt-1"></i></a>
-                    <a class="text-decoration-none me-3 d-flex align-items-center"
-                        style="font-size: 13px;font-weight:550;color:var(--black-text-color);" href="">Blog <i
-                            class="bi bi-chevron-down ms-1 mt-1"></i></a>
-                    <a class="text-decoration-none d-flex align-items-center text-nowrap"
-                        style="font-size: 13px;font-weight:550;color:var(--black-text-color);" href="">About Us</a>
+                    <a class="text-decoration-none me-3 d-flex align-items-center" style="font-size: 13px;font-weight:550;color:var(--black-text-color);" href="">Home <i class="bi bi-chevron-down ms-1 mt-1"></i></a>
+                    <a class="text-decoration-none me-3 d-flex align-items-center" style="font-size: 13px;font-weight:550;color:var(--black-text-color);" href="">Shop<i class="bi bi-chevron-down ms-1 mt-1"></i></a>
+                    <a class="text-decoration-none me-3 d-flex align-items-center" style="font-size: 13px;font-weight:550;color:var(--black-text-color);" href="">Pages<i class="bi bi-chevron-down ms-1 mt-1"></i></a>
+                    <a class="text-decoration-none me-3 d-flex align-items-center" style="font-size: 13px;font-weight:550;color:var(--black-text-color);" href="">Blog <i class="bi bi-chevron-down ms-1 mt-1"></i></a>
+                    <a class="text-decoration-none d-flex align-items-center text-nowrap" style="font-size: 13px;font-weight:550;color:var(--black-text-color);" href="">About Us</a>
                 </div>
 
                 <!-- Brand logo centered in the navigation -->
-                <div class="col-3 d-flex justify-content-center fs-2"
-                    style="font-family: Poppins, sans-serif; font-weight: 400; color: var(--black-text-color); position: absolute; left: 50%; transform: translateX(-50%);">
+                <div class="col-3 d-flex justify-content-center fs-2" style="font-family: Poppins, sans-serif; font-weight: 400; color: var(--black-text-color); position: absolute; left: 50%; transform: translateX(-50%);">
                     <a href="" class="text-decoration-none d-flex" style="color: var(--black-text-color);">
                         <i class="fas fa-leaf me-1 mt-2" style="color: var(--green-text);"></i>
                         Ecobazar
@@ -88,8 +98,7 @@
                     </div>
                     <!-- Login button (hidden on mobile) -->
                     <div class="me-3 d-lg-flex d-none">
-                        <a href="#" class="btn btn-sm"
-                            style="background-color: var(--green-text); color: white; padding: 0.25rem 0.75rem;">
+                        <a href="#" class="btn btn-sm" style="background-color: var(--green-text); color: white; padding: 0.25rem 0.75rem;">
                             Login
                         </a>
                     </div>
@@ -102,8 +111,7 @@
                     <!-- Search input field (initially hidden) -->
                     <div>
                         <form class="d-flex" role="search">
-                            <input class="form-control" type="search" placeholder="Search" aria-label="Search"
-                                id="searchBox">
+                            <input class="form-control" type="search" placeholder="Search" aria-label="Search" id="searchBox">
                         </form>
                     </div>
                 </div>
@@ -116,12 +124,10 @@
             </button>
 
             <!-- Mobile offcanvas menu -->
-            <div class="offcanvas offcanvas-start border-0" tabindex="-1" id="offcanvasNavbar2"
-                aria-labelledby="offcanvasNavbar2Label">
+            <div class="offcanvas offcanvas-start border-0" tabindex="-1" id="offcanvasNavbar2" aria-labelledby="offcanvasNavbar2Label">
                 <div class="offcanvas-header mt-4">
                     <h5 class="offcanvas-title" id="offcanvasNavbar2Label">
-                        <a href="" class="ms-1 border border-black rounded-5 p-3"
-                            style="color:var(--black-text-color);">
+                        <a href="" class="ms-1 border border-black rounded-5 p-3" style="color:var(--black-text-color);">
                             <i class="bi bi-person fa-lg fa-5x"></i>
                         </a>
                     </h5>
@@ -130,32 +136,22 @@
                 <div class="offcanvas-body">
                     <ul class="navbar-nav">
                         <li class="nav-item">
-                            <a class="text-decoration-none d-flex align-items-center"
-                                style="color:var(--black-text-color);" href="">Home <i
-                                    class="bi bi-chevron-down ms-1 mt-1"></i></a>
+                            <a class="text-decoration-none d-flex align-items-center" style="color:var(--black-text-color);" href="">Home <i class="bi bi-chevron-down ms-1 mt-1"></i></a>
                         </li>
                         <li class="nav-item">
-                            <a class="text-decoration-none mt-3 d-flex align-items-center border-top p-1"
-                                style="color:var(--black-text-color);" href="">Shop<i
-                                    class="bi bi-chevron-down ms-1 mt-1"></i></a>
+                            <a class="text-decoration-none mt-3 d-flex align-items-center border-top p-1" style="color:var(--black-text-color);" href="">Shop<i class="bi bi-chevron-down ms-1 mt-1"></i></a>
                         </li>
                         <li class="nav-item">
-                            <a class="text-decoration-none mt-3 d-flex align-items-center border-top p-1"
-                                style="color:var(--black-text-color);" href="">Pages<i
-                                    class="bi bi-chevron-down ms-1 mt-1"></i></a>
+                            <a class="text-decoration-none mt-3 d-flex align-items-center border-top p-1" style="color:var(--black-text-color);" href="">Pages<i class="bi bi-chevron-down ms-1 mt-1"></i></a>
                         </li>
                         <li class="nav-item">
-                            <a class="text-decoration-none mt-3 d-flex align-items-center border-top p-1"
-                                style="color:var(--black-text-color);" href="">Blog <i
-                                    class="bi bi-chevron-down ms-1 mt-1"></i></a>
+                            <a class="text-decoration-none mt-3 d-flex align-items-center border-top p-1" style="color:var(--black-text-color);" href="">Blog <i class="bi bi-chevron-down ms-1 mt-1"></i></a>
                         </li>
                         <li class="nav-item">
-                            <a class="text-decoration-none mt-3 d-flex align-items-center border-top p-1"
-                                style="color:var(--black-text-color);" href="">About Us</a>
+                            <a class="text-decoration-none mt-3 d-flex align-items-center border-top p-1" style="color:var(--black-text-color);" href="">About Us</a>
                         </li>
                         <li class="nav-item">
-                            <a class="text-decoration-none mt-3 d-flex align-items-center border-top p-1"
-                                style="color:var(--black-text-color);" href="">Wish list</a>
+                            <a class="text-decoration-none mt-3 d-flex align-items-center border-top p-1" style="color:var(--black-text-color);" href="">Wish list</a>
                         </li>
                     </ul>
                     <!-- Brand logo at bottom of mobile menu -->
@@ -166,8 +162,7 @@
             </div>
 
             <!-- Shopping cart offcanvas panel -->
-            <div class="offcanvas offcanvas-end border-0" tabindex="-1" id="offcanvasCart"
-                aria-labelledby="offcanvasCartLabel">
+            <div class="offcanvas offcanvas-end border-0" tabindex="-1" id="offcanvasCart" aria-labelledby="offcanvasCartLabel">
                 <div class="offcanvas-header">
                     <h5 class="offcanvas-title" id="offcanvasCartLabel">Shopping Cart (2)</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
@@ -182,18 +177,15 @@
                                 </div>
                                 <div class="col-auto">
                                     <div class="row" style="margin-left: -240px;margin-top:20px;">
-                                        <p style="font-weight:400;font-family: poppins;color:var(--black-text-color);">
-                                            Fresh Indian Orange</p>
+                                        <p style="font-weight:400;font-family: poppins;color:var(--black-text-color);"> Fresh Indian Orange</p>
                                     </div>
                                     <div class="row" style="margin-top:-18px;margin-left: -240px;">
-                                        <p style="color:var(--black-text-color);">1 kg x <span
-                                                class="fw-bold">12.00</span></p>
+                                        <p style="color:var(--black-text-color);">1 kg x <span class="fw-bold">12.00</span></p>
                                     </div>
                                 </div>
                                 <div class="col position-absolute" style="margin-left: 320px; margin-top:20px;">
                                     <div class="btn-group" role="group" aria-label="Third group">
-                                        <button type="button" class="x-button border-0"
-                                            style="background-color:var(--white);color:var(--black-text-color);">x</button>
+                                        <button type="button" class="x-button border-0" style="background-color:var(--white);color:var(--black-text-color);">x</button>
                                     </div>
                                 </div>
                             </div>
@@ -206,19 +198,15 @@
                                     </div>
                                     <div class="col-auto">
                                         <div class="row" style="margin-left: -185px;margin-top:40px;">
-                                            <p
-                                                style="font-weight:400;font-family: poppins;color:var(--black-text-color);">
-                                                Green Apple</p>
+                                            <p style="font-weight:400;font-family: poppins;color:var(--black-text-color);"> Green Apple</p>
                                         </div>
                                         <div class="row" style="margin-top:-18px;margin-left: -185px;">
-                                            <p style="color:var(--black-text-color);">1 kg x <span
-                                                    class="fw-bold">14.00</span></p>
+                                            <p style="color:var(--black-text-color);">1 kg x <span class="fw-bold">14.00</span></p>
                                         </div>
                                     </div>
                                     <div class="col position-absolute" style="margin-left: 320px; margin-top:40px;">
                                         <div class="btn-group" role="group" aria-label="Third group">
-                                            <button type="button" class="x-button border-0"
-                                                style="background-color:var(--white);color:var(--black-text-color);">x</button>
+                                            <button type="button" class="x-button border-0" style="background-color:var(--white);color:var(--black-text-color);">x</button>
                                         </div>
                                     </div>
                                 </div>
@@ -241,9 +229,7 @@
                                         style="color: var(--background-page); background-color: var(--green-text); margin-bottom: 10px;">Checkout</button>
                                 </div>
                                 <div class="row d-block">
-                                    <button type="button" class="btn border rounded-5"
-                                        style="color: var(--black-text-color); background-color: var(--card-border-color);">Go
-                                        To Cart</button>
+                                    <button type="button" class="btn border rounded-5" style="color: var(--black-text-color); background-color: var(--card-border-color);">Go To Cart</button>
                                 </div>
                             </div>
                         </div>
@@ -261,7 +247,9 @@
                         <img src="dashbroad-image/right-arrow.svg" alt="right arrow" />
                         <h6><a href="#">Account</a></h6>
                         <img src="dashbroad-image/right-arrow.svg" alt="right arrow" />
-                        <h6><a href="#" class="baner__a">Settings</a></h6>
+                        <h6><a href="#">Order  History</a></h6>
+                        <img src="dashbroad-image/right-arrow.svg" alt="right arrow" />
+                        <h6><a href="#" class="baner__a">Order Detail</a></h6>
                     </div>
                 </div>
             </section>
@@ -279,7 +267,7 @@
                                     </a>
                                 </button>
                                 <button class="flex__row">
-                                    <a href="order-history.html" class="acount-info__aside--button flex__row">
+                                    <a href="order-history.html" class="acount-info__aside--button flex__row acount-info__aside--order-button">
                                         <img src="dashbroad-image/refresh-icon.svg" alt="refresh-icon" />
                                         <p>Order History</p>
                                     </a>
@@ -297,7 +285,7 @@
                                     </a>
                                 </button>
                                 <button class="flex__row">
-                                    <a href="settings.html" class="flex__row acount-info__aside--button acount-info__aside--setting-button">
+                                    <a href="settings.html" class="flex__row acount-info__aside--button">
                                         <img src="dashbroad-image/setting-icon.svg" alt="Settings icon" />
                                         <p>Settings</p>
                                     </a>
@@ -310,128 +298,147 @@
                                 </button>
                             </div>
                         </aside>
-
-                        <div class="flex__colamn acount-info__setting-container">
-                            <div class="box-border flex__colamn acount-info__setting-box">
-                                <h5>Account Settings</h5>
-                                <div class="flex__row acount-info__change-acount-info">
-                                    <div class="flex__colamn acount-info__change-text">
-                                        <form class="flex__colamn acount-info__change-form acount-info__change-acount-info-form">
-                                            <div class="flex__colamn">
-                                                <label for="first-name">First name</label>
-                                                <input type="text" id="first-name" class="box-border" value="Dianne" />
-                                            </div>
-                                            <div class="flex__colamn">
-                                                <label for="last-name">Last Name</label>
-                                                <input type="text" id="last-name" class="box-border" value="Russell" />
-                                            </div>
-                                            <div class="flex__colamn">
-                                                <label for="email">Email</label>
-                                                <input type="email" id="email" class="box-border" value="dianne.russell@gmail.com" />
-                                            </div>
-                                            <div class="flex__colamn">
-                                                <label for="tel">Phone Number</label>
-                                                <input type="tel" id="tel" class="box-border" value="(603) 555-0123" />
-                                            </div>
-                                        </form>
-                                        <button class="acount-info__change-info--green-button">Save Changes</button>
+                        
+                        <div class="box-border order-detail__container flex__colamn">
+                            <div class="flex__colamn order-detail__box">
+                                <div class="flex__row order-detail__heading">
+                                    <div class="flex__row">
+                                        <h5>Order Details</h5>
+                                        <img src="dashbroad-image/bulet-icon.svg" alt="bulet icon" />
+                                        <p>April 24, 2021</p>
+                                        <img src="dashbroad-image/bulet-icon.svg" alt="bulet icon" />
+                                        <p>3 Products</p>
                                     </div>
-                                    <div class="flex__colamn acount-info__change-photo">
-                                        <img src="dashbroad-image/costumer-image.svg" alt="costumer image" />
-                                        <button>Chose Image</button>
+                                    <a href="#">Back to List</a>
+                                </div>
+                                <div class="flex__colamn order-detail__order-detail">
+                                    <div class="flex__row order-detail__text">
+                                        <div class="box-border flex__row order-detail__address">
+                                            <div class="flex__colamn order-detail__dainne-info">
+                                                <p>Billing Address</p>
+                                                <div class="flex__colamn">
+                                                    <div class="dainne-russel__box flex__colamn">
+                                                        <h6>Dainne Russell</h6>
+                                                        <p>4140 Parker Rd. Allentown, New Mexico 31134</p>
+                                                    </div>
+                                                    <div class="dainne-russel__info flex__colamn">
+                                                        <div class="flex__colamn">
+                                                            <span>Email</span>
+                                                            <P>dainne.ressell@gmail.com</P>
+                                                        </div>
+                                                        <div class="flex__colamn">
+                                                            <span>Phone</span>
+                                                            <p>(671) 555-0110</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="flex__colamn order-detail__dainne-info">
+                                                <p>Shipping Address</p>
+                                                <div class="flex__colamn">
+                                                    <div class="dainne-russel__box flex__colamn">
+                                                        <h6>Dainne Russell</h6>
+                                                        <p>4140 Parker Rd. Allentown, New Mexico 31134</p>
+                                                    </div>
+                                                    <div class="dainne-russel__info flex__colamn">
+                                                        <div class="flex__colamn">
+                                                            <span>Email</span>
+                                                            <P>dainne.ressell@gmail.com</P>
+                                                        </div>
+                                                        <div class="flex__colamn">
+                                                            <span>Phone</span>
+                                                            <p>(671) 555-0110</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="box-border order-detail__order-info flex__colamn">
+                                            <div class="order-detail__order-id flex__row">
+                                                <div class="flex__colamn">
+                                                    <span>Order ID:</span>
+                                                    <p>#4152</p>
+                                                </div>
+                                                <img src="dashbroad-image/vertical-line.svg" alt="vertical line" />
+                                                <div class="flex__colamn">
+                                                    <span>Payment Method:</span>
+                                                    <p>Paypal</p>
+                                                </div>
+                                            </div>
+                                            <div class="flex__colamn order-detail__order-price">
+                                                <div class="flex__row order-detail__price-box order-detail__subtotal-box">
+                                                    <p>Subtotal:</p>
+                                                    <span>$365.00</span>
+                                                </div>
+                                                <div class="order-detail__price-box flex__row">
+                                                    <p>Discount</p>
+                                                    <span>20%</span>
+                                                </div>
+                                                <div class="order-detail__price-box flex__row">
+                                                    <p>Shipping</p>
+                                                    <span>Free</span>
+                                                </div>
+                                                <div class="flex__row order-detail__total-price">
+                                                    <p>Total</p>
+                                                    <span>$84.00</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="order-detail__complate flex__colamn">
+                                        <div class="div flex__row">
+                                            <img src="dashbroad-image/image.svg" alt="image" class="image"/>
+                                        </div>
+                                        <div class="order-detail__complate-text flex__row">
+                                            <span class="order-detail__complate-green-text">Order received</span>
+                                            <span class="order-detail__complate-green-text">Processing</span>
+                                            <span>On the way</span>
+                                            <span>Delivered</span>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="box-border flex__colamn acount-info__setting-box">
-                                <h5>Billing Address</h5>
-                                <div class="flex__colamn acount-info__change-text">
-                                    <form class="flex__colamn acount-info__change-form acount-info__billing-form">
-                                        <div class="flex__row acount-info__billing--costumer-info">
-                                            <div class="flex__colamn">
-                                                <label for="first-name">First name</label>
-                                                <input type="text" id="first-name" class="box-border" value="Dianne" />
-                                            </div>
-                                            <div class="flex__colamn">
-                                                <label>Last name</label>
-                                                <input type="text" value="Dianne" class="box-border" />
-                                            </div>
-                                            <div class="flex__colamn">
-                                                <label>Company Name (optional)</label>
-                                                <input type="text" value="Zakirsoft" class="box-border" />
-                                            </div>
-                                        </div>
-                                        <div class="flex__colamn">
-                                            <label for="last-name">Street Address</label>
-                                            <input type="text" id="last-name" class="box-border" value="4140 Par|" />
-                                        </div>
-                                        <div class="flex__row acount-info__billing--costumer-info">
-                                            <div class="flex__colamn">
-                                                <label for="first-name">Country / Region</label>
-                                                <div class="flex__row box-border bottom-arrow__box">
-                                                    <input type="text" id="first-name" value="Dianne" />
-                                                    <img src="dashbroad-image/bottom-arrow.svg" alt="bottom-arrow" />
-                                                </div>
-                                            </div>
-                                            <div class="flex__colamn">
-                                                <label>States</label>
-                                                <div class="flex__row box-border bottom-arrow__box">
-                                                    <input type="text" id="first-name" value="Washington DC" />
-                                                    <img src="dashbroad-image/bottom-arrow.svg" alt="bottom-arrow" />
-                                                </div>
-                                            </div>
-                                            <div class="flex__colamn">
-                                                <label>Zip Code</label>
-                                                <input type="text" value="20033" class="box-border" />
-                                            </div>
-                                        </div>
-                                        <div class="flex__row acount-info__billing--contact-info">
-                                            <div class="flex__colamn">
-                                                <label>Email</label>
-                                                <input type="text" value="dianne.russell@gmail.com" class="box-border" />
-                                            </div>
-                                            <div class="flex__colamn">
-                                                <label>Phone</label>
-                                                <input type="tel" value="(603) 555-0123" class="box-border" />
-                                            </div>
-                                        </div>
-                                    </form>
-                                    <button class="acount-info__change-info--green-button">Save Changes</button>
-                                </div>
-                            </div>
-                            <div class="box-border flex__colamn acount-info__setting-box">
-                                <h5>Change Password</h5>
-                                <div class="flex__colamn acount-info__change-text">
-                                    <form class="flex__colamn acount-info__change-form acount-info__billing-form">
-                                        <div class="flex__colamn acount-info__current-password-box">
-                                            <label>Current Password</label>
-                                            <div class="box-border flex__row">
-                                                <input type="password" placeholder="Password" />
-                                                <img src="dashbroad-image/eye-icon.svg" alt="eye icon" />
-                                            </div>
-                                        </div>
-                                        <div class="flex__row acount-info__change-passwor">
-                                            <div class="flex__colamn acount-info__change-password-box">
-                                                <label>New Password Password</label>
-                                                <div class="flex__row box-border">
-                                                    <input type="password" placeholder="Password" />
-                                                    <img src="dashbroad-image/eye-icon.svg" alt="eye icon" />
-                                                </div>
-                                            </div>
-                                            <div class="flex__colamn acount-info__change-password-box">
-                                                <label>Confirm Password</label>
-                                                <div class="flex__row box-border">
-                                                    <input type="password" placeholder="password"/> 
-                                                    <img src="dashbroad-image/eye-icon.svg" alt="eye icon" />
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </form>
-                                    <button class="acount-info__change-info--green-button acount-info__change-info--green-password-button">Change Password</button>
+                            <div class="flex__colamn order-detail__product-info">
+                                <ul class="flex__row order-detail__product-info--ul order-detail__product-info--heading-ul">
+                                    <li>Product</li>
+                                    <li>Price</li>
+                                    <li>Quantity</li>
+                                    <li>Subtotal</li>
+                                </ul>
+                                <div class="flex__colamn">
+                                    <ul class="flex__row order-detail__product-info--ul order-detail__product-info--product-ul">
+                                        <li class="flex__row">
+                                            <img src="dashbroad-image/red-capsicum.png" alt="red capsicum" />
+                                            <span>  Red Capsicum</span>
+                                        </li>
+                                        <li>$14.00</li>
+                                        <li>x5</li>
+                                        <li>$70.00</li>
+                                    </ul>
+                                    <ul class="order-detail__product-info--ul flex__row order-detail__product-info--product-ul">
+                                        <li class="flex__row">
+                                            <img src="dashbroad-image/green-capsicum.png" alt="green capsicum" />
+                                            <span>  Green Capsicum</span>
+                                        </li>
+                                        <li>$14.00</li>
+                                        <li>x2</li>
+                                        <li>$28.00</li>
+                                    </ul>
+                                    <ul class="order-detail__product-info--ul flex__row order-detail__product-info--product-ul">
+                                        <li class="flex__row">
+                                            <img src="dashbroad-image/green-chili.png" alt="green chili" />
+                                            <span>  Green Chili</span>
+                                        </li>
+                                        <li>$26.70</li>
+                                        <li>x10</li>
+                                        <li>$267.00</li>
+                                    </ul>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+                
             </article>
 
         </main>
