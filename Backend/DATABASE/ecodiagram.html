@@ -1,0 +1,981 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Database Schema Diagram</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .diagram {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+        }
+        .entity {
+            border: 2px solid #333;
+            border-radius: 5px;
+            width: 280px;
+            background-color: #f9f9f9;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .entity-header {
+            background-color: #333;
+            color: white;
+            padding: 8px 10px;
+            font-weight: bold;
+            text-align: center;
+            font-size: 16px;
+        }
+        .entity-content {
+            padding: 10px;
+        }
+        .attribute {
+            padding: 5px;
+            border-bottom: 1px solid #ddd;
+            font-size: 14px;
+            display: flex;
+        }
+        .attribute:last-child {
+            border-bottom: none;
+        }
+        .attribute-name {
+            flex: 1;
+        }
+        .attribute-type {
+            color: #666;
+            margin-right: 5px;
+        }
+        .attribute-constraint {
+            font-weight: bold;
+            color: #0066cc;
+            margin-left: 5px;
+        }
+        .relationships {
+            margin-top: 40px;
+            border-top: 1px solid #ddd;
+            padding-top: 20px;
+        }
+        .relationship {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 10px;
+            padding: 5px;
+            background-color: #f0f8ff;
+            border-radius: 5px;
+        }
+        .relationship-entity {
+            font-weight: bold;
+            padding: 5px 10px;
+            background-color: #e6f7ff;
+            border-radius: 4px;
+            border: 1px solid #91d5ff;
+        }
+        .relationship-type {
+            margin: 0 10px;
+            font-style: italic;
+            color: #555;
+        }
+        .cardinality {
+            color: #0066cc;
+            font-weight: bold;
+            margin: 0 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Database Schema Diagram</h1>
+        
+        <div class="diagram">
+            <!-- CATEGORIES Entity -->
+            <div class="entity">
+                <div class="entity-header">CATEGORIES</div>
+                <div class="entity-content">
+                    <div class="attribute">
+                        <span class="attribute-type">int</span>
+                        <span class="attribute-name">id</span>
+                        <span class="attribute-constraint">PK</span>
+                    </div>
+                    <div class="attribute">
+                        <span class="attribute-type">varchar</span>
+                        <span class="attribute-name">name</span>
+                    </div>
+                    <div class="attribute">
+                        <span class="attribute-type">int</span>
+                        <span class="attribute-name">display_order</span>
+                    </div>
+                    <div class="attribute">
+                        <span class="attribute-type">varchar</span>
+                        <span class="attribute-name">image</span>
+                    </div>
+                    <div class="attribute">
+                        <span class="attribute-type">text</span>
+                        <span class="attribute-name">description</span>
+                    </div>
+                    <div class="attribute">
+                        <span class="attribute-type">timestamp</span>
+                        <span class="attribute-name">created_at</span>
+                    </div>
+                    <div class="attribute">
+                        <span class="attribute-type">timestamp</span>
+                        <span class="attribute-name">updated_at</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- BRANDS Entity -->
+            <div class="entity">
+                <div class="entity-header">BRANDS</div>
+                <div class="entity-content">
+                    <div class="attribute">
+                        <span class="attribute-type">int</span>
+                        <span class="attribute-name">id</span>
+                        <span class="attribute-constraint">PK</span>
+                    </div>
+                    <div class="attribute">
+                        <span class="attribute-type">varchar</span>
+                        <span class="attribute-name">name</span>
+                    </div>
+                    <div class="attribute">
+                        <span class="attribute-type">varchar</span>
+                        <span class="attribute-name">logo</span>
+                    </div>
+                    <div class="attribute">
+                        <span class="attribute-type">text</span>
+                        <span class="attribute-name">description</span>
+                    </div>
+                    <div class="attribute">
+                        <span class="attribute-type">varchar</span>
+                        <span class="attribute-name">website</span>
+                    </div>
+                    <div class="attribute">
+                        <span class="attribute-type">timestamp</span>
+                        <span class="attribute-name">created_at</span>
+                    </div>
+                    <div class="attribute">
+                        <span class="attribute-type">timestamp</span>
+                        <span class="attribute-name">updated_at</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PRODUCTS Entity -->
+            <div class="entity">
+                <div class="entity-header">PRODUCTS</div>
+                <div class="entity-content">
+                    <div class="attribute">
+                        <span class="attribute-type">int</span>
+                        <span class="attribute-name">id</span>
+                        <span class="attribute-constraint">PK</span>
+                    </div>
+                    <div class="attribute">
+                        <span class="attribute-type">varchar</span>
+                        <span class="attribute-name">name</span>
+                    </div>
+                    <div class="attribute">
+                        <span class="attribute-type">int</span>
+                        <span class="attribute-name">category_id</span>
+                        <span class="attribute-constraint">FK</span>
+                    </div>
+                    <div class="attribute">
+                        <span class="attribute-type">int</span>
+                        <span class="attribute-name">brand_id</span>
+                        <span class="attribute-constraint">FK</span>
+                    </div>
+                    <div class="attribute">
+                        <span class="attribute-type">varchar</span>
+                        <span class="attribute-name">main_image</span>
+                    </div>
+                    <div class="attribute">
+                        <span class="attribute-type">decimal</span>
+                        <span class="attribute-name">original_price</span>
+                    </div>
+                    <div class="attribute">
+                        <span class="attribute-type">decimal</span>
+                        <span class="attribute-name">discounted_price</span>
+                    </div>
+                    <div class="attribute">
+                        <span class="attribute-type">int</span>
+                        <span class="attribute-name">stock_quantity</span>
+                    </div>
+                    <div class="attribute">
+                        <span class="attribute-type">varchar</span>
+                        <span class="attribute-name">weight</span>
+                    </div>
+                    <div class="attribute">
+                        <span class="attribute-type">varchar</span>
+                        <span class="attribute-name">color</span>
+                    </div>
+                    <div class="attribute">
+                        <span class="attribute-type">varchar</span>
+                        <span class="attribute-name">type</span>
+                    </div>
+                    <div class="attribute">
+                        <span class="attribute-type">text</span>
+                        <span class="attribute-name">features</span>
+                    </div>
+                    <div class="attribute">
+                        <span class="attribute-type">text</span>
+                        <span class="attribute-name">description</span>
+                    </div>
+                    <div class="attribute">
+                        <span class="attribute-type">varchar</span>
+                        <span class="attribute-name">tags</span>
+                    </div>
+                    <div class="attribute">
+                        <span class="attribute-type">int</span>
+                        <span class="attribute-name">sold_count</span>
+                    </div>
+                    <div class="attribute">
+                        <span class="attribute-type">boolean</span>
+                        <span class="attribute-name">is_featured</span>
+                    </div>
+                    <div class="attribute">
+                        <span class="attribute-type">boolean</span>
+                        <span class="attribute-name">is_new</span>
+                    </div>
+                    <div class="attribute">
+                        <span class="attribute-type">boolean</span>
+                        <span class="attribute-name">is_organic</span>
+                    </div>
+                    <div class="attribute">
+                        <span class="attribute-type">enum</span>
+                        <span class="attribute-name">status</span>
+                    </div>
+                    <div class="attribute">
+                        <span class="attribute-type">varchar</span>
+                        <span class="attribute-name">video_url</span>
+                    </div>
+                    <div class="attribute">
+                        <span class="attribute-type">timestamp</span>
+                        <span class="attribute-name">created_at</span>
+                    </div>
+                    <div class="attribute">
+                        <span class="attribute-type">timestamp</span>
+                        <span class="attribute-name">updated_at</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PRODUCT_IMAGES Entity -->
+            <div class="entity">
+                <div class="entity-header">PRODUCT_IMAGES</div>
+                <div class="entity-content">
+                    <div class="attribute">
+                        <span class="attribute-type">int</span>
+                        <span class="attribute-name">id</span>
+                        <span class="attribute-constraint">PK</span>
+                    </div>
+                    <div class="attribute">
+                        <span class="attribute-type">int</span>
+                        <span class="attribute-name">product_id</span>
+                        <span class="attribute-constraint">FK</span>
+                    </div>
+                    <div class="attribute">
+                        <span class="attribute-type">varchar</span>
+                        <span class="attribute-name">image_path</span>
+                    </div>
+                    <div class="attribute">
+                        <span class="attribute-type">int</span>
+                        <span class="attribute-name">display_order</span>
+                    </div>
+                    <div class="attribute">
+                        <span class="attribute-type">timestamp</span>
+                        <span class="attribute-name">created_at</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- USERS Entity -->
+            <div class="entity">
+                <div class="entity-header">USERS</div>
+                <div class="entity-content">
+                    <div class="attribute">
+                        <span class="attribute-type">int</span>
+                        <span class="attribute-name">id</span>
+                        <span class="attribute-constraint">PK</span>
+                    </div>
+                    <div class="attribute">
+                        <span class="attribute-type">varchar</span>
+                        <span class="attribute-name">name</span>
+                    </div>
+                    <div class="attribute">
+                        <span class="attribute-type">varchar</span>
+                        <span class="attribute-name">last_name</span>
+                    </div>
+                    <div class="attribute">
+                        <span class="attribute-type">varchar</span>
+                        <span class="attribute-name">email</span>
+                    </div>
+                    <div class="attribute">
+                        <span class="attribute-type">varchar</span>
+                        <span class="attribute-name">phone</span>
+                    </div>
+                    <div class="attribute">
+                        <span class="attribute-type">varchar</span>
+                        <span class="attribute-name">password</span>
+                    </div>
+                    <div class="attribute">
+                        <span class="attribute-type">enum</span>
+                        <span class="attribute-name">role</span>
+                    </div>
+                    <div class="attribute">
+                        <span class="attribute-type">varchar</span>
+                        <span class="attribute-name">profile_image</span>
+                    </div>
+                    <div class="attribute">
+                        <span class="attribute-type">text</span>
+                        <span class="attribute-name">address</span>
+                    </div>
+                    <div class="attribute">
+                        <span class="attribute-type">varchar</span>
+                        <span class="attribute-name">city</span>
+                    </div>
+                    <div class="attribute">
+                        <span class="attribute-type">varchar</span>
+                        <span class="attribute-name">country</span>
+                    </div>
+                    <div class="attribute">
+                        <span class="attribute-type">varchar</span>
+                        <span class="attribute-name">postal_code</span>
+                    </div>
+                    <div class="attribute">
+                        <span class="attribute-type">boolean</span>
+                        <span class="attribute-name">is_admin</span>
+                    </div>
+                    <div class="attribute">
+                        <span class="attribute-type">timestamp</span>
+                        <span class="attribute-name">created_at</span>
+                    </div>
+                    <div class="attribute">
+                        <span class="attribute-type">timestamp</span>
+                        <span class="attribute-name">updated_at</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- REVIEWS Entity -->
+            <div class="entity">
+                <div class="entity-header">REVIEWS</div>
+                <div class="entity-content">
+                    <div class="attribute">
+                        <span class="attribute-type">int</span>
+                        <span class="attribute-name">id</span>
+                        <span class="attribute-constraint">PK</span>
+                    </div>
+                    <div class="attribute">
+                        <span class="attribute-type">int</span>
+                        <span class="attribute-name">product_id</span>
+                        <span class="attribute-constraint">FK</span>
+                    </div>
+                    <div class="attribute">
+                        <span class="attribute-type">int</span>
+                        <span class="attribute-name">user_id</span>
+                        <span class="attribute-constraint">FK</span>
+                    </div>
+                    <div class="attribute">
+                        <span class="attribute-type">varchar</span>
+                        <span class="attribute-name">user_name</span>
+                    </div>
+                    <div class="attribute">
+                        <span class="attribute-type">int</span>
+                        <span class="attribute-name">rating</span>
+                    </div>
+                    <div class="attribute">
+                        <span class="attribute-type">text</span>
+                        <span class="attribute-name">comment</span>
+                    </div>
+                    <div class="attribute">
+                        <span class="attribute-type">timestamp</span>
+                        <span class="attribute-name">created_at</span>
+                    </div>
+                    <div class="attribute">
+                        <span class="attribute-type">timestamp</span>
+                        <span class="attribute-name">updated_at</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAGS Entity -->
+            <div class="entity">
+                <div class="entity-header">TAGS</div>
+                <div class="entity-content">
+                    <div class="attribute">
+                        <span class="attribute-type">int</span>
+                        <span class="attribute-name">id</span>
+                        <span class="attribute-constraint">PK</span>
+                    </div>
+                    <div class="attribute">
+                        <span class="attribute-type">varchar</span>
+                        <span class="attribute-name">name</span>
+                    </div>
+                    <div class="attribute">
+                        <span class="attribute-type">timestamp</span>
+                        <span class="attribute-name">created_at</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PRODUCT_TAGS Entity -->
+            <div class="entity">
+                <div class="entity-header">PRODUCT_TAGS</div>
+                <div class="entity-content">
+                    <div class="attribute">
+                        <span class="attribute-type">int</span>
+                        <span class="attribute-name">product_id</span>
+                        <span class="attribute-constraint">PK,FK</span>
+                    </div>
+                    <div class="attribute">
+                        <span class="attribute-type">int</span>
+                        <span class="attribute-name">tag_id</span>
+                        <span class="attribute-constraint">PK,FK</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- RELATED_PRODUCTS Entity -->
+            <div class="entity">
+                <div class="entity-header">RELATED_PRODUCTS</div>
+                <div class="entity-content">
+                    <div class="attribute">
+                        <span class="attribute-type">int</span>
+                        <span class="attribute-name">id</span>
+                        <span class="attribute-constraint">PK</span>
+                    </div>
+                    <div class="attribute">
+                        <span class="attribute-type">int</span>
+                        <span class="attribute-name">product_id</span>
+                        <span class="attribute-constraint">FK</span>
+                    </div>
+                    <div class="attribute">
+                        <span class="attribute-type">int</span>
+                        <span class="attribute-name">related_product_id</span>
+                        <span class="attribute-constraint">FK</span>
+                    </div>
+                    <div class="attribute">
+                        <span class="attribute-type">timestamp</span>
+                        <span class="attribute-name">created_at</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CARTS Entity -->
+            <div class="entity">
+                <div class="entity-header">CARTS</div>
+                <div class="entity-content">
+                    <div class="attribute">
+                        <span class="attribute-type">int</span>
+                        <span class="attribute-name">id</span>
+                        <span class="attribute-constraint">PK</span>
+                    </div>
+                    <div class="attribute">
+                        <span class="attribute-type">int</span>
+                        <span class="attribute-name">user_id</span>
+                        <span class="attribute-constraint">FK</span>
+                    </div>
+                    <div class="attribute">
+                        <span class="attribute-type">timestamp</span>
+                        <span class="attribute-name">created_at</span>
+                    </div>
+                    <div class="attribute">
+                        <span class="attribute-type">timestamp</span>
+                        <span class="attribute-name">updated_at</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CART_ITEMS Entity -->
+            <div class="entity">
+                <div class="entity-header">CART_ITEMS</div>
+                <div class="entity-content">
+                    <div class="attribute">
+                        <span class="attribute-type">int</span>
+                        <span class="attribute-name">id</span>
+                        <span class="attribute-constraint">PK</span>
+                    </div>
+                    <div class="attribute">
+                        <span class="attribute-type">int</span>
+                        <span class="attribute-name">cart_id</span>
+                        <span class="attribute-constraint">FK</span>
+                    </div>
+                    <div class="attribute">
+                        <span class="attribute-type">int</span>
+                        <span class="attribute-name">product_id</span>
+                        <span class="attribute-constraint">FK</span>
+                    </div>
+                    <div class="attribute">
+                        <span class="attribute-type">int</span>
+                        <span class="attribute-name">quantity</span>
+                    </div>
+                    <div class="attribute">
+                        <span class="attribute-type">timestamp</span>
+                        <span class="attribute-name">created_at</span>
+                    </div>
+                    <div class="attribute">
+                        <span class="attribute-type">timestamp</span>
+                        <span class="attribute-name">updated_at</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ORDERS Entity -->
+            <div class="entity">
+                <div class="entity-header">ORDERS</div>
+                <div class="entity-content">
+                    <div class="attribute">
+                        <span class="attribute-type">int</span>
+                        <span class="attribute-name">id</span>
+                        <span class="attribute-constraint">PK</span>
+                    </div>
+                    <div class="attribute">
+                        <span class="attribute-type">int</span>
+                        <span class="attribute-name">user_id</span>
+                        <span class="attribute-constraint">FK</span>
+                    </div>
+                    <div class="attribute">
+                        <span class="attribute-type">decimal</span>
+                        <span class="attribute-name">total_price</span>
+                    </div>
+                    <div class="attribute">
+                        <span class="attribute-type">text</span>
+                        <span class="attribute-name">shipping_address</span>
+                    </div>
+                    <div class="attribute">
+                        <span class="attribute-type">text</span>
+                        <span class="attribute-name">billing_address</span>
+                    </div>
+                    <div class="attribute">
+                        <span class="attribute-type">varchar</span>
+                        <span class="attribute-name">phone</span>
+                    </div>
+                    <div class="attribute">
+                        <span class="attribute-type">varchar</span>
+                        <span class="attribute-name">email</span>
+                    </div>
+                    <div class="attribute">
+                        <span class="attribute-type">enum</span>
+                        <span class="attribute-name">status</span>
+                    </div>
+                    <div class="attribute">
+                        <span class="attribute-type">varchar</span>
+                        <span class="attribute-name">payment_method</span>
+                    </div>
+                    <div class="attribute">
+                        <span class="attribute-type">varchar</span>
+                        <span class="attribute-name">tracking_number</span>
+                    </div>
+                    <div class="attribute">
+                        <span class="attribute-type">text</span>
+                        <span class="attribute-name">notes</span>
+                    </div>
+                    <div class="attribute">
+                        <span class="attribute-type">timestamp</span>
+                        <span class="attribute-name">created_at</span>
+                    </div>
+                    <div class="attribute">
+                        <span class="attribute-type">timestamp</span>
+                        <span class="attribute-name">updated_at</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ORDER_ITEMS Entity -->
+            <div class="entity">
+                <div class="entity-header">ORDER_ITEMS</div>
+                <div class="entity-content">
+                    <div class="attribute">
+                        <span class="attribute-type">int</span>
+                        <span class="attribute-name">id</span>
+                        <span class="attribute-constraint">PK</span>
+                    </div>
+                    <div class="attribute">
+                        <span class="attribute-type">int</span>
+                        <span class="attribute-name">order_id</span>
+                        <span class="attribute-constraint">FK</span>
+                    </div>
+                    <div class="attribute">
+                        <span class="attribute-type">int</span>
+                        <span class="attribute-name">product_id</span>
+                        <span class="attribute-constraint">FK</span>
+                    </div>
+                    <div class="attribute">
+                        <span class="attribute-type">int</span>
+                        <span class="attribute-name">quantity</span>
+                    </div>
+                    <div class="attribute">
+                        <span class="attribute-type">decimal</span>
+                        <span class="attribute-name">price</span>
+                    </div>
+                    <div class="attribute">
+                        <span class="attribute-type">timestamp</span>
+                        <span class="attribute-name">created_at</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PRODUCT_VIDEOS Entity -->
+            <div class="entity">
+                <div class="entity-header">PRODUCT_VIDEOS</div>
+                <div class="entity-content">
+                    <div class="attribute">
+                        <span class="attribute-type">int</span>
+                        <span class="attribute-name">id</span>
+                        <span class="attribute-constraint">PK</span>
+                    </div>
+                    <div class="attribute">
+                        <span class="attribute-type">int</span>
+                        <span class="attribute-name">product_id</span>
+                        <span class="attribute-constraint">FK</span>
+                    </div>
+                    <div class="attribute">
+                        <span class="attribute-type">varchar</span>
+                        <span class="attribute-name">video_id</span>
+                    </div>
+                    <div class="attribute">
+                        <span class="attribute-type">enum</span>
+                        <span class="attribute-name">video_platform</span>
+                    </div>
+                    <div class="attribute">
+                        <span class="attribute-type">int</span>
+                        <span class="attribute-name">display_order</span>
+                    </div>
+                    <div class="attribute">
+                        <span class="attribute-type">timestamp</span>
+                        <span class="attribute-name">created_at</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PRODUCT_FEATURES Entity -->
+            <div class="entity">
+                <div class="entity-header">PRODUCT_FEATURES</div>
+                <div class="entity-content">
+                    <div class="attribute">
+                        <span class="attribute-type">int</span>
+                        <span class="attribute-name">product_id</span>
+                        <span class="attribute-constraint">PK,FK</span>
+                    </div>
+                    <div class="attribute">
+                        <span class="attribute-type">int</span>
+                        <span class="attribute-name">related_product_id</span>
+                        <span class="attribute-constraint">PK,FK</span>
+                    </div>
+                    <div class="attribute">
+                        <span class="attribute-type">int</span>
+                        <span class="attribute-name">relation_type</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ORDERS Entity -->
+            <div class="entity">
+                <div class="entity-header">ORDERS</div>
+                <div class="entity-content">
+                    <div class="attribute">
+                        <span class="attribute-type">int</span>
+                        <span class="attribute-name">id</span>
+                        <span class="attribute-constraint">PK</span>
+                    </div>
+                    <div class="attribute">
+                        <span class="attribute-type">int</span>
+                        <span class="attribute-name">user_id</span>
+                        <span class="attribute-constraint">FK</span>
+                    </div>
+                    <div class="attribute">
+                        <span class="attribute-type">varchar</span>
+                        <span class="attribute-name">order_number</span>
+                    </div>
+                    <div class="attribute">
+                        <span class="attribute-type">decimal</span>
+                        <span class="attribute-name">total_amount</span>
+                    </div>
+                    <div class="attribute">
+                        <span class="attribute-type">decimal</span>
+                        <span class="attribute-name">shipping_cost</span>
+                    </div>
+                    <div class="attribute">
+                        <span class="attribute-type">decimal</span>
+                        <span class="attribute-name">tax_amount</span>
+                    </div>
+                    <div class="attribute">
+                        <span class="attribute-type">varchar</span>
+                        <span class="attribute-name">payment_method</span>
+                    </div>
+                    <div class="attribute">
+                        <span class="attribute-type">varchar</span>
+                        <span class="attribute-name">transaction_id</span>
+                    </div>
+                    <div class="attribute">
+                        <span class="attribute-type">enum</span>
+                        <span class="attribute-name">payment_status</span>
+                    </div>
+                    <div class="attribute">
+                        <span class="attribute-type">enum</span>
+                        <span class="attribute-name">order_status</span>
+                    </div>
+                    <div class="attribute">
+                        <span class="attribute-type">text</span>
+                        <span class="attribute-name">shipping_address</span>
+                    </div>
+                    <div class="attribute">
+                        <span class="attribute-type">text</span>
+                        <span class="attribute-name">billing_address</span>
+                    </div>
+                    <div class="attribute">
+                        <span class="attribute-type">varchar</span>
+                        <span class="attribute-name">contact_phone</span>
+                    </div>
+                    <div class="attribute">
+                        <span class="attribute-type">varchar</span>
+                        <span class="attribute-name">contact_email</span>
+                    </div>
+                    <div class="attribute">
+                        <span class="attribute-type">text</span>
+                        <span class="attribute-name">notes</span>
+                    </div>
+                    <div class="attribute">
+                        <span class="attribute-type">timestamp</span>
+                        <span class="attribute-name">created_at</span>
+                    </div>
+                    <div class="attribute">
+                        <span class="attribute-type">timestamp</span>
+                        <span class="attribute-name">updated_at</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ORDER_ITEMS Entity -->
+            <div class="entity">
+                <div class="entity-header">ORDER_ITEMS</div>
+                <div class="entity-content">
+                    <div class="attribute">
+                        <span class="attribute-type">int</span>
+                        <span class="attribute-name">id</span>
+                        <span class="attribute-constraint">PK</span>
+                    </div>
+                    <div class="attribute">
+                        <span class="attribute-type">int</span>
+                        <span class="attribute-name">order_id</span>
+                        <span class="attribute-constraint">FK</span>
+                    </div>
+                    <div class="attribute">
+                        <span class="attribute-type">int</span>
+                        <span class="attribute-name">product_id</span>
+                        <span class="attribute-constraint">FK</span>
+                    </div>
+                    <div class="attribute">
+                        <span class="attribute-type">varchar</span>
+                        <span class="attribute-name">product_name</span>
+                    </div>
+                    <div class="attribute">
+                        <span class="attribute-type">decimal</span>
+                        <span class="attribute-name">unit_price</span>
+                    </div>
+                    <div class="attribute">
+                        <span class="attribute-type">int</span>
+                        <span class="attribute-name">quantity</span>
+                    </div>
+                    <div class="attribute">
+                        <span class="attribute-type">decimal</span>
+                        <span class="attribute-name">total_price</span>
+                    </div>
+                    <div class="attribute">
+                        <span class="attribute-type">timestamp</span>
+                        <span class="attribute-name">created_at</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- COUPONS Entity -->
+            <div class="entity">
+                <div class="entity-header">COUPONS</div>
+                <div class="entity-content">
+                    <div class="attribute">
+                        <span class="attribute-type">int</span>
+                        <span class="attribute-name">id</span>
+                        <span class="attribute-constraint">PK</span>
+                    </div>
+                    <div class="attribute">
+                        <span class="attribute-type">varchar</span>
+                        <span class="attribute-name">code</span>
+                    </div>
+                    <div class="attribute">
+                        <span class="attribute-type">varchar</span>
+                        <span class="attribute-name">description</span>
+                    </div>
+                    <div class="attribute">
+                        <span class="attribute-type">enum</span>
+                        <span class="attribute-name">discount_type</span>
+                    </div>
+                    <div class="attribute">
+                        <span class="attribute-type">decimal</span>
+                        <span class="attribute-name">discount_value</span>
+                    </div>
+                    <div class="attribute">
+                        <span class="attribute-type">decimal</span>
+                        <span class="attribute-name">minimum_spend</span>
+                    </div>
+                    <div class="attribute">
+                        <span class="attribute-type">int</span>
+                        <span class="attribute-name">usage_limit</span>
+                    </div>
+                    <div class="attribute">
+                        <span class="attribute-type">int</span>
+                        <span class="attribute-name">usage_count</span>
+                    </div>
+                    <div class="attribute">
+                        <span class="attribute-type">date</span>
+                        <span class="attribute-name">expiry_date</span>
+                    </div>
+                    <div class="attribute">
+                        <span class="attribute-type">boolean</span>
+                        <span class="attribute-name">is_active</span>
+                    </div>
+                    <div class="attribute">
+                        <span class="attribute-type">timestamp</span>
+                        <span class="attribute-name">created_at</span>
+                    </div>
+                    <div class="attribute">
+                        <span class="attribute-type">timestamp</span>
+                        <span class="attribute-name">updated_at</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="relationships">
+            <h2>Relationships</h2>
+            
+            <div class="relationship">
+                <span class="relationship-entity">PRODUCTS</span>
+                <span class="cardinality">N</span>
+                <span class="relationship-type">belongs to</span>
+                <span class="cardinality">1</span>
+                <span class="relationship-entity">CATEGORIES</span>
+            </div>
+            
+            <div class="relationship">
+                <span class="relationship-entity">PRODUCTS</span>
+                <span class="cardinality">N</span>
+                <span class="relationship-type">belongs to</span>
+                <span class="cardinality">1</span>
+                <span class="relationship-entity">BRANDS</span>
+            </div>
+            
+            <div class="relationship">
+                <span class="relationship-entity">PRODUCT_IMAGES</span>
+                <span class="cardinality">N</span>
+                <span class="relationship-type">belongs to</span>
+                <span class="cardinality">1</span>
+                <span class="relationship-entity">PRODUCTS</span>
+            </div>
+            
+            <div class="relationship">
+                <span class="relationship-entity">REVIEWS</span>
+                <span class="cardinality">N</span>
+                <span class="relationship-type">belongs to</span>
+                <span class="cardinality">1</span>
+                <span class="relationship-entity">PRODUCTS</span>
+            </div>
+            
+            <div class="relationship">
+                <span class="relationship-entity">REVIEWS</span>
+                <span class="cardinality">N</span>
+                <span class="relationship-type">belongs to</span>
+                <span class="cardinality">1</span>
+                <span class="relationship-entity">USERS</span>
+            </div>
+            
+            <div class="relationship">
+                <span class="relationship-entity">PRODUCTS</span>
+                <span class="cardinality">N</span>
+                <span class="relationship-type">has</span>
+                <span class="cardinality">M</span>
+                <span class="relationship-entity">TAGS</span>
+            </div>
+            
+            <div class="relationship">
+                <span class="relationship-entity">PRODUCTS</span>
+                <span class="cardinality">N</span>
+                <span class="relationship-type">has</span>
+                <span class="cardinality">M</span>
+                <span class="relationship-entity">RELATED_PRODUCTS</span>
+            </div>
+            
+            <div class="relationship">
+                <span class="relationship-entity">ORDERS</span>
+                <span class="cardinality">N</span>
+                <span class="relationship-type">belongs to</span>
+                <span class="cardinality">1</span>
+                <span class="relationship-entity">USERS</span>
+            </div>
+            
+            <div class="relationship">
+                <span class="relationship-entity">ORDER_ITEMS</span>
+                <span class="cardinality">N</span>
+                <span class="relationship-type">belongs to</span>
+                <span class="cardinality">1</span>
+                <span class="relationship-entity">ORDERS</span>
+            </div>
+            
+            <div class="relationship">
+                <span class="relationship-entity">ORDER_ITEMS</span>
+                <span class="cardinality">N</span>
+                <span class="relationship-type">references</span>
+                <span class="cardinality">1</span>
+                <span class="relationship-entity">PRODUCTS</span>
+            </div>
+        </div>
+    </div>
+    
+    <div class="container" style="margin-top: 30px; padding: 20px; background-color: #f0f8ff; border-left: 5px solid #0066cc;">
+        <h2 style="color: #0066cc;">Schema Relationship Overview</h2>
+        
+        <div style="margin-top: 15px;">
+            <h3>Abbreviations explained:</h3>
+            <ul style="line-height: 1.6;">
+                <li><strong>PK</strong>: Primary Key - A unique identifier for each record in a table</li>
+                <li><strong>FK</strong>: Foreign Key - A field that refers to the primary key in another table</li>
+                <li><strong>N, M</strong>: Cardinality indicators - representing "many" in relationships</li>
+                <li><strong>1</strong>: Cardinality indicator - representing "one" in relationships</li>
+            </ul>
+            
+            <h3>Relationship types:</h3>
+            <ul style="line-height: 1.6;">
+                <li><strong>belongs to</strong>: Indicates a child-parent relationship where the first entity is dependent on the second</li>
+                <li><strong>has</strong>: Indicates ownership or composition relationship</li>
+                <li><strong>references</strong>: Indicates a reference relationship without strong ownership</li>
+            </ul>
+            
+            <h3>Examples:</h3>
+            <ul style="line-height: 1.6;">
+                <li><strong>PRODUCTS N belongs to 1 CATEGORIES</strong>: Many products can belong to one category</li>
+                <li><strong>PRODUCTS N has M TAGS</strong>: Many products can have many tags (many-to-many relationship)</li>
+                <li><strong>ORDER_ITEMS N belongs to 1 ORDERS</strong>: Many order items belong to one order</li>
+            </ul>
+            
+            <p>This database schema represents a complete e-commerce system with products, categories, brands, users, orders, and related entities interconnected through various relationship types.</p>
+        </div>
+    </div>
+</body>
+</html>
