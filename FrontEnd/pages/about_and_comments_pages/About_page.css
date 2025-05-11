@@ -30,7 +30,7 @@
   --star-color: #ffc107;
 }
 body {
-  background-color: #ffffff;
+  background-color: var(--background-page);
   color: #333;
   direction: ltr;
   margin-top: -20px;
@@ -41,77 +41,7 @@ body {
   /* Setting direction to match the design */
 }
 
-/* تصميم متجاوب للشبكة */
-.container {
-  width: 120%;
-  max-width: 1500px;
-  margin: 0 auto;
-}
 
-.row {
-  display: flex;
-  flex-wrap: wrap;
-  margin: 0 -15px;
-}
-
-.column {
-  flex: 1;
-  padding: 0 15px;
-  min-width: 250px;
-}
-
-.box-width {
-  width: 1320px;
-}
-
-.flex__colamn {
-  display: flex;
-  flex-direction: column;
-}
-
-.flex__row {
-  display: flex;
-  align-items: center;
-}
-
-/* Typography */
-
-h1 {
-  font-size: 48px;
-}
-
-p {
-  font-size: 14px;
-}
-
-h2 {
-  font-size: 40px;
-}
-
-h3 {
-  font-size: 32px;
-}
-
-h4 {
-  font-size: 24px;
-}
-
-h5 {
-  font-size: 20px;
-}
-
-h6 {
-  font-size: 16px;
-}
-
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  color: #1a1a1a;
-}
 
 /* || header */
 
