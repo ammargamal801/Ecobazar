@@ -1,26 +1,26 @@
-/* CSS Variables for consistent theming across the site */
+/* Root variables for light theme colors */
 :root {
-    --background-page: #f0f8ff; /* Light blue background */
-    --background-card: #f0f8ff; /* Matching card background */
-    --white-text-color: #808080; /* Gray text */
-    --black-text-color: #002603; /* Dark green text */
-    --sticker-color: #00B207; /* Bright green for stickers/buttons */
-    --text-hover-color: #7b837b; /* Gray-green for hover states */
-    --card-border-color: #E6E6E6; /* Light gray borders */
-    --header-text-not-hovered: #959393; /* Inactive nav text */
-    --green-text: #00B207; /* Main green color */
-    --light-green: #5eec7f; /* Lighter green for accents */
-    --footer-background: #002603; /* Dark footer background */
-    --second-background: #EDF2EE; /* Secondary page background */
-    --discount-background: #EA4B481A; /* Discount tag background */
-    --discount: #48acea; /* Discount text color */
-    --white: #ffffff; /* Pure white */
+    --background-page: #f0f8ff;
+    --background-card: #f0f8ff;
+    --white-text-color: #808080;
+    --black-text-color: #002603;
+    --sticker-color: #00B207;
+    --text-hover-color: #7b837b;
+    --card-border-color: #E6E6E6;
+    --header-text-not-hovered: #959393;
+    --green-text: #00B207;
+    --light-green: #5eec7f;
+    --footer-background: #002603;
+    --second-background: #EDF2EE;
+    --discount-background: #EA4B481A;
+    --discount: #48acea;
+    --white: #ffffff;
 }
 
 /* Search box styling - initially hidden */
 #searchBox {
     display: none;
-    transition: all 0.3s ease; /* Smooth animations */
+    transition: all 0.3s ease;
     position: absolute;
     top: 60px;
     right: 10px;
@@ -30,57 +30,71 @@
 /* Focus state for search box */
 #searchBox:focus {
     outline: none;
-    box-shadow: 0 0 0 0.2rem var(--light-green); /* Green glow */
-    border-color: var(--green-text); /* Green border */
+    box-shadow: 0 0 0 0.2rem var(--light-green);
+    border-color: var(--green-text);
 }
 
-/* Remove focus outlines from Bootstrap toggler */
+/* Remove focus outline from navbar toggler */
 .navbar-toggler:focus,
 .navbar-toggler:active {
     outline: none;
     box-shadow: none;
 }
 
-/* Hide scrollbar in offcanvas but keep functionality */
+/* Hide scrollbar in offcanvas body */
 .offcanvas-body::-webkit-scrollbar {
     display: none;
 }
 
 .offcanvas-body {
-    -ms-overflow-style: none; /* IE/Edge */
-    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none;
+    scrollbar-width: none;
 }
 
-/* Placeholder text styling */
+/* Placeholder text color for form inputs */
 .form-control::placeholder {
     color: var(--header-text-not-hovered);
 }
 
-/* Footer container adjustments */
+/* Footer container minimum height */
 .container-fluid[style*="background-color:var(--footer-background)"] {
-    min-height: 600px; /* Give footer more vertical space */
+    min-height: 600px;
 }
 
-/* Food icon styling - outline only effect */
+/* Decorative food icon styling */
 .food-icon {
     position: absolute;
     font-size: 60px;
-    opacity: 0.2; /* Semi-transparent */
+    opacity: 0.2;
     color: #666666;
     display: block;
-    background: transparent; /* No fill */
-    -webkit-text-stroke: 2px #666666; /* Outline for WebKit */
-    text-stroke: 2px #666666; /* Standard outline */
-    -webkit-text-fill-color: transparent; /* No fill */
-    text-fill-color: transparent; /* No fill */
+    background: transparent;
+    -webkit-text-stroke: 2px #666666;
+    text-stroke: 2px #666666;
+    -webkit-text-fill-color: transparent;
+    text-fill-color: transparent;
 }
 
-/* Let footer height adjust to content naturally */
+/* Adjust footer container height */
 .container-fluid[style*="background-color:var(--footer-background)"] {
     min-height: auto;
 }
 
-/* First column food icon positioning - left side */
+/* Repetition of food icon styling for specificity */
+.food-icon {
+    position: absolute;
+    font-size: 60px;
+    opacity: 0.2;
+    color: #666666;
+    display: block;
+    background: transparent;
+    -webkit-text-stroke: 2px #666666;
+    text-stroke: 2px #666666;
+    -webkit-text-fill-color: transparent;
+    text-fill-color: transparent;
+}
+
+/* Positioning for left-side food icons (first column) */
 .col:first-child .food-icon:nth-child(1) { top: 10px; left: 120px; }
 .col:first-child .food-icon:nth-child(2) { top: 10px; left: 40px; }
 .col:first-child .food-icon:nth-child(3) { top: 90px; left: 180px; }
@@ -99,7 +113,7 @@
 .col:first-child .food-icon:nth-child(16) { top: 420px; left: 130px; }
 .col:first-child .food-icon:nth-child(17) { top: 420px; left: 190px; }
 
-/* Last column food icon positioning - right side (mirrored) */
+/* Positioning for right-side food icons (last column) */
 .col:last-child .food-icon:nth-child(1) { top: 10px; right: 120px; }
 .col:last-child .food-icon:nth-child(2) { top: 10px; right: 40px; }
 .col:last-child .food-icon:nth-child(3) { top: 90px; right: 180px; }
@@ -118,7 +132,138 @@
 .col:last-child .food-icon:nth-child(16) { top: 420px; right: 130px; }
 .col:last-child .food-icon:nth-child(17) { top: 420px; right: 190px; }
 
-/* Hover effect for list items (excluding first child) */
+/* Hover effects for navigation links */
+.col-3.d-flex.d-xxl-flex.d-none.align-items-center.ms-n6 a:hover,
+.col-3.justify-content-end.align-self-center.d-flex.ms-auto a:hover,
 .list-unstyled li:not(:first-child) a:hover {
-    color: var(--light-green) !important; /* Light green hover */
+    color: var(--light-green) !important;
+}
+
+/* Dark mode hover effects */
+body.dark-mode .col-3.d-flex.d-xxl-flex.d-none.align-items-center.ms-n6 a:hover,
+body.dark-mode .col-3.justify-content-end.align-self-center.d-flex.ms-auto a:hover,
+body.dark-mode .list-unstyled li:not(:first-child) a:hover {
+    color: var(--light-green) !important;
+}
+
+/* Dark mode icon hover states */
+body.dark-mode .bi-search:hover,
+body.dark-mode .bi-heart:hover,
+body.dark-mode .bi-handbag:hover,
+body.dark-mode .bi-person:hover {
+    color: var(--light-green) !important;
+}
+
+/* Dark theme color variables and base styles */
+body.dark-mode {
+    background-color: var(--background-page) !important;
+    color: var(--white-text-color) !important;
+    --background-page: #06240b;
+    --background-card: #1e1e1e;
+    --white-text-color: #e0e0e0;
+    --black-text-color: #f5f5f5;
+    --sticker-color: #03a308;
+    --text-hover-color: #bbc3bb;
+    --card-border-color: #333333;
+    --header-text-not-hovered: #aaaaaa;
+    --green-text: #3b9450;
+    --light-green: #7dfa9d;
+    --footer-background: #001a02;
+    --second-background: #2d2d2d;
+    --discount-background: #3a1a1a;
+    --discount: #6ab7f0;
+    --white: #252525;
+}
+
+/* Dark mode navbar and offcanvas styling */
+body.dark-mode .navbar,
+body.dark-mode .offcanvas {
+    background-color: var(--background-card) !important;
+    border-color: var(--card-border-color) !important;
+}
+
+/* Dark mode close button styling */
+body.dark-mode .btn-close {
+    filter: invert(1);
+}
+
+/* Dark mode form controls */
+body.dark-mode .form-control {
+    background-color: var(--second-background);
+    color: var(--white-text-color);
+    border-color: var(--card-border-color);
+}
+
+/* Dark mode placeholder text */
+body.dark-mode .form-control::placeholder {
+    color: var(--header-text-not-hovered);
+}
+
+/* Dark mode icon colors */
+body.dark-mode i,
+body.dark-mode .bi,
+body.dark-mode .fas {
+    color: var(--white-text-color) !important;
+}
+
+/* Special cases for leaf icon in dark mode */
+body.dark-mode .fa-leaf,
+body.dark-mode .dark-mode-toggle i {
+    color: var(--green-text) !important;
+}
+
+/* Dark mode offcanvas background */
+body.dark-mode .offcanvas-body {
+    background-color: var(--background-page);
+}
+
+/* Dark mode close button styling */
+body.dark-mode .x-button {
+    background-color: var(--background-card) !important;
+    color: var(--white-text-color) !important;
+}
+
+/* Adjust light green in dark mode */
+body.dark-mode {
+    --light-green: #7dfa9d;
+}
+
+/* Login button styling */
+.btn-login {
+    background-color: var(--green-text) !important;
+    color: white !important;
+    padding: 0.25rem 0.75rem !important;
+    font-size: 0.875rem !important;
+    border-radius: 4px !important;
+}
+
+/* Dark mode login button */
+body.dark-mode .btn-login {
+    background-color: var(--light-green) !important;
+    color: var(--black-text-color) !important;
+}
+
+/* Login button hover effects */
+.btn-login:hover {
+    opacity: 0.9;
+    transform: translateY(-1px);
+}
+
+
+/* Force white text on these elements */
+.fs-4 p,
+.border-bottom.pb-2,
+.fs-5.text-decoration-none,
+.bi-lock,
+.bi-lock span {
+    color: white !important;
+}
+
+/* Override dark mode */
+body.dark-mode .fs-4 p,
+body.dark-mode .border-bottom.pb-2,
+body.dark-mode .fs-5.text-decoration-none,
+body.dark-mode .bi-lock,
+body.dark-mode .bi-lock span {
+    color: white !important;
 }

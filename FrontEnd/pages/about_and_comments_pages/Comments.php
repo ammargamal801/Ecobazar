@@ -14,10 +14,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (isset($_POST['delete_comment'])) {
         $commentId = $_POST['comment_id'];
         $commentsFile = 'comments.json';
-        
+
         if (file_exists($commentsFile)) {
             $currentComments = json_decode(file_get_contents($commentsFile), true);
-            
+
             // Remove the comment with the specified ID
             if (isset($currentComments[$commentId])) {
                 array_splice($currentComments, $commentId, 1);
@@ -25,7 +25,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $deleteSuccess = true;
             }
         }
-    } 
+    }
     // Check if like action
     elseif (isset($_POST['action']) && $_POST['action'] === 'like') {
         $commentId = $_POST['comment_id'];
@@ -45,31 +45,31 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             }
             // For non-AJAX, could redirect or show a message, but AJAX is primary here.
             // Consider what to do if not an AJAX request, though current JS uses AJAX.
-            return; 
+            return;
         }
-        
+
         if (file_exists($commentsFile)) {
             $currentComments = json_decode(file_get_contents($commentsFile), true);
-            
+
             if (isset($currentComments[$commentId])) {
                 // Initialize likes if it doesn't exist
                 if (!isset($currentComments[$commentId]['likes'])) {
                     $currentComments[$commentId]['likes'] = 0;
                 }
-                
+
                 $currentComments[$commentId]['likes']++;
-                
+
                 file_put_contents($commentsFile, json_encode($currentComments, JSON_PRETTY_PRINT));
                 // Set cookie after successful like
                 setcookie($cookie_name, "true", time() + (86400 * 365), "/"); // Cookie for 1 year
-                
+
                 // Return updated like count for AJAX requests
                 if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && $_SERVER['HTTP_X_REQUESTED_WITH'] === 'XMLHttpRequest') {
                     echo json_encode(['likes' => $currentComments[$commentId]['likes'], 'success' => true]);
                     exit;
                 }
             } else {
-                 if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && $_SERVER['HTTP_X_REQUESTED_WITH'] === 'XMLHttpRequest') {
+                if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && $_SERVER['HTTP_X_REQUESTED_WITH'] === 'XMLHttpRequest') {
                     echo json_encode(['error' => 'Comment not found.']);
                     exit;
                 }
@@ -80,13 +80,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 exit;
             }
         }
-    } 
+    }
     // Check if reply action
     elseif (isset($_POST['action']) && $_POST['action'] === 'reply') {
         $commentId = $_POST['comment_id'];
         $replyMessage = test_input($_POST['reply_message']);
         $commentsFile = 'comments.json';
-        
+
         if (empty($replyMessage)) {
             if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && $_SERVER['HTTP_X_REQUESTED_WITH'] === 'XMLHttpRequest') {
                 echo json_encode(['error' => 'Reply message is required']);
@@ -95,26 +95,26 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         } else {
             if (file_exists($commentsFile)) {
                 $currentComments = json_decode(file_get_contents($commentsFile), true);
-                
+
                 if (isset($currentComments[$commentId])) {
                     // Initialize replies array if it doesn't exist
                     if (!isset($currentComments[$commentId]['replies'])) {
                         $currentComments[$commentId]['replies'] = [];
                     }
-                    
+
                     // Create reply data
                     $replyData = [
                         'message' => $replyMessage,
                         'date' => date('d M, Y'),
                         'fullName' => isset($_COOKIE['commentName']) ? $_COOKIE['commentName'] : 'Anonymous',
                     ];
-                    
+
                     // Add reply to comment
                     $currentComments[$commentId]['replies'][] = $replyData;
-                    
+
                     file_put_contents($commentsFile, json_encode($currentComments, JSON_PRETTY_PRINT));
                     $replySuccess = true;
-                    
+
                     // Return success message for AJAX requests
                     if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && $_SERVER['HTTP_X_REQUESTED_WITH'] === 'XMLHttpRequest') {
                         echo json_encode([
@@ -139,7 +139,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $fullNameErr = "Only letters and white space allowed";
             }
         }
-        
+
         // Validate email
         if (empty($_POST["email"])) {
             $emailErr = "Email is required";
@@ -150,20 +150,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $emailErr = "Invalid email format";
             }
         }
-        
+
         // Validate message
         if (empty($_POST["message"])) {
             $messageErr = "Comment is required";
         } else {
             $message = test_input($_POST["message"]);
         }
-        
+
         // If no errors, save comment to file
         if (empty($fullNameErr) && empty($emailErr) && empty($messageErr)) {
             // Generate avatar color based on email (for consistency)
             $hash = md5($email);
             $colorHex = '#' . substr($hash, 0, 6);
-                    
+
             $commentData = [
                 'fullName' => $fullName,
                 'email' => $email,
@@ -174,25 +174,25 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 'likes' => 0,
                 'replies' => []
             ];
-            
+
             // Save to comments.json file
             $commentsFile = 'comments.json';
-            
+
             // Create default comments if file doesn't exist
             if (!file_exists($commentsFile)) {
                 $defaultComments = getDefaultComments();
                 file_put_contents($commentsFile, json_encode($defaultComments, JSON_PRETTY_PRINT));
             }
-            
+
             // Read existing comments
             $currentComments = json_decode(file_get_contents($commentsFile), true);
-            
+
             // Add new comment at the beginning of the array
             array_unshift($currentComments, $commentData);
-            
+
             // Save all comments back to file
             file_put_contents($commentsFile, json_encode($currentComments, JSON_PRETTY_PRINT));
-            
+
             // Clear form fields after successful submission
             $fullName = $email = $message = "";
             $submitSuccess = true;
@@ -201,7 +201,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 }
 
 // Helper function to sanitize input data
-function test_input($data) {
+function test_input($data)
+{
     $data = trim($data);
     $data = stripslashes($data);
     $data = htmlspecialchars($data);
@@ -209,26 +210,28 @@ function test_input($data) {
 }
 
 // Helper function to get initials from full name
-function getInitials($name) {
+function getInitials($name)
+{
     $words = explode(' ', $name);
     $initials = '';
-    
+
     foreach ($words as $word) {
         if (!empty($word)) {
             $initials .= mb_strtoupper(mb_substr($word, 0, 1, 'UTF-8'), 'UTF-8');
         }
     }
-    
+
     // If only one initial, use the first two letters
     if (strlen($initials) < 2 && mb_strlen($name, 'UTF-8') > 1) {
         $initials = mb_strtoupper(mb_substr($name, 0, 2, 'UTF-8'), 'UTF-8');
     }
-    
+
     return $initials;
 }
 
 // Function to load comments
-function getComments() {
+function getComments()
+{
     $commentsFile = 'comments.json';
     if (file_exists($commentsFile)) {
         return json_decode(file_get_contents($commentsFile), true);
@@ -238,7 +241,8 @@ function getComments() {
 }
 
 // Function to create default comments with avatar format
-function getDefaultComments() {
+function getDefaultComments()
+{
     // Define a set of vibrant colors for avatars
     $colors = [
         '#4f46e5', // Indigo
@@ -252,7 +256,7 @@ function getDefaultComments() {
         '#14b8a6', // Teal
         '#6366f1'  // Indigo
     ];
-    
+
     return [
         [
             'fullName' => 'Annette Black',
@@ -308,7 +312,8 @@ function getDefaultComments() {
 }
 
 // Generate a unique color for each user based on their email
-function getUserColor($email) {
+function getUserColor($email)
+{
     $colors = [
         '#4f46e5', // Indigo
         '#10b981', // Emerald
@@ -321,10 +326,10 @@ function getUserColor($email) {
         '#14b8a6', // Teal
         '#6366f1'  // Indigo
     ];
-    
+
     $hash = md5($email);
     $colorIndex = hexdec(substr($hash, 0, 8)) % count($colors);
-    
+
     return $colors[$colorIndex];
 }
 ?>
@@ -335,8 +340,16 @@ function getUserColor($email) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="Comments.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="../../Style/main.css">
+    <link rel="stylesheet" href="comments.css">
     <title>Shopery - Organic eCommerce</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
@@ -419,14 +432,14 @@ function getUserColor($email) {
         ::-webkit-scrollbar-thumb:hover {
             background: #16a34a;
         }
-        
+
         /* Error message styling */
         .error-message {
             color: #ef4444;
             font-size: 0.875rem;
             margin-top: 0.25rem;
         }
-        
+
         /* Success message styling */
         .success-message {
             background-color: #dcfce7;
@@ -435,7 +448,7 @@ function getUserColor($email) {
             border-radius: 0.5rem;
             margin-bottom: 1rem;
         }
-        
+
         /* Avatar styling */
         .user-avatar {
             width: 48px;
@@ -447,9 +460,9 @@ function getUserColor($email) {
             color: white;
             border-radius: 50%;
             font-size: 1rem;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
-        
+
         /* Dropdown Menu */
         .dropdown {
             position: relative;
@@ -466,13 +479,13 @@ function getUserColor($email) {
             padding: 0.5rem 0;
             background-color: white;
             border-radius: 0.375rem;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
         }
 
         .dropdown-menu.show {
             display: block;
         }
-        
+
         .dropdown-item {
             display: block;
             width: 100%;
@@ -480,20 +493,21 @@ function getUserColor($email) {
             text-align: left;
             transition: background-color 0.2s;
         }
-        
+
         .dropdown-item:hover {
             background-color: #f3f4f6;
         }
-        
+
         /* Like button active state */
         .like-btn.active {
             color: #00b207;
         }
-        
+
         .like-btn.active i {
-            font-weight: 900; /* Solid icon when active */
+            font-weight: 900;
+            /* Solid icon when active */
         }
-        
+
         /* Reply section */
         .reply-section {
             margin-top: 1rem;
@@ -501,20 +515,20 @@ function getUserColor($email) {
             border-top: 1px solid #e5e7eb;
             display: none;
         }
-        
+
         /* Reply list */
         .replies-list {
             margin-top: 1rem;
             padding-left: 2rem;
             border-left: 2px solid #e5e7eb;
         }
-        
+
         .reply-item {
             margin-bottom: 1rem;
             padding-bottom: 1rem;
             border-bottom: 1px dashed #e5e7eb;
         }
-        
+
         .reply-item:last-child {
             border-bottom: none;
         }
@@ -522,6 +536,9 @@ function getUserColor($email) {
 </head>
 
 <body class="bg-white">
+    <?php
+    include '../header.php';
+    ?>
     <div class="container mx-auto px-4 py-8 max-w-[1200px]">
         <!-- Summer Sales Banner -->
         <div
@@ -544,25 +561,25 @@ function getUserColor($email) {
         <!-- Leave a Comment Section -->
         <div class="p-6 md:p-10 mb-5 bg-white rounded-lg shadow-sm">
             <h1 class="text-3xl font-bold mb-6">Leave a Comment</h1>
-            
+
             <?php if ($submitSuccess): ?>
-            <div class="success-message mb-6">
-                <p>Your comment has been posted successfully!</p>
-            </div>
+                <div class="success-message mb-6">
+                    <p>Your comment has been posted successfully!</p>
+                </div>
             <?php endif; ?>
-            
+
             <?php if ($deleteSuccess): ?>
-            <div class="success-message mb-6">
-                <p>Comment has been deleted successfully!</p>
-            </div>
+                <div class="success-message mb-6">
+                    <p>Comment has been deleted successfully!</p>
+                </div>
             <?php endif; ?>
-            
+
             <?php if ($replySuccess): ?>
-            <div class="success-message mb-6">
-                <p>Your reply has been posted successfully!</p>
-            </div>
+                <div class="success-message mb-6">
+                    <p>Your reply has been posted successfully!</p>
+                </div>
             <?php endif; ?>
-            
+
             <form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
                 <div class="grid md:grid-cols-2 gap-6">
                     <div>
@@ -614,97 +631,115 @@ function getUserColor($email) {
             <div class="space-y-6">
                 <?php
                 $comments = getComments();
-                foreach ($comments as $index => $comment): 
-                ?>
-                <!-- Comment -->
-                <div class="flex items-start space-x-4 pb-6 border-b border-gray-200" id="comment-<?php echo $index; ?>">
-                    <div class="user-avatar" style="background-color: <?php echo htmlspecialchars($comment['colorHex']); ?>">
-                        <?php echo htmlspecialchars($comment['initials']); ?>
-                    </div>
-                    <div class="flex-1">
-                        <div class="flex items-center justify-between">
-                            <div class="flex items-center space-x-2">
-                                <h4 class="font-semibold text-gray-800"><?php echo htmlspecialchars($comment['fullName']); ?></h4>
-                                <span class="text-sm text-gray-500"><?php echo htmlspecialchars($comment['date']); ?></span>
-                            </div>
-                            <div class="dropdown">
-                                <span class="text-gray-400 hover:text-gray-600 cursor-pointer dropdown-toggle">
-                                    <i class="fas fa-ellipsis-h"></i>
-                                </span>
-                                <div class="dropdown-menu">
-                                    <form method="POST" class="inline">
-                                        <input type="hidden" name="comment_id" value="<?php echo $index; ?>">
-                                        <button type="submit" name="delete_comment" class="dropdown-item text-red-500 hover:bg-red-50">
-                                            <i class="fas fa-trash-alt mr-2"></i> Delete
-                                        </button>
-                                    </form>
-                                </div>
-                            </div>
+                foreach ($comments as $index => $comment):
+                    ?>
+                    <!-- Comment -->
+                    <div class="flex items-start space-x-4 pb-6 border-b border-gray-200"
+                        id="comment-<?php echo $index; ?>">
+                        <div class="user-avatar"
+                            style="background-color: <?php echo htmlspecialchars($comment['colorHex']); ?>">
+                            <?php echo htmlspecialchars($comment['initials']); ?>
                         </div>
-                        <p class="text-gray-600 mt-2 whitespace-pre-line"><?php echo htmlspecialchars($comment['message']); ?></p>
-                        <div class="flex items-center mt-3 text-gray-500 text-sm">
-                           
-                            <button class="reply-btn flex items-center ml-4 hover:text-green-600 transition-colors" data-comment-id="<?php echo $index; ?>">
-                                <i class="far fa-comment mr-1"></i> Reply
-                            </button>
-                        </div>
-                        
-
-
-
-
-                        <!-- Reply Form - Hidden by default -->
-                        <div class="reply-section" id="reply-section-<?php echo $index; ?>">
-                            <form class="reply-form" data-comment-id="<?php echo $index; ?>">
-                                <textarea name="reply_message" placeholder="Write your reply..." rows="2" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"></textarea>
-                                <div class="mt-2 flex justify-end">
-                                    <button type="button" class="cancel-reply bg-gray-100 text-gray-700 px-4 py-2 rounded-lg mr-2 hover:bg-gray-200 transition-colors">Cancel</button>
-                                    <button type="submit" class="submit-reply green-btn text-white px-4 py-2 rounded-lg hover:bg-green-700 transition-colors">Reply</button>
-                                </div>
-                            </form>
-                        </div>
-                        
-                        <!-- Replies List -->
-                        <?php if (isset($comment['replies']) && !empty($comment['replies'])): ?>
-                        <div class="replies-list mt-4">
-                            <h5 class="text-sm font-medium text-gray-700 mb-2">Replies</h5>
-                            <?php foreach ($comment['replies'] as $reply): ?>
-                            <div class="reply-item">
+                        <div class="flex-1">
+                            <div class="flex items-center justify-between">
                                 <div class="flex items-center space-x-2">
-                                    <h6 class="font-semibold text-gray-700"><?php echo htmlspecialchars($reply['fullName']); ?></h6>
-                                    <span class="text-xs text-gray-500"><?php echo htmlspecialchars($reply['date']); ?></span>
+                                    <h4 class="font-semibold text-gray-800">
+                                        <?php echo htmlspecialchars($comment['fullName']); ?>
+                                    </h4>
+                                    <span
+                                        class="text-sm text-gray-500"><?php echo htmlspecialchars($comment['date']); ?></span>
                                 </div>
-                                <p class="text-gray-600 mt-1 text-sm"><?php echo htmlspecialchars($reply['message']); ?></p>
+                                <div class="dropdown">
+                                    <span class="text-gray-400 hover:text-gray-600 cursor-pointer dropdown-toggle">
+                                        <i class="fas fa-ellipsis-h"></i>
+                                    </span>
+                                    <div class="dropdown-menu">
+                                        <form method="POST" class="inline">
+                                            <input type="hidden" name="comment_id" value="<?php echo $index; ?>">
+                                            <button type="submit" name="delete_comment"
+                                                class="dropdown-item text-red-500 hover:bg-red-50">
+                                                <i class="fas fa-trash-alt mr-2"></i> Delete
+                                            </button>
+                                        </form>
+                                    </div>
+                                </div>
                             </div>
-                            <?php endforeach; ?>
+                            <p class="text-gray-600 mt-2 whitespace-pre-line">
+                                <?php echo htmlspecialchars($comment['message']); ?>
+                            </p>
+                            <div class="flex items-center mt-3 text-gray-500 text-sm">
+
+                                <button class="reply-btn flex items-center ml-4 hover:text-green-600 transition-colors"
+                                    data-comment-id="<?php echo $index; ?>">
+                                    <i class="far fa-comment mr-1"></i> Reply
+                                </button>
+                            </div>
+
+
+
+
+
+                            <!-- Reply Form - Hidden by default -->
+                            <div class="reply-section" id="reply-section-<?php echo $index; ?>">
+                                <form class="reply-form" data-comment-id="<?php echo $index; ?>">
+                                    <textarea name="reply_message" placeholder="Write your reply..." rows="2"
+                                        class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"></textarea>
+                                    <div class="mt-2 flex justify-end">
+                                        <button type="button"
+                                            class="cancel-reply bg-gray-100 text-gray-700 px-4 py-2 rounded-lg mr-2 hover:bg-gray-200 transition-colors">Cancel</button>
+                                        <button type="submit"
+                                            class="submit-reply green-btn text-white px-4 py-2 rounded-lg hover:bg-green-700 transition-colors">Reply</button>
+                                    </div>
+                                </form>
+                            </div>
+
+                            <!-- Replies List -->
+                            <?php if (isset($comment['replies']) && !empty($comment['replies'])): ?>
+                                <div class="replies-list mt-4">
+                                    <h5 class="text-sm font-medium text-gray-700 mb-2">Replies</h5>
+                                    <?php foreach ($comment['replies'] as $reply): ?>
+                                        <div class="reply-item">
+                                            <div class="flex items-center space-x-2">
+                                                <h6 class="font-semibold text-gray-700">
+                                                    <?php echo htmlspecialchars($reply['fullName']); ?>
+                                                </h6>
+                                                <span
+                                                    class="text-xs text-gray-500"><?php echo htmlspecialchars($reply['date']); ?></span>
+                                            </div>
+                                            <p class="text-gray-600 mt-1 text-sm"><?php echo htmlspecialchars($reply['message']); ?>
+                                            </p>
+                                        </div>
+                                    <?php endforeach; ?>
+                                </div>
+                            <?php endif; ?>
                         </div>
-                        <?php endif; ?>
                     </div>
-                </div>
                 <?php endforeach; ?>
             </div>
         </div>
 
     </div>
-
+    <?php
+    include '../footer.html';
+    ?>
     <script>
-        
-        document.addEventListener('DOMContentLoaded', function() {
+
+        document.addEventListener('DOMContentLoaded', function () {
             // Check if saved info exists and populate the form
             if (localStorage.getItem('commentName') && localStorage.getItem('commentEmail')) {
                 document.getElementById('fullName').value = localStorage.getItem('commentName');
                 document.getElementById('email').value = localStorage.getItem('commentEmail');
                 document.getElementById('saveInfo').checked = true;
             }
-            
+
             // Add form submit event listener
             const form = document.querySelector('form');
-            form.addEventListener('submit', function(e) {
+            form.addEventListener('submit', function (e) {
                 // If save info checkbox is checked, save to localStorage
                 if (document.getElementById('saveInfo').checked) {
                     localStorage.setItem('commentName', document.getElementById('fullName').value);
                     localStorage.setItem('commentEmail', document.getElementById('email').value);
-                    
+
                     // Also set cookies for replies
                     document.cookie = "commentName=" + encodeURIComponent(document.getElementById('fullName').value) + "; path=/; max-age=31536000";  // 1 year
                 } else {
@@ -714,236 +749,237 @@ function getUserColor($email) {
                     document.cookie = "commentName=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT";
                 }
             });
-            
+
             // Dropdown toggles
             const dropdownToggles = document.querySelectorAll('.dropdown-toggle');
-            
+
             dropdownToggles.forEach(toggle => {
-                toggle.addEventListener('click', function(e) {
+                toggle.addEventListener('click', function (e) {
                     e.stopPropagation();
-                    
+
                     // Close all other dropdowns first
                     document.querySelectorAll('.dropdown-menu').forEach(menu => {
                         if (menu !== this.nextElementSibling) {
                             menu.classList.remove('show');
                         }
                     });
-                    
+
                     // Toggle the clicked dropdown
                     const dropdownMenu = this.nextElementSibling; // Corrected from this.next
-                    if(dropdownMenu) { // Check if dropdownMenu exists
-                       dropdownMenu.classList.toggle('show');
+                    if (dropdownMenu) { // Check if dropdownMenu exists
+                        dropdownMenu.classList.toggle('show');
                     }
                 });
             });
 
-// Close dropdowns when clicking elsewhere
-document.addEventListener('click', function() {
-    document.querySelectorAll('.dropdown-menu').forEach(menu => {
-        menu.classList.remove('show');
-    });
-});
+            // Close dropdowns when clicking elsewhere
+            document.addEventListener('click', function () {
+                document.querySelectorAll('.dropdown-menu').forEach(menu => {
+                    menu.classList.remove('show');
+                });
+            });
 
-// Like button functionality (Updated for PHP cookie-based like-once)
-const likeButtons = document.querySelectorAll('.like-btn');
-likeButtons.forEach(button => {
-    const commentIdForInitialCheck = button.getAttribute('data-comment-id');
-    // Check cookie to set initial state of the button
-    // Note: PHP should ideally render the button pre-disabled/active if liked.
-    // This JS check is a fallback or for dynamic updates if PHP doesn't pre-render state.
-    if (document.cookie.split(';').some((item) => item.trim().startsWith(`liked_comment_${commentIdForInitialCheck}=true`))) {
-        button.classList.add('active');
-        const icon = button.querySelector('i');
-        if (icon) {
-            icon.classList.remove('far');
-            icon.classList.add('fas');
-        }
-        button.disabled = true; 
-    }
-
-    button.addEventListener('click', function() {
-        const commentId = this.getAttribute('data-comment-id');
-        const likeCountSpan = this.querySelector('.like-count');
-        const buttonIcon = this.querySelector('i');
-
-        if (this.disabled) { // If button is already disabled (e.g. by initial check or previous click)
-            return; 
-        }
-
-        this.disabled = true; // Disable button immediately to prevent multiple clicks
-
-        const formData = new FormData();
-        formData.append('action', 'like');
-        formData.append('comment_id', commentId);
-        
-        fetch(window.location.href, {
-            method: 'POST',
-            body: formData,
-            headers: {
-                'X-Requested-With': 'XMLHttpRequest'
-            }
-        })
-        .then(response => {
-            if (!response.ok) {
-                return response.text().then(text => { throw new Error('Server error: ' + text); });
-            }
-            return response.json();
-        })
-        .then(data => {
-            if (data.success && data.likes !== undefined) {
-                // Successfully liked
-                if(likeCountSpan) likeCountSpan.textContent = data.likes;
-                this.classList.add('active');
-                if(buttonIcon) {
-                    buttonIcon.classList.remove('far');
-                    buttonIcon.classList.add('fas');
+            // Like button functionality (Updated for PHP cookie-based like-once)
+            const likeButtons = document.querySelectorAll('.like-btn');
+            likeButtons.forEach(button => {
+                const commentIdForInitialCheck = button.getAttribute('data-comment-id');
+                // Check cookie to set initial state of the button
+                // Note: PHP should ideally render the button pre-disabled/active if liked.
+                // This JS check is a fallback or for dynamic updates if PHP doesn't pre-render state.
+                if (document.cookie.split(';').some((item) => item.trim().startsWith(`liked_comment_${commentIdForInitialCheck}=true`))) {
+                    button.classList.add('active');
+                    const icon = button.querySelector('i');
+                    if (icon) {
+                        icon.classList.remove('far');
+                        icon.classList.add('fas');
+                    }
+                    button.disabled = true;
                 }
-                if (likeCountSpan && likeCountSpan.nextSibling && likeCountSpan.nextSibling.nodeType === Node.TEXT_NODE) {
-                    likeCountSpan.nextSibling.textContent = data.likes === 1 ? ' Like' : ' Likes';
-                }
-                // Button remains disabled as it's successfully liked and cookie is set by server
-            } else if (data.already_liked) {
-                // Already liked, server confirmed
-                if(likeCountSpan && data.likes !== undefined) likeCountSpan.textContent = data.likes; 
-                this.classList.add('active');
-                 if(buttonIcon) {
-                    buttonIcon.classList.remove('far');
-                    buttonIcon.classList.add('fas');
-                }
-                if (likeCountSpan && likeCountSpan.nextSibling && likeCountSpan.nextSibling.nodeType === Node.TEXT_NODE && data.likes !== undefined) {
-                    likeCountSpan.nextSibling.textContent = data.likes === 1 ? ' Like' : ' Likes';
-                }
-                // Button remains disabled
-            } else if (data.error) {
-                console.error('Error liking comment:', data.error);
-                alert('Error: ' + data.error);
-                this.disabled = false; // Re-enable button if there was an error from server logic
-            } else {
-                console.error('Unknown response from server:', data);
-                this.disabled = false; // Re-enable on unknown server response
-            }
-        })
 
-        .catch(error => {
-            console.error('Fetch Error:', error);
-            alert('An error occurred while trying to like the comment. Please try again.');
-            this.disabled = false; // Re-enable button on fetch error
-        });
-    });
-});
+                button.addEventListener('click', function () {
+                    const commentId = this.getAttribute('data-comment-id');
+                    const likeCountSpan = this.querySelector('.like-count');
+                    const buttonIcon = this.querySelector('i');
 
-// Reply button functionality
-const replyButtons = document.querySelectorAll('.reply-btn');
-replyButtons.forEach(button => {
-    button.addEventListener('click', function() {
-        const commentId = this.getAttribute('data-comment-id');
-        const replySection = document.getElementById(`reply-section-${commentId}`);
-        
-        // Hide all other reply sections first
-        document.querySelectorAll('.reply-section').forEach(section => {
-            if (section !== replySection) {
-                section.style.display = 'none';
-            }
-        });
-        
-        // Toggle the current reply section
-        replySection.style.display = replySection.style.display === 'block' ? 'none' : 'block';
-    });
-});
+                    if (this.disabled) { // If button is already disabled (e.g. by initial check or previous click)
+                        return;
+                    }
 
-// Cancel reply buttons
-const cancelButtons = document.querySelectorAll('.cancel-reply');
-cancelButtons.forEach(button => {
-    button.addEventListener('click', function() {
-        const replySection = this.closest('.reply-section');
-        replySection.style.display = 'none';
-        
-        // Clear the textarea
-        const textarea = replySection.querySelector('textarea');
-        textarea.value = '';
-    });
-});
+                    this.disabled = true; // Disable button immediately to prevent multiple clicks
 
-// Submit reply via AJAX
-const replyForms = document.querySelectorAll('.reply-form');
-replyForms.forEach(form => {
-    form.addEventListener('submit', function(e) {
-        e.preventDefault();
-        
-        const commentId = this.getAttribute('data-comment-id');
-        const textarea = this.querySelector('textarea');
-        const replyMessage = textarea.value.trim();
-        
-        if (replyMessage === '') {
-            alert('Please write a reply message');
-            return;
-        }
-        
-        // Send AJAX request to post reply
-        const formData = new FormData();
-        formData.append('action', 'reply');
-        formData.append('comment_id', commentId);
-        formData.append('reply_message', replyMessage);
-        
-        fetch(window.location.href, {
-            method: 'POST',
-            body: formData,
-            headers: {
-                'X-Requested-With': 'XMLHttpRequest'
-            }
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                // Create and add the new reply to the DOM
-                const repliesList = document.querySelector(`#comment-${commentId} .replies-list`);
-                
-                // If no replies list exists yet, create one
-                if (!repliesList) {
-                    const newRepliesList = document.createElement('div');
-                    newRepliesList.className = 'replies-list mt-4';
-                    newRepliesList.innerHTML = `
+                    const formData = new FormData();
+                    formData.append('action', 'like');
+                    formData.append('comment_id', commentId);
+
+                    fetch(window.location.href, {
+                        method: 'POST',
+                        body: formData,
+                        headers: {
+                            'X-Requested-With': 'XMLHttpRequest'
+                        }
+                    })
+                        .then(response => {
+                            if (!response.ok) {
+                                return response.text().then(text => { throw new Error('Server error: ' + text); });
+                            }
+                            return response.json();
+                        })
+                        .then(data => {
+                            if (data.success && data.likes !== undefined) {
+                                // Successfully liked
+                                if (likeCountSpan) likeCountSpan.textContent = data.likes;
+                                this.classList.add('active');
+                                if (buttonIcon) {
+                                    buttonIcon.classList.remove('far');
+                                    buttonIcon.classList.add('fas');
+                                }
+                                if (likeCountSpan && likeCountSpan.nextSibling && likeCountSpan.nextSibling.nodeType === Node.TEXT_NODE) {
+                                    likeCountSpan.nextSibling.textContent = data.likes === 1 ? ' Like' : ' Likes';
+                                }
+                                // Button remains disabled as it's successfully liked and cookie is set by server
+                            } else if (data.already_liked) {
+                                // Already liked, server confirmed
+                                if (likeCountSpan && data.likes !== undefined) likeCountSpan.textContent = data.likes;
+                                this.classList.add('active');
+                                if (buttonIcon) {
+                                    buttonIcon.classList.remove('far');
+                                    buttonIcon.classList.add('fas');
+                                }
+                                if (likeCountSpan && likeCountSpan.nextSibling && likeCountSpan.nextSibling.nodeType === Node.TEXT_NODE && data.likes !== undefined) {
+                                    likeCountSpan.nextSibling.textContent = data.likes === 1 ? ' Like' : ' Likes';
+                                }
+                                // Button remains disabled
+                            } else if (data.error) {
+                                console.error('Error liking comment:', data.error);
+                                alert('Error: ' + data.error);
+                                this.disabled = false; // Re-enable button if there was an error from server logic
+                            } else {
+                                console.error('Unknown response from server:', data);
+                                this.disabled = false; // Re-enable on unknown server response
+                            }
+                        })
+
+                        .catch(error => {
+                            console.error('Fetch Error:', error);
+                            alert('An error occurred while trying to like the comment. Please try again.');
+                            this.disabled = false; // Re-enable button on fetch error
+                        });
+                });
+            });
+
+            // Reply button functionality
+            const replyButtons = document.querySelectorAll('.reply-btn');
+            replyButtons.forEach(button => {
+                button.addEventListener('click', function () {
+                    const commentId = this.getAttribute('data-comment-id');
+                    const replySection = document.getElementById(`reply-section-${commentId}`);
+
+                    // Hide all other reply sections first
+                    document.querySelectorAll('.reply-section').forEach(section => {
+                        if (section !== replySection) {
+                            section.style.display = 'none';
+                        }
+                    });
+
+                    // Toggle the current reply section
+                    replySection.style.display = replySection.style.display === 'block' ? 'none' : 'block';
+                });
+            });
+
+            // Cancel reply buttons
+            const cancelButtons = document.querySelectorAll('.cancel-reply');
+            cancelButtons.forEach(button => {
+                button.addEventListener('click', function () {
+                    const replySection = this.closest('.reply-section');
+                    replySection.style.display = 'none';
+
+                    // Clear the textarea
+                    const textarea = replySection.querySelector('textarea');
+                    textarea.value = '';
+                });
+            });
+
+            // Submit reply via AJAX
+            const replyForms = document.querySelectorAll('.reply-form');
+            replyForms.forEach(form => {
+                form.addEventListener('submit', function (e) {
+                    e.preventDefault();
+
+                    const commentId = this.getAttribute('data-comment-id');
+                    const textarea = this.querySelector('textarea');
+                    const replyMessage = textarea.value.trim();
+
+                    if (replyMessage === '') {
+                        alert('Please write a reply message');
+                        return;
+                    }
+
+                    // Send AJAX request to post reply
+                    const formData = new FormData();
+                    formData.append('action', 'reply');
+                    formData.append('comment_id', commentId);
+                    formData.append('reply_message', replyMessage);
+
+                    fetch(window.location.href, {
+                        method: 'POST',
+                        body: formData,
+                        headers: {
+                            'X-Requested-With': 'XMLHttpRequest'
+                        }
+                    })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.success) {
+                                // Create and add the new reply to the DOM
+                                const repliesList = document.querySelector(`#comment-${commentId} .replies-list`);
+
+                                // If no replies list exists yet, create one
+                                if (!repliesList) {
+                                    const newRepliesList = document.createElement('div');
+                                    newRepliesList.className = 'replies-list mt-4';
+                                    newRepliesList.innerHTML = `
                         <h5 class="text-sm font-medium text-gray-700 mb-2">Replies</h5>
                     `;
-                    
-                    const commentBlock = document.querySelector(`#comment-${commentId} .flex-1`);
-                    commentBlock.appendChild(newRepliesList);
-                    
-                    // Add the new reply to the newly created list
-                    addReplyToList(newRepliesList, data.reply);
-                } else {
-                    // Add the new reply to the existing list
-                    addReplyToList(repliesList, data.reply);
-                }
-                
-                // Clear the textarea and hide the reply form
-                textarea.value = '';
-                this.closest('.reply-section').style.display = 'none';
-            } else if (data.error) {
-                alert(data.error);
-            }
-        })
-        .catch(error => console.error('Error:', error));
-    });
-});
 
-// Helper function to add a reply to the DOM
-function addReplyToList(repliesList, reply) {
-    const replyItem = document.createElement('div');
-    replyItem.className = 'reply-item';
-    replyItem.innerHTML = `
+                                    const commentBlock = document.querySelector(`#comment-${commentId} .flex-1`);
+                                    commentBlock.appendChild(newRepliesList);
+
+                                    // Add the new reply to the newly created list
+                                    addReplyToList(newRepliesList, data.reply);
+                                } else {
+                                    // Add the new reply to the existing list
+                                    addReplyToList(repliesList, data.reply);
+                                }
+
+                                // Clear the textarea and hide the reply form
+                                textarea.value = '';
+                                this.closest('.reply-section').style.display = 'none';
+                            } else if (data.error) {
+                                alert(data.error);
+                            }
+                        })
+                        .catch(error => console.error('Error:', error));
+                });
+            });
+
+            // Helper function to add a reply to the DOM
+            function addReplyToList(repliesList, reply) {
+                const replyItem = document.createElement('div');
+                replyItem.className = 'reply-item';
+                replyItem.innerHTML = `
         <div class="flex items-center space-x-2">
             <h6 class="font-semibold text-gray-700">${reply.fullName}</h6>
             <span class="text-xs text-gray-500">${reply.date}</span>
         </div>
         <p class="text-gray-600 mt-1 text-sm">${reply.message}</p>
     `;
-    
-    repliesList.appendChild(replyItem);
-}
+
+                repliesList.appendChild(replyItem);
+            }
         });
     </script>
 
 
 </body>
+
 </html>

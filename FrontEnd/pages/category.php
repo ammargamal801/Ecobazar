@@ -149,12 +149,12 @@ if (isset($_SESSION['user'])) {
     </nav>
 
     <!-- Photo on Header Section -->
-    <div class="container-fluid" style="margin-top: 120px; height: 100px;">
+    <div class="container-fluid" style="margin-top: 120px; height: 100px; margin-bottom: 20px;">
         <div class="row">
             <img src="../Assets/pic under header.jpg" alt="" class="img-fluid" style="height: 100px; object-fit: cover;">
         </div>
     </div>
-
+<!-- ///////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
     <div class="container2">
         <div class="filter-container">
             <div class="filter-button">
@@ -410,7 +410,9 @@ if (isset($_SESSION['user'])) {
         </div>
     </div>
     <!-- /////////////////////////////////////////////////////////////////////// -->
-
+<?php 
+include './footer.html';
+?>
     <script src="../Logics/category.js"></script>
     <!-- Custom JavaScript for search on nav bar -->
     <script>
@@ -427,19 +429,11 @@ if (isset($_SESSION['user'])) {
                 }
             });
         });
-
-
-        if (localStorage.getItem('orderCompleted') === 'true') {
-            localStorage.removeItem('cart');
-            localStorage.removeItem('cartTotal');
-            localStorage.removeItem('orderCompleted'); 
-        }
     </script>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" 
     integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" 
     crossorigin="anonymous"></script>
-
     <script src="../Logics/add&delete-cart.js"></script>
     <script>
         // Wishlist functionality
