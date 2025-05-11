@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Shopping Cart</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="../../Style/shopping-cart.css">
+</head>
+
+<body>
+  <!-- Navbar -->
+  <header class="bg-light border-bottom">
+    <div class="container d-flex justify-content-between align-items-center py-2">
+      <span>Store location: Egypt,alexandria</span>
+      <div>
+        <span>Eng ▼</span> | 
+        <span>EG ▼</span> | 
+        <a href="../Login Page/login.html" class="text-decoration-none text-green"><span>&larr;</span> signin / login</a>
+      </div>
+    </div>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <div class="container">
+        <a class="navbar-brand text-success fw-bold" href="#">Ecobazar</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav me-auto">
+            <li class="nav-item"><a class="nav-link active" href="#">Home</a></li>
+            <li class="nav-item"><a class="nav-link" href="#">Shop</a></li>
+            <li class="nav-item"><a class="nav-link" href="#">Pages</a></li>
+            <li class="nav-item"><a class="nav-link" href="#">Blog</a></li>
+            <li class="nav-item"><a class="nav-link" href="#">About Us</a></li>
+            <li class="nav-item"><a class="nav-link" href="#">Contact Us</a></li>
+          </ul>
+          <form class="d-flex">
+            <input class="form-control me-2" type="search" placeholder="Search">
+            <button class="btn btn-success" type="submit">Search</button>
+          </form>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Shopping Cart Section -->
+  <section class="container my-5">
+    <h2 class="text-center mb-4">My Shopping Cart</h2>
+    <div class="row">
+      <!-- Cart Items -->
+      <div class="col-lg-8">
+        <table class="table border">
+          <thead>
+            <tr>
+              <th>Product</th>
+              <th>Price</th>
+              <th>Quantity</th>
+              <th>Subtotal</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody id="cart-items">
+
+          </tbody>
+        </table>
+        <div class="d-flex justify-content-between">
+          <button class="btn btn-outline-secondary">Return to shop</button>
+          <button class="btn btn-outline-success" id="update-cart">Update Cart</button>
+        </div>
+        <div class="mt-4">
+          <input type="text" class="form-control d-inline-block w-75" placeholder="Enter code">
+          <button class="btn btn-outline-dark">Apply Coupon</button>
+        </div>
+      </div>
+
+      <!-- Cart Summary -->
+      <div class="col-lg-4">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">Cart Total</h5>
+            <p class="d-flex justify-content-between">
+              <span>Subtotal</span>
+              <span id="cart-subtotal">00.00</span>
+            </p>
+            <p class="d-flex justify-content-between">
+              <span>Shipping</span>
+              <span>Free</span>
+            </p>
+            <hr>
+            <p class="d-flex justify-content-between fw-bold">
+              <span>Total</span>
+              <span id="cart-total">00.00</span>
+            </p>
+            <button class="btn btn-success w-100 proceed-to-check">Proceed to checkout</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="../../Logics/shopping-cart.js"></script>
+</body>
+
+</html>
