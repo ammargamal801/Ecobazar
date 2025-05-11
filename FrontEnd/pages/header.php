@@ -1,16 +1,3 @@
-<?php
-require_once '../../Backend/Authentication/users.php';
-
-// Check if user is logged in
-$is_logged_in = isset($_SESSION['user']);
-$wishlist_items = [];
-
-if ($is_logged_in) {
-    $user = unserialize($_SESSION['user']);
-    $user_id = $user->getId();
-    $wishlist_items = Customer::getWishlist($user_id);
-}
-?>
 <title>Document</title>
 <link rel="stylesheet" href="../Style/main.css">
 <div class="he">
@@ -214,9 +201,9 @@ if ($is_logged_in) {
     </nav>
 
     <!-- Banner image below header -->
-    <div class="container-fluid" style="margin-top: 120px; height: 100px;">
+    <div class="container-fluid" style="margin-top: 59px; height: 100px;">
         <div class="row">
-            <img src="../Assets/pic under header.jpg" alt="" class="img-fluid"
+            <img src="../../Assets/pic under header.jpg" alt="" class="img-fluid"
                 style="height: 100px; object-fit: cover;">
         </div>
     </div>
