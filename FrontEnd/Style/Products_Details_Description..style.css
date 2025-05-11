@@ -79,8 +79,10 @@ img {
 }
 
 .main-image img {
-    max-height: 100%;
+      width: 80%;
+    height: 100%;
     object-fit: contain;
+    transition: transform 0.5s ease;
 }
 
 .product-info {
