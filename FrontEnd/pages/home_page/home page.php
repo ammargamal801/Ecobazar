@@ -1,3 +1,16 @@
+<?php
+session_start();
+require_once '../../../Backend/Authentication/users.php';
+// Check if user is logged in
+$is_logged_in = isset($_SESSION['user']);
+$wishlist_items = [];
+
+if ($is_logged_in) {
+    $user = unserialize($_SESSION['user']);
+    $user_id = $user->getId();
+    $wishlist_items = Customer::getWishlist($user_id);
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 

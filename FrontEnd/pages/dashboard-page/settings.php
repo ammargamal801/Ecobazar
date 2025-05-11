@@ -1,14 +1,27 @@
+<?php
+session_start();
+require_once '../../../Backend/Authentication/users.php';
+// Check if user is logged in
+$is_logged_in = isset($_SESSION['user']);
+$wishlist_items = [];
+
+if ($is_logged_in) {
+    $user = unserialize($_SESSION['user']);
+    $user_id = $user->getId();
+    $wishlist_items = Customer::getWishlist($user_id);
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta charset="UFT-8" />
+        <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0"> -->
         <link rel="icon" href="dashbroad-image/header-logo.svg" />
-        <link rel="stylesheet" href="dashbroad.css" />
+        <link rel="stylesheet" href="settings.css" />
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
-        <title>Dashboard</title>
+        <title>Settings</title>
 <!-- Bootstrap CSS for styling components -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
@@ -261,7 +274,7 @@
                         <img src="dashbroad-image/right-arrow.svg" alt="right arrow" />
                         <h6><a href="#">Account</a></h6>
                         <img src="dashbroad-image/right-arrow.svg" alt="right arrow" />
-                        <h6><a href="#" class="baner__a">Dashboard</a></h6>
+                        <h6><a href="#" class="baner__a">Settings</a></h6>
                     </div>
                 </div>
             </section>
@@ -273,7 +286,7 @@
                             <div class="flex__colamn acount-info__aside box-border">
                                 <h5>Navigation</h5>
                                 <button class="flex__row">
-                                    <a href="dashbroad.html" class="flex__row acount-info__aside--button acount-info__aside--dashed-button">
+                                    <a href="dashbroad.html" class="flex__row acount-info__aside--button">
                                         <img src="dashbroad-image/dashbroad-icon.svg" alt="dashbroad icon" />
                                         <p>Dashboard</p>
                                     </a>
@@ -297,7 +310,7 @@
                                     </a>
                                 </button>
                                 <button class="flex__row">
-                                    <a href="settings.html" class="flex__row acount-info__aside--button">
+                                    <a href="settings.html" class="flex__row acount-info__aside--button acount-info__aside--setting-button">
                                         <img src="dashbroad-image/setting-icon.svg" alt="Settings icon" />
                                         <p>Settings</p>
                                     </a>
@@ -310,98 +323,128 @@
                                 </button>
                             </div>
                         </aside>
-                        <div class="flex__colamn acount-info__dashbroead-container">
-                            <div class="flex__row dashbroad__box  acount-info__dashbroad-boxes">
-                                <div class="flex__colamn acount-info__costumer-profill box-border">
-                                    <img src="dashbroad-image/costumer-img.svg" alt="costumer image" />
-                                    <div class="flex__colamn">
-                                        <h5>Dianne Russell</h5>
-                                        <P>Customer</P>
+
+                        <div class="flex__colamn acount-info__setting-container">
+                            <div class="box-border flex__colamn acount-info__setting-box">
+                                <h5>Account Settings</h5>
+                                <div class="flex__row acount-info__change-acount-info">
+                                    <div class="flex__colamn acount-info__change-text">
+                                        <form class="flex__colamn acount-info__change-form acount-info__change-acount-info-form">
+                                            <div class="flex__colamn">
+                                                <label for="first-name">First name</label>
+                                                <input type="text" id="first-name" class="box-border" value="Dianne" />
+                                            </div>
+                                            <div class="flex__colamn">
+                                                <label for="last-name">Last Name</label>
+                                                <input type="text" id="last-name" class="box-border" value="Russell" />
+                                            </div>
+                                            <div class="flex__colamn">
+                                                <label for="email">Email</label>
+                                                <input type="email" id="email" class="box-border" value="dianne.russell@gmail.com" />
+                                            </div>
+                                            <div class="flex__colamn">
+                                                <label for="tel">Phone Number</label>
+                                                <input type="tel" id="tel" class="box-border" value="(603) 555-0123" />
+                                            </div>
+                                        </form>
+                                        <button class="acount-info__change-info--green-button">Save Changes</button>
                                     </div>
-                                    <a href="settings.html" class="edit-address">Edit Profile</a>
-                                </div>
-                                <div class="flex__colamn box-border acount-info__costumer-info">
-                                    <p>Billing Address</p>
-                                    <div class="flex__colamn acount-info__costumer-info--div">
-                                        <h6>Danie Russell</h6>
-                                        <p>4140 Parker Rd. Allentown, New Mexico 31134</p>
-                                        <div class="flex__colamn">
-                                            <p>dainne.ressell@gmail.com</p>
-                                            <span>(671) 555-0110</span>
-                                        </div>
+                                    <div class="flex__colamn acount-info__change-photo">
+                                        <img src="dashbroad-image/costumer-image.svg" alt="costumer image" />
+                                        <button>Chose Image</button>
                                     </div>
-                                    <a href="settings.html" class="edit-address">Edit Address</a>
                                 </div>
                             </div>
-                            <div class="flex__colamn box-border acount-info__order-box">
-                                <div class="flex__row acount-info__order-box--h5">
-                                    <h5>Recet Order History</h5>
-                                    <a href="order-detail.html" class="edit-address">View All</a>
+                            <div class="box-border flex__colamn acount-info__setting-box">
+                                <h5>Billing Address</h5>
+                                <div class="flex__colamn acount-info__change-text">
+                                    <form class="flex__colamn acount-info__change-form acount-info__billing-form">
+                                        <div class="flex__row acount-info__billing--costumer-info">
+                                            <div class="flex__colamn">
+                                                <label for="first-name">First name</label>
+                                                <input type="text" id="first-name" class="box-border" value="Dianne" />
+                                            </div>
+                                            <div class="flex__colamn">
+                                                <label>Last name</label>
+                                                <input type="text" value="Dianne" class="box-border" />
+                                            </div>
+                                            <div class="flex__colamn">
+                                                <label>Company Name (optional)</label>
+                                                <input type="text" value="Zakirsoft" class="box-border" />
+                                            </div>
+                                        </div>
+                                        <div class="flex__colamn">
+                                            <label for="last-name">Street Address</label>
+                                            <input type="text" id="last-name" class="box-border" value="4140 Par|" />
+                                        </div>
+                                        <div class="flex__row acount-info__billing--costumer-info">
+                                            <div class="flex__colamn">
+                                                <label for="first-name">Country / Region</label>
+                                                <div class="flex__row box-border bottom-arrow__box">
+                                                    <input type="text" id="first-name" value="Dianne" />
+                                                    <img src="dashbroad-image/bottom-arrow.svg" alt="bottom-arrow" />
+                                                </div>
+                                            </div>
+                                            <div class="flex__colamn">
+                                                <label>States</label>
+                                                <div class="flex__row box-border bottom-arrow__box">
+                                                    <input type="text" id="first-name" value="Washington DC" />
+                                                    <img src="dashbroad-image/bottom-arrow.svg" alt="bottom-arrow" />
+                                                </div>
+                                            </div>
+                                            <div class="flex__colamn">
+                                                <label>Zip Code</label>
+                                                <input type="text" value="20033" class="box-border" />
+                                            </div>
+                                        </div>
+                                        <div class="flex__row acount-info__billing--contact-info">
+                                            <div class="flex__colamn">
+                                                <label>Email</label>
+                                                <input type="text" value="dianne.russell@gmail.com" class="box-border" />
+                                            </div>
+                                            <div class="flex__colamn">
+                                                <label>Phone</label>
+                                                <input type="tel" value="(603) 555-0123" class="box-border" />
+                                            </div>
+                                        </div>
+                                    </form>
+                                    <button class="acount-info__change-info--green-button">Save Changes</button>
                                 </div>
-
-                                <ul class="flex__row order__ul">
-                                    <li>Order ID</li>
-                                    <li>Date</li>
-                                    <li>Total</li>
-                                    <li>Status</li>
-                                    <li></li>
-                                </ul>
-
-                                <div>
-                                    <ul class="flex__row order__ul acount-info__order--ul">
-                                        <li>#738</li>
-                                        <li>8 Sep, 2020</li>
-                                        <li>$135.00 (5 Products)</li>
-                                        <li>Processing</li>
-                                        <li><a href="#">View Details</a></li>
-                                    </ul>
-    
-                                    <ul class="flex__row order__ul acount-info__order--ul">
-                                        <li>#703</li>
-                                        <li>24 May, 2020</li>
-                                        <li>$25.00 (1 Product)</li>
-                                        <li>on the way</li>
-                                        <li><a href="#">View Details</a></li>
-                                    </ul>
-    
-                                    <ul class="flex__row order__ul acount-info__order--ul">
-                                        <li>#130</li>
-                                        <li>22 Oct, 2020</li>
-                                        <li>$250.00 (4 Products)</li>
-                                        <li>Completed</li>
-                                        <li><a href="#">View Details</a></li>
-                                    </ul>
-    
-                                    <ul class="flex__row order__ul acount-info__order--ul">
-                                        <li>#561</li>
-                                        <li>1 Feb, 2020</li>
-                                        <li>$35.00 (1 Products)</li>
-                                        <li>Completed</li>
-                                        <li><a href="#">View Details</a></li>
-                                    </ul>
-    
-                                    <ul class="flex__row order__ul acount-info__order--ul">
-                                        <li>#536</li>
-                                        <li>21 Sep, 2020</li>
-                                        <li>$578.00 (13 Products)</li>
-                                        <li>Completed</li>
-                                        <li><a href="#">View Details</a></li>
-                                    </ul>
-    
-                                    <ul class="flex__row acount-info__order--end-ul order__ul acount-info__order--ul">
-                                        <li>#492</li>
-                                        <li>22 Oct, 2020</li>
-                                        <li>$345.00 (7 Products)</li>
-                                        <li>Completed</li>
-                                        <li><a href="#">View Details</a></li>
-                                    </ul>
+                            </div>
+                            <div class="box-border flex__colamn acount-info__setting-box">
+                                <h5>Change Password</h5>
+                                <div class="flex__colamn acount-info__change-text">
+                                    <form class="flex__colamn acount-info__change-form acount-info__billing-form">
+                                        <div class="flex__colamn acount-info__current-password-box">
+                                            <label>Current Password</label>
+                                            <div class="box-border flex__row">
+                                                <input type="password" placeholder="Password" />
+                                                <img src="dashbroad-image/eye-icon.svg" alt="eye icon" />
+                                            </div>
+                                        </div>
+                                        <div class="flex__row acount-info__change-passwor">
+                                            <div class="flex__colamn acount-info__change-password-box">
+                                                <label>New Password Password</label>
+                                                <div class="flex__row box-border">
+                                                    <input type="password" placeholder="Password" />
+                                                    <img src="dashbroad-image/eye-icon.svg" alt="eye icon" />
+                                                </div>
+                                            </div>
+                                            <div class="flex__colamn acount-info__change-password-box">
+                                                <label>Confirm Password</label>
+                                                <div class="flex__row box-border">
+                                                    <input type="password" placeholder="password"/> 
+                                                    <img src="dashbroad-image/eye-icon.svg" alt="eye icon" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                    <button class="acount-info__change-info--green-button acount-info__change-info--green-password-button">Change Password</button>
                                 </div>
-
                             </div>
                         </div>
                     </div>
                 </div>
-                
             </article>
 
         </main>

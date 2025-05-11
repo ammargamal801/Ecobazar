@@ -1,12 +1,27 @@
+<?php
+session_start();
+require_once '../../../Backend/Authentication/users.php';
+// Check if user is logged in
+$is_logged_in = isset($_SESSION['user']);
+$wishlist_items = [];
+
+if ($is_logged_in) {
+    $user = unserialize($_SESSION['user']);
+    $user_id = $user->getId();
+    $wishlist_items = Customer::getWishlist($user_id);
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Shopping Cart</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="../../Style/shopping-cart.css">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="icon" href="dashbroad-image/header-logo.svg" />
+        <link rel="stylesheet" href="dashbroad.css" />
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+        <title>Dashboard</title>
 <!-- Bootstrap CSS for styling components -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
@@ -251,67 +266,160 @@
         </div>
     </nav>
 
-  <!-- Shopping Cart Section -->
-  <section class="container my-5">
-    <h2 class="text-center mb-4" style="margin-top: 120px;">My Shopping Cart</h2>
-    <div class="row">
-      <!-- Cart Items -->
-      <div class="col-lg-8">
-        <table class="table border">
-          <thead>
-            <tr>
-              <th>Product</th>
-              <th>Price</th>
-              <th>Quantity</th>
-              <th>Subtotal</th>
-              <th></th>
-            </tr>
-          </thead>
-          <tbody id="cart-items">
+        <main>
+            <section>
+                <div class="baner__container flex__row">
+                    <div class="flex__row box-width">
+                        <img src="dashbroad-image/home-icon.svg" alt="home icon" />
+                        <img src="dashbroad-image/right-arrow.svg" alt="right arrow" />
+                        <h6><a href="#">Account</a></h6>
+                        <img src="dashbroad-image/right-arrow.svg" alt="right arrow" />
+                        <h6><a href="#" class="baner__a">Dashboard</a></h6>
+                    </div>
+                </div>
+            </section>
 
-          </tbody>
-        </table>
-        <div class="d-flex justify-content-between">
-          <button class="btn btn-outline-secondary">Return to shop</button>
-          <button class="btn btn-outline-success" id="update-cart">Update Cart</button>
-        </div>
-        <div class="mt-4">
-          <input type="text" class="form-control d-inline-block w-75" placeholder="Enter code">
-          <button class="btn btn-outline-dark">Apply Coupon</button>
-        </div>
-      </div>
+            <article>
+                <div class="flex__row acount-info__container">
+                    <div class="flex__row box-width acount-info__box">
+                        <aside>
+                            <div class="flex__colamn acount-info__aside box-border">
+                                <h5>Navigation</h5>
+                                <button class="flex__row">
+                                    <a href="dashbroad.html" class="flex__row acount-info__aside--button acount-info__aside--dashed-button">
+                                        <img src="dashbroad-image/dashbroad-icon.svg" alt="dashbroad icon" />
+                                        <p>Dashboard</p>
+                                    </a>
+                                </button>
+                                <button class="flex__row">
+                                    <a href="order-history.html" class="acount-info__aside--button flex__row">
+                                        <img src="dashbroad-image/refresh-icon.svg" alt="refresh-icon" />
+                                        <p>Order History</p>
+                                    </a>
+                                </button>
+                                <button class="flex__row">
+                                    <a href="#" class="flex__row acount-info__aside--button">
+                                        <img src="dashbroad-image/white-heart.svg" alt="heart icon" />
+                                        <p>Wishlist</p>
+                                    </a>
+                                </button>
+                                <button class="flex__row">
+                                    <a href="#" class="flex__row acount-info__aside--button">
+                                        <img src="dashbroad-image/white-bag.svg" alt="bag-icon" />
+                                        <p>Shopping Cart</p>
+                                    </a>
+                                </button>
+                                <button class="flex__row">
+                                    <a href="settings.html" class="flex__row acount-info__aside--button">
+                                        <img src="dashbroad-image/setting-icon.svg" alt="Settings icon" />
+                                        <p>Settings</p>
+                                    </a>
+                                </button>
+                                <button class="flex__row">
+                                    <a href="#" class="flex__row acount-info__aside--button">
+                                        <img src="dashbroad-image/log-out.svg" alt="log-out icon" />
+                                        <p>Log-out</p>
+                                    </a>
+                                </button>
+                            </div>
+                        </aside>
+                        <div class="flex__colamn acount-info__dashbroead-container">
+                            <div class="flex__row dashbroad__box  acount-info__dashbroad-boxes">
+                                <div class="flex__colamn acount-info__costumer-profill box-border">
+                                    <img src="dashbroad-image/costumer-img.svg" alt="costumer image" />
+                                    <div class="flex__colamn">
+                                        <h5>Dianne Russell</h5>
+                                        <P>Customer</P>
+                                    </div>
+                                    <a href="settings.html" class="edit-address">Edit Profile</a>
+                                </div>
+                                <div class="flex__colamn box-border acount-info__costumer-info">
+                                    <p>Billing Address</p>
+                                    <div class="flex__colamn acount-info__costumer-info--div">
+                                        <h6>Danie Russell</h6>
+                                        <p>4140 Parker Rd. Allentown, New Mexico 31134</p>
+                                        <div class="flex__colamn">
+                                            <p>dainne.ressell@gmail.com</p>
+                                            <span>(671) 555-0110</span>
+                                        </div>
+                                    </div>
+                                    <a href="settings.html" class="edit-address">Edit Address</a>
+                                </div>
+                            </div>
+                            <div class="flex__colamn box-border acount-info__order-box">
+                                <div class="flex__row acount-info__order-box--h5">
+                                    <h5>Recet Order History</h5>
+                                    <a href="order-detail.html" class="edit-address">View All</a>
+                                </div>
 
-      <!-- Cart Summary -->
-      <div class="col-lg-4">
-        <div class="card">
-          <div class="card-body">
-            <h5 class="card-title">Cart Total</h5>
-            <p class="d-flex justify-content-between">
-              <span>Subtotal</span>
-              <span id="cart-subtotal">84.00</span>
-            </p>
-            <p class="d-flex justify-content-between">
-              <span>Shipping</span>
-              <span>Free</span>
-            </p>
-            <hr>
-            <p class="d-flex justify-content-between fw-bold">
-              <span>Total</span>
-              <span id="cart-total">84.00</span>
-            </p>
-            <button class="btn btn-success w-100 proceed-to-check">Proceed to checkout</button>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
+                                <ul class="flex__row order__ul">
+                                    <li>Order ID</li>
+                                    <li>Date</li>
+                                    <li>Total</li>
+                                    <li>Status</li>
+                                    <li></li>
+                                </ul>
 
+                                <div>
+                                    <ul class="flex__row order__ul acount-info__order--ul">
+                                        <li>#738</li>
+                                        <li>8 Sep, 2020</li>
+                                        <li>$135.00 (5 Products)</li>
+                                        <li>Processing</li>
+                                        <li><a href="#">View Details</a></li>
+                                    </ul>
+    
+                                    <ul class="flex__row order__ul acount-info__order--ul">
+                                        <li>#703</li>
+                                        <li>24 May, 2020</li>
+                                        <li>$25.00 (1 Product)</li>
+                                        <li>on the way</li>
+                                        <li><a href="#">View Details</a></li>
+                                    </ul>
+    
+                                    <ul class="flex__row order__ul acount-info__order--ul">
+                                        <li>#130</li>
+                                        <li>22 Oct, 2020</li>
+                                        <li>$250.00 (4 Products)</li>
+                                        <li>Completed</li>
+                                        <li><a href="#">View Details</a></li>
+                                    </ul>
+    
+                                    <ul class="flex__row order__ul acount-info__order--ul">
+                                        <li>#561</li>
+                                        <li>1 Feb, 2020</li>
+                                        <li>$35.00 (1 Products)</li>
+                                        <li>Completed</li>
+                                        <li><a href="#">View Details</a></li>
+                                    </ul>
+    
+                                    <ul class="flex__row order__ul acount-info__order--ul">
+                                        <li>#536</li>
+                                        <li>21 Sep, 2020</li>
+                                        <li>$578.00 (13 Products)</li>
+                                        <li>Completed</li>
+                                        <li><a href="#">View Details</a></li>
+                                    </ul>
+    
+                                    <ul class="flex__row acount-info__order--end-ul order__ul acount-info__order--ul">
+                                        <li>#492</li>
+                                        <li>22 Oct, 2020</li>
+                                        <li>$345.00 (7 Products)</li>
+                                        <li>Completed</li>
+                                        <li><a href="#">View Details</a></li>
+                                    </ul>
+                                </div>
 
-  
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="../../Logics/shopping-cart.js"></script>
-  <script src="../../Logics/header.js"></script>
-    <nav class="navbar pt-0" style="background-color:var(--footer-background);">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+            </article>
+
+        </main>
+
+        <nav class="navbar pt-0" style="background-color:var(--footer-background);">
         <!-- Top bar with contrasting background color -->
         <div class="container-fluid" style="background-color:var(--card-border-color);">
             <div class="container-fluid">
@@ -559,5 +667,4 @@
     </nav>
     <script src="../../Logics/header.js"></script>
 </body>
-
 </html>
