@@ -244,7 +244,7 @@ if ($is_logged_in) {
             </div>
         <?php elseif (empty($wishlist_items)): ?>
             <div class="alert alert-info text-center">
-                <p>Your wishlist is empty. Browse our <a href="../../index.php" class="alert-link">products</a> to add items to your wishlist.</p>
+                <p>Your wishlist is empty. Browse our <a href="../category.php" class="alert-link">products</a> to add items to your wishlist.</p>
             </div>
         <?php else: ?>
             <div class="table-responsive">
