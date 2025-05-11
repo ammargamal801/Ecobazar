@@ -106,7 +106,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     $replyData = [
                         'message' => $replyMessage,
                         'date' => date('d M, Y'),
-                        'fullName' => isset($_COOKIE['commentName']) ? $_COOKIE['commentName'] : 'Anonymous',
+                        'fullName' => isset($_POST['fullName']) ? test_input($_POST['fullName']) :'Anonymous',
                     ];
 
                     // Add reply to comment
