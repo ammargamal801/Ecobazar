@@ -476,6 +476,11 @@ include './footer.html';
                 });
             });
         });
+        if(localStorage.getItem('orderCompleted') === 'true') {
+            localStorage.removeItem('cart');
+            localStorage.removeItem('cartTotal');
+            localStorage.removeItem('orderCompleted');
+        }
     </script>
 </body>
 </html>
