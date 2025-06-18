@@ -157,25 +157,36 @@ $conn = getConnection();
           </ul>
 
         <?php
-          $sql = "SELECT id, user_id, total_price, status, created_at FROM orders";
-          $result = $conn->query($sql);
-          
-          if ($result && $result->num_rows > 0) {
-              while($row = $result->fetch_assoc()) {
-                  echo '<ul class="flex__row order__ul acount-info__order--ul">';
-                  echo '<li>#'. $row["id"] . '</li>';
-                  echo '<li>#'. $row["user_id"] . '</li>';
-                  echo '<li>' . $row["created_at"] . '</li>';
-                  echo '<li>$'. $row["total_price"] . '</li>';
-                  echo '<li>' . $row["status"] . '</li>';
-                  echo '<li><a href="#">View Details</a></li>';
-                  echo '</ul>';
-              }
-          } else {
-              echo "0 results";
-          }
-          // Don't close the connection here
-          ?>
+        $sql = "SELECT id, user_id, total_price, status, created_at FROM orders";
+        $result = $conn->query($sql);
+
+        if ($result->num_rows > 0) {
+            while($row = $result->fetch_assoc()) {
+                echo '<ul class="flex__row order__ul acount-info__order--ul">';
+                echo '<li>#'. $row["user_id"] . '</li>';
+                echo '<li>#'. $row["id"] . '</li>';
+                echo '<li>' . $row["created_at"] . '</li>';
+                echo '<li>$'. $row["total_price"] . '</li>';
+                echo '<li>' . $row["status"] . '</li>';
+
+                echo '<form method="POST" action="edit-status.php">';
+                echo '<input type="hidden" name="order_id" value="' . $row['id'] . '">';
+                echo '<select name="status">
+                        <option value="pending" ' . ($row['status'] == 'pending' ? 'selected' : '') . '>Pending</option>
+                        <option value="processing" ' . ($row['status'] == 'processing' ? 'selected' : '') . '>Processing</option>
+                        <option value="delivered" ' . ($row['status'] == 'delivered' ? 'selected' : '') . '>Delivered</option>
+                        <option value="cancelled" ' . ($row['status'] == 'cancelled' ? 'selected' : '') . '>cancelled</option>
+                      </select>';
+                echo '<button type="submit">Change Status</button>';
+                echo '</form>';
+                echo '</ul>';
+            }
+        } else {
+            echo "0 results";
+        }
+
+        ?>
+
         </div>
       <!-- Manage orders End-->
       

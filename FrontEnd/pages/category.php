@@ -61,11 +61,11 @@ if (isset($_SESSION['user'])) {
                 </div>
                 <!-- Navigation Links -->
                 <div class="col-3 d-flex d-xxl-flex d-none align-items-center ms-n6" style="margin-left: -100px;">
-                    <a class="text-decoration-none me-3 d-flex align-items-center" style="font-size: 13px;font-weight:550;color:var(--black-text-color);" href="">Home <i class="bi bi-chevron-down ms-1 mt-1"></i></a>
-                    <a class="text-decoration-none me-3 d-flex align-items-center" style="font-size: 13px;font-weight:550;color:var(--black-text-color);" href="">Shop<i class="bi bi-chevron-down ms-1 mt-1"></i></a>
-                    <a class="text-decoration-none me-3 d-flex align-items-center" style="font-size: 13px;font-weight:550;color:var(--black-text-color);" href="">Pages<i class="bi bi-chevron-down ms-1 mt-1"></i></a>
-                    <a class="text-decoration-none me-3 d-flex align-items-center" style="font-size: 13px;font-weight:550;color:var(--black-text-color);" href="">Blog <i class="bi bi-chevron-down ms-1 mt-1"></i></a>
-                    <a class="text-decoration-none d-flex align-items-center text-nowrap" style="font-size: 13px;font-weight:550;color:var(--black-text-color);" href="">About Us</a>
+                    <a class="text-decoration-none me-3 d-flex align-items-center" style="font-size: 13px;font-weight:550;color:var(--black-text-color);" href="./home_page/home page.php">Home <i class="bi bi-chevron-down ms-1 mt-1"></i></a>
+                    <a class="text-decoration-none me-3 d-flex align-items-center" style="font-size: 13px;font-weight:550;color:var(--black-text-color);" href="../">contact us<i class="bi bi-chevron-down ms-1 mt-1"></i></a>
+                    <a class="text-decoration-none me-3 d-flex align-items-center" style="font-size: 13px;font-weight:550;color:var(--black-text-color);" href="./about_and_comments_pages/Comments.php">comments<i class="bi bi-chevron-down ms-1 mt-1"></i></a>
+                    <a class="text-decoration-none me-3 d-flex align-items-center" style="font-size: 13px;font-weight:550;color:var(--black-text-color);" href="./Blog/BLOG.html">Blog <i class="bi bi-chevron-down ms-1 mt-1"></i></a>
+                    <a class="text-decoration-none d-flex align-items-center text-nowrap" style="font-size: 13px;font-weight:550;color:var(--black-text-color);" href="./about_and_comments_pages/About_page.html">About Us</a>
                 </div>
                 <!-- Ecobazar Logo -->
                 <div class="col-3 d-flex justify-content-center fs-2" style="font-family: Poppins, sans-serif; font-weight: 400; color: var(--black-text-color); position: absolute; left: 50%; transform: translateX(-50%);">
@@ -80,13 +80,19 @@ if (isset($_SESSION['user'])) {
                     <a href="Wishlist Page/wishlist.php" class="align-self-center d-lg-flex d-none" style="color:var(--black-text-color);"><i class="bi bi-heart fa-lg me-3"></i></a>
                     <!-- Cart Icon -->
                     <div id="cart-icon">
-                        <a href="Shopping Cart/shopping_cart.html" style="color: var(--black-text-color);" class="me-3" data-bs-toggle="offcanvas" 
+                        <a href="Shopping Cart/shopping_cart.php" style="color: var(--black-text-color);" class="me-3" data-bs-toggle="offcanvas" 
                         data-bs-target="#offcanvasCart" aria-controls="offcanvasCart">
                             <i class="bi bi-handbag fa-lg"></i>
                         </a>
                         <span class="cart-item-count"></span>
                     </div>
                     <a href="Login Page/login.php" class="d-lg-flex d-none" style="color:var(--black-text-color);"><i class="bi bi-person fa-lg"></i></a>
+                    <!-- Dark mode toggle button -->
+                    <div class="me-3">
+                        <button id="darkModeToggle" class="btn btn-link p-0" style="color: var(--black-text-color);">
+                            <i class="bi bi-moon"></i>
+                        </button>
+                    </div>
                     <!-- Search Box -->
                     <form class="d-flex" role="search">
                         <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" id="searchBox">
@@ -371,9 +377,8 @@ if (isset($_SESSION['user'])) {
                                     </a>
                                 </h4>
                                 <div class="price">
-                                    <?php if (!empty($product['discounted_price'])): ?>
+                                    <?php if (!empty($product['original_price'])): ?>
                                         <span class="current-price-sort">$<?php echo $product['discounted_price']; ?></span>
-                                        <span class="original-price-sort">$<?php echo $product['original_price']; ?></span>
                                     <?php else: ?>
                                         $<?php echo $product['original_price']; ?>
                                     <?php endif; ?>
@@ -476,6 +481,12 @@ include './footer.html';
                 });
             });
         });
+        if(localStorage.getItem('orderCompleted') === 'true') {
+            localStorage.removeItem('cart');
+            localStorage.removeItem('cartTotal');
+            localStorage.removeItem('orderCompleted');
+        }
     </script>
+    <script src="../Logics/header.js"></script>
 </body>
 </html>

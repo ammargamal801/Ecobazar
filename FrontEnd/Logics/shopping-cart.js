@@ -36,7 +36,6 @@ if (savedCart && savedCart.length > 0) {
 
         // Remove Item
         row.querySelector(".remove-item").addEventListener("click", () => {
-            // Remove the item row from the DOM
             row.remove();
         
             // Get the latest version of cart from localStorage
@@ -96,8 +95,7 @@ if (savedCart && savedCart.length > 0) {
                 }
                 return cartItem;
                 });
-localStorage.setItem("cart", JSON.stringify(updatedCart));
-
+                localStorage.setItem("cart", JSON.stringify(updatedCart));
         });
 
         // Handle Quantity Decrease

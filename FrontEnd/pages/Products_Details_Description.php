@@ -4,6 +4,19 @@ require_once '../../Backend/category-b/product-details.php';
 <?php
 require_once '../../Backend/category-b/related.php';
 ?>
+<?php
+session_start();
+require_once '../../Backend/Authentication/users.php';
+// Check if user is logged in
+$is_logged_in = isset($_SESSION['user']);
+$wishlist_items = [];
+
+if ($is_logged_in) {
+    $user = unserialize($_SESSION['user']);
+    $user_id = $user->getId();
+    $wishlist_items = Customer::getWishlist($user_id);
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -11,84 +24,148 @@ require_once '../../Backend/category-b/related.php';
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ecobazar - <?php echo $product['name']; ?></title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" 
+    integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="../Style/Products_Details_Description..style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="../Style/main.css">
+    <link rel="stylesheet" href="../Style/add-to-cart.css"> 
+</head>
+   <style>
+        body {
+            background-color: white !important;
+        }
+        
+        .wishlist-icon {
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+        .wishlist-icon.fas {
+            color: #EA4B48;
+        }
+        .wishlist-icon:hover {
+            transform: scale(1.1);
+        }
+    </style>
 </head>
 
 <body>
-    <header class="eco-header">
-        <div class="container">
-            <!-- الشعار ومتصفح البحث -->
-            <div class="header-top">
-                <div class="logo">
-                    <a href="index.html">
-                        <img src="Assets/plant 1.png" alt="Ecobazar Logo">
-                        <h1>Ecobazar</h1>
+<nav class="navbar border fixed-top d-flex py-3" style="background-color: var(--white);">
+        <div class="container-fluid d-flex justify-content-center">
+            <div class="container d-flex align-items-center position-relative">
+                <!-- Navbar Toggler for Sidebar -->
+                <div class="col-1 me-3 mt-1 d-flex">
+                    <button class="navbar-toggler border-0" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar2"
+                    aria-controls="offcanvasNavbar2" aria-label="Toggle navigation2">
+                        <span class="navbar-toggler-icon d-block d-xxl-none"></span>
+                    </button>
+                </div>
+                <!-- Navigation Links -->
+                <div class="col-3 d-flex d-xxl-flex d-none align-items-center ms-n6" style="margin-left: -100px;">
+                    <a class="text-decoration-none me-3 d-flex align-items-center" style="font-size: 13px;font-weight:550;color:var(--black-text-color);" href="./home_page/home page.php">Home <i class="bi bi-chevron-down ms-1 mt-1"></i></a>
+                    <a class="text-decoration-none me-3 d-flex align-items-center" style="font-size: 13px;font-weight:550;color:var(--black-text-color);" href="../">contact us<i class="bi bi-chevron-down ms-1 mt-1"></i></a>
+                    <a class="text-decoration-none me-3 d-flex align-items-center" style="font-size: 13px;font-weight:550;color:var(--black-text-color);" href="./about_and_comments_pages/Comments.php">comments<i class="bi bi-chevron-down ms-1 mt-1"></i></a>
+                    <a class="text-decoration-none me-3 d-flex align-items-center" style="font-size: 13px;font-weight:550;color:var(--black-text-color);" href="./Blog/BLOG.html">Blog <i class="bi bi-chevron-down ms-1 mt-1"></i></a>
+                    <a class="text-decoration-none d-flex align-items-center text-nowrap" style="font-size: 13px;font-weight:550;color:var(--black-text-color);" href="./about_and_comments_pages/About_page.html">About Us</a>
+                </div>
+                <!-- Ecobazar Logo -->
+                <div class="col-3 d-flex justify-content-center fs-2" style="font-family: Poppins, sans-serif; font-weight: 400; color: var(--black-text-color); position: absolute; left: 50%; transform: translateX(-50%);">
+                    <a href="" class="text-decoration-none d-flex" style="color: var(--black-text-color);">
+                        <i class="fas fa-leaf me-1 mt-2" style="color: var(--green-text);"></i>
+                        Ecobazar
                     </a>
                 </div>
-
-                <div class="search-bar">
-                    <form action="/search">
-                        <input type="text" placeholder="Search for organic products..." class="search-input">
-                        <button type="submit" class="search-btn">
-                            <i class="fas fa-search"></i>
+                <!-- Icons and Search -->
+                <div class="col-3 justify-content-end align-self-center d-flex ms-auto">
+                    <i class="bi bi-search fa-lg me-3" id="searchIcon" style="cursor: pointer;"></i>
+                    <a href="Wishlist Page/wishlist.php" class="align-self-center d-lg-flex d-none" style="color:var(--black-text-color);"><i class="bi bi-heart fa-lg me-3"></i></a>
+                    <!-- Cart Icon -->
+                    <div id="cart-icon">
+                        <a href="Shopping Cart/shopping_cart.php" style="color: var(--black-text-color);" class="me-3" data-bs-toggle="offcanvas" 
+                        data-bs-target="#offcanvasCart" aria-controls="offcanvasCart">
+                            <i class="bi bi-handbag fa-lg"></i>
+                        </a>
+                        <span class="cart-item-count"></span>
+                    </div>
+                    <a href="Login Page/login.php" class="d-lg-flex d-none" style="color:var(--black-text-color);"><i class="bi bi-person fa-lg"></i></a>
+                    <!-- Dark mode toggle button -->
+                    <div class="me-3">
+                        <button id="darkModeToggle" class="btn btn-link p-0" style="color: var(--black-text-color);">
+                            <i class="bi bi-moon"></i>
                         </button>
+                    </div>
+                    <!-- Search Box -->
+                    <form class="d-flex" role="search">
+                        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" id="searchBox">
                     </form>
                 </div>
-
-                <div class="header-icons">
-                    <a href="#" class="icon-link"><i class="far fa-user"></i></a>
-                    <a href="#" class="icon-link"><i class="far fa-heart"></i></a>
-                    <a href="cart.html" class="icon-link cart-icon">
-                        <i class="fas fa-shopping-cart"></i>
-                        <span class="cart-count">0</span>
-                    </a>
+            </div>
+            <button class="navbar-toggler border-0 ms-2 d-none" type="button" data-bs-toggle="offcanvas" 
+            data-bs-target="#offcanvasNavMenu" aria-controls="offcanvasNavMenu" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <!-- Offcanvas for Left Sidebar -->
+            <div class="offcanvas offcanvas-start border-0" tabindex="-1" id="offcanvasNavbar2" aria-labelledby="offcanvasNavbar2Label">
+                <div class="offcanvas-header mt-4">
+                    <h5 class="offcanvas-title" id="offcanvasNavbar2Label">
+                        <a href="" class="ms-1 border border-black rounded-5 p-3" style="color:var(--black-text-color);">
+                            <i class="bi bi-person fa-lg fa-5x"></i>
+                        </a>
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                </div>
+                <div class="offcanvas-body">
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="text-decoration-none d-flex align-items-center" style="color:var(--black-text-color);" href="">Home <i class="bi bi-chevron-down ms-1 mt-1"></i></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="text-decoration-none mt-3 d-flex align-items-center border-top p-1" style="color:var(--black-text-color);" href="">Shop<i class="bi bi-chevron-down ms-1 mt-1"></i></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="text-decoration-none mt-3 d-flex align-items-center border-top p-1" style="color:var(--black-text-color);" href="">Pages<i class="bi bi-chevron-down ms-1 mt-1"></i></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="text-decoration-none mt-3 d-flex align-items-center border-top p-1" style="color:var(--black-text-color);" href="">Blog <i class="bi bi-chevron-down ms-1 mt-1"></i></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="text-decoration-none mt-3 d-flex align-items-center border-top p-1" style="color:var(--black-text-color);" href="">About Us</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="text-decoration-none mt-3 d-flex align-items-center border-top p-1" style="color:var(--black-text-color);" href="">Wish list</a>
+                        </li>
+                    </ul>
+                    <div class="fw-bold" style="margin-top:250px;color: var(--black-text-color);">
+                        <i class="fas fa-leaf fa-2x" style="color: var(--green-text);"></i>
+                    </div>
                 </div>
             </div>
-
-            <!-- القائمة الرئيسية -->
-            <nav class="main-nav">
-                <ul class="nav-list">
-                    <li><a href="index.html">Home</a></li>
-                    <li class="mega-menu">
-                        <a href="./category.php">Shop <i class="fas fa-chevron-down"></i></a>
-                        <div class="mega-menu-content">
-                            <?php
-                            $categories_query = "SELECT * FROM categories";
-                            $categories_result = $conn->query($categories_query);
-
-                            if ($categories_result && $categories_result->num_rows > 0):
-                                while ($category = $categories_result->fetch_assoc()):
-                                    ?>
-                                    <div class="mega-menu-column">
-                                        <h4><?php echo htmlspecialchars($category['name']); ?></h4>
-                                        <ul>
-                                            <li>
-                                                <a href="category.php?id=<?php echo $category['id']; ?>">
-                                                    View All <?php echo htmlspecialchars($category['name']); ?>
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                    <?php
-                                endwhile;
-                            endif;
-                            ?>
-                        </div>
-                    </li>
-                    <li><a href="blog.html">Blog</a></li>
-                    <li><a href="about.html">About Us</a></li>
-                    <li><a href="contact.html">Contact</a></li>
-                </ul>
-            </nav>
-
-            <!-- زر القائمة المتنقلة -->
-            <div class="mobile-menu-btn">
-                <i class="fas fa-bars"></i>
+            <!-- cart details -->
+            <div class="cart">
+                <h2 class="cart-title">Your Cart</h2>
+                <div class="cart-content">
+                </div>
+                <div class="total">
+                    <div class="total-title">Total</div>
+                    <div class="total-price">$0</div>
+                </div>
+                <button class="btn-buy">Buy Now</button>
+                <i class="fa-solid fa-circle-xmark" id="cart-close"></i>
             </div>
         </div>
-    </header>
+    </nav>
 
+    <!-- Photo on Header Section -->
+    <div class="container-fluid" style="margin-top: 120px; height: 100px; margin-bottom: 20px;">
+        <div class="row">
+            <img src="../Assets/pic under header.jpg" alt="" class="img-fluid" style="height: 100px; object-fit: cover;">
+        </div>
+    </div>
     <main class="product-detail">
         <div class="container">
             <div class="breadcrumb">
@@ -362,93 +439,75 @@ require_once '../../Backend/category-b/related.php';
         </section>
     </main>
 
-    <section class="newsletter">
-        <div class="container">
-            <h2>Subscribe our Newsletter</h2>
-            <p>Felicitatezza su utilità degli insulti congiura media media nec lettus. Pinsella impetrata siti su magma.
-            </p>
-            <form class="newsletter-form">
-                <input type="email" placeholder="Your email address" required>
-                <button type="submit">Subscribe</button>
-            </form>
-            <div class="social-links">
-                <a href="#"><i class="fab fa-facebook"></i></a>
-                <a href="#"><i class="fab fa-twitter"></i></a>
-                <a href="#"><i class="fab fa-pinterest"></i></a>
-            </div>
-        </div>
-    </section>
-
-    <footer style="background-color: #111; color: #fff; padding: 40px 0; font-family: Arial, sans-serif;">
-        <div style="width: 80%; margin: auto; display: flex; flex-wrap: wrap; justify-content: space-between;">
-            <!-- Left Section -->
-            <div style="width: 25%; min-width: 250px;">
-                <h2 style="display: flex; align-items: center;">
-                    <span style="color: #29a745; font-size: 24px; margin-right: 10px;">&#127793;</span>
-                    <span>Ecobazar</span>
-                </h2>
-                <p style="color: #bbb; font-size: 14px;">Morbi cursus porttitor enim lobortis molestie. Duis gravida
-                    turpis dui, eget bibendum magna congue nec.</p>
-                <p style="color: #bbb; font-size: 14px;">
-                    <span style="color: #29a745;">(+20) 01285964248</span> or
-                    <a href="mailto:ZiadAlbadry16@gmail.com"
-                        style="color: #29a745; text-decoration: none;">ZiadAlbadry16@gmail.com</a>
-                </p>
-            </div>
-
-            <!-- Middle Sections -->
-            <div style="width: 15%; min-width: 150px;">
-                <h3>My Account</h3>
-                <ul style="list-style: none; padding: 0; color: #bbb;">
-                    <li>My Account</li>
-                    <li>Order History</li>
-                    <li style="color: white;">Shoping Cart</li>
-                    <li>Wishlist</li>
-                </ul>
-            </div>
-            <div style="width: 15%; min-width: 150px;">
-                <h3>Helps</h3>
-                <ul style="list-style: none; padding: 0; color: #bbb;">
-                    <li>Contact</li>
-                    <li>FAQs</li>
-                    <li>Terms & Condition</li>
-                    <li>Privacy Policy</li>
-                </ul>
-            </div>
-            <div style="width: 15%; min-width: 150px;">
-                <h3>Proxy</h3>
-                <ul style="list-style: none; padding: 0; color: #bbb;">
-                    <li>About</li>
-                    <li>Shop</li>
-                    <li>Product</li>
-                    <li>Track Order</li>
-                </ul>
-            </div>
-            <div style="width: 15%; min-width: 150px;">
-                <h3>Categories</h3>
-                <ul style="list-style: none; padding: 0; color: #bbb;">
-                    <li>Fruit & Vegetables</li>
-                    <li>Meat & Fish</li>
-                    <li>Bread & Bakery</li>
-                    <li>Beauty & Health</li>
-                </ul>
-            </div>
-        </div>
-        <!-- Bottom Section -->
-        <div style="width: 80%; margin: auto; padding-top: 20px; border-top: 1px solid #333; text-align: center;">
-            <p style="color: #bbb;">Ecobazar eCommerce © 2025. All Rights Reserved</p>
-            <div style="display: flex; justify-content: center; align-items: center; gap: 10px;">
-                <img src="Assets/ApplePay.png" alt="Apple Pay" width="40">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/0/04/Visa.svg" alt="Visa" width="40">
-                <img src="Assets/Method=Discover.png" alt="Discover" width="40">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/b/b7/MasterCard_Logo.svg" alt="MasterCard"
-                    width="40">
-                <img src="images/Cart.png" alt="Visa" width="40">
-            </div>
-        </div>
-    </footer>
+    <?php 
+include './footer.html';
+?>
 
     <script src="../Logics/Products_Details_Description.js"></script>
-</body>
 
+<!-- Custom JavaScript for search on nav bar -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const searchIcon = document.getElementById('searchIcon');
+            const searchBox = document.getElementById('searchBox');
+
+            searchIcon.addEventListener('click', function(event) {
+                event.preventDefault();
+                if (searchBox.style.display === 'none' || searchBox.style.display === '') {
+                    searchBox.style.display = 'block';
+                } else {
+                    searchBox.style.display = 'none';
+                }
+            });
+        });
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" 
+    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" 
+    crossorigin="anonymous"></script>
+    <script src="../Logics/add&delete-cart.js"></script>
+    <script>
+        // Wishlist functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const wishlistIcons = document.querySelectorAll('.wishlist-icon');
+            
+            wishlistIcons.forEach(icon => {
+                icon.addEventListener('click', function() {
+                    const productId = this.getAttribute('data-product-id');
+                    const isInWishlist = this.classList.contains('fas');
+                    
+                    // Determine action based on current state
+                    const action = isInWishlist ? 'remove' : 'add';
+                    
+                    // Send request to server
+                    fetch('../../Backend/wishlist/wishlist_handle.php', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded',
+                        },
+                        body: `action=${action}&product_id=${productId}`
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            // Toggle heart icon
+                            this.classList.toggle('far');
+                            this.classList.toggle('fas');
+                            
+                            // Show success message
+                            alert(data.message);
+                        } else {
+                            alert(data.message);
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        alert('An error occurred while updating your wishlist');
+                    });
+                });
+            });
+        });
+    </script>
+    <script src="../Logics/header.js"></script>
+</body>
 </html>
